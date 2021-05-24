@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Keterangan_Jalan Poros Makarti Jaya",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Ket": "Jalan Poros Makarti Jaya", "Keterangan": "Jalan Poros Makarti Jaya" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.958886605791861, -2.565425941108344 ], [ 104.96459731220574, -2.536301338396925 ], [ 104.9693562342174, -2.509651375131682 ], [ 104.973353728707309, -2.484143553149124 ], [ 104.980968003925852, -2.445501106414497 ], [ 104.986297996578912, -2.410856154169608 ], [ 104.989343706666432, -2.389345826676902 ], [ 104.990866561710106, -2.378114770729326 ] ] ] } }
+]
+}

@@ -15,6 +15,7 @@ class CreateLaporanWargaTable extends Migration
     {
         Schema::create('laporan_warga', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('email');
             $table->string('phone');
             $table->string('description');

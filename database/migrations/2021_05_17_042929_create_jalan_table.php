@@ -49,6 +49,10 @@ class CreateJalanTable extends Migration
      */
     public function down()
     {
+        DB::unprepared("DROP TYPE kondisiJalanEnum");
+        DB::unprepared("DROP TYPE statusJalanEnum");
+        DB::unprepared("DROP TYPE jenisPerkerasanEnum");
+        DB::unprepared("DROP TYPE kelasJalanEnum");
         Schema::dropIfExists('jalan');
     }
 }

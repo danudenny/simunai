@@ -17,6 +17,7 @@ class CreateKecamatanTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('nama');
+            $table->string('warna');
         });
     }
 

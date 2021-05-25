@@ -18,6 +18,8 @@ class CreateTableLampiran extends Migration
             $table->unsignedBigInteger('jalan_id');
             $table->foreign('jalan_id')->references('id')->on('jalan')->onDelete('cascade');
             $table->string('file_name');
+            $table->string('url')->nullable(true);
+            $table->boolean('is_video')->nullable(true);
             $table->timestamps();
         });
     }

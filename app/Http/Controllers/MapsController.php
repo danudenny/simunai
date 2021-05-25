@@ -12,9 +12,6 @@ class MapsController extends Controller
     public function index() {
         $data = Jalan::all();
         $kecamatan = Kecamatan::all();
-        foreach( $data as $datas) {
-            $lampiran = Lampiran::where('jalan_id', '=', $datas->id)->get();
-        };
-        return view('pages.maps.index', compact('data', 'kecamatan', 'lampiran'));
+        return view('pages.maps.index', compact('data', 'kecamatan'));
     }
 }

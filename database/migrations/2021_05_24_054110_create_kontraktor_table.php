@@ -18,6 +18,7 @@ class CreateKontraktorTable extends Migration
             $table->string('nama');
             $table->string('alamat');
             $table->string('telepon');
+            $table->string('email')->nullable(true);
             $table->string('is_active');
             $table->timestamps();
         });

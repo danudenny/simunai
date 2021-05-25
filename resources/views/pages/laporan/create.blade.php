@@ -85,7 +85,7 @@
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary mr-2"><i class="ik ik-save" title="Sumbit"></i> Submit</button>
-                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('kontraktor') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
+                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('maps') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
                     </div>
                 </form>
             </div>

@@ -35,15 +35,26 @@ Route::get('password/forget',  function () {
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
+// Maps
+Route::get('/', [MapsController::class,'index'])->name('maps');
+
+// Jalan
+Route::get('/jalan', [JalanController::class,'index'])->name('jalan');
+// Route::get('/jalan/tambah', [JalanController::class,'create'])->name('jalan.tambah');
+// Route::get('/jalan/edit/{id}', [JalanController::class,'edit'])->name('jalan.edit');
+Route::get('/jalan/details/{id}', [JalanController::class,'show'])->name('jalan.details');
+// Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
+// Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
+// Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
 
 // Riwayat
 Route::get('/laporan', [LaporanKontroller::class,'index'])->name('laporan');
 Route::get('/laporan/tambah/{id}', [LaporanKontroller::class,'create'])->name('laporan.tambah');
-Route::get('/laporan/edit/{id}', [LaporanKontroller::class,'edit'])->name('laporan.edit');
-Route::get('/laporan/details/{id}', [LaporanKontroller::class,'show'])->name('laporan.details');
-Route::patch('/laporan/update/{id}', [LaporanKontroller::class,'update'])->name('laporan.update');
+// Route::get('/laporan/edit/{id}', [LaporanKontroller::class,'edit'])->name('laporan.edit');
+// Route::get('/laporan/details/{id}', [LaporanKontroller::class,'show'])->name('laporan.details');
+// Route::patch('/laporan/update/{id}', [LaporanKontroller::class,'update'])->name('laporan.update');
 Route::post('/laporan/store', [LaporanKontroller::class,'store'])->name('laporan.store');
-Route::delete('/laporan/hapus/{id}', [LaporanKontroller::class,'destroy'])->name('laporan.hapus');
+// Route::delete('/laporan/hapus/{id}', [LaporanKontroller::class,'destroy'])->name('laporan.hapus');
 
 Route::group(['middleware' => 'auth'], function(){
 	// logout route
@@ -55,9 +66,9 @@ Route::group(['middleware' => 'auth'], function(){
 		return view('pages.dashboard');
 	})->name('dashboard');
 
-    Route::get('/', function () {
-		return view('pages.dashboard');
-	})->name('dashboard');
+    // Route::get('/', function () {
+	// 	return view('pages.dashboard');
+	// })->name('dashboard');
 
     // Jalan
     Route::get('/jalan', [JalanController::class,'index'])->name('jalan');
@@ -87,7 +98,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/riwayat/hapus/{id}', [RiwayatController::class,'destroy'])->name('riwayat.hapus');
 
     //
-    Route::get('/maps', [MapsController::class,'index'])->name('maps');
 
 	//only those have manage_user permission will get access
 	Route::group(['middleware' => 'can:manage_user'], function(){

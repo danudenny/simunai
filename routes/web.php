@@ -84,7 +84,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/clear-cache', [HomeController::class,'clearCache']);
 
 	// dashboard route
-	Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+	// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Route::get('/', function () {
 	// 	return view('pages.dashboard');

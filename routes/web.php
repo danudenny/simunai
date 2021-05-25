@@ -35,26 +35,46 @@ Route::get('password/forget',  function () {
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
+
 // Maps
 Route::get('/', [MapsController::class,'index'])->name('maps');
+Route::get('/maps', [MapsController::class,'index'])->name('maps');
 
 // Jalan
 Route::get('/jalan', [JalanController::class,'index'])->name('jalan');
-// Route::get('/jalan/tambah', [JalanController::class,'create'])->name('jalan.tambah');
-// Route::get('/jalan/edit/{id}', [JalanController::class,'edit'])->name('jalan.edit');
+Route::get('/jalan/tambah', [JalanController::class,'create'])->name('jalan.tambah');
+Route::get('/jalan/edit/{id}', [JalanController::class,'edit'])->name('jalan.edit');
 Route::get('/jalan/details/{id}', [JalanController::class,'show'])->name('jalan.details');
-// Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
-// Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
-// Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
+Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
+Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
+Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
+
+// Kontraktor
+Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');
+Route::get('/kontraktor/tambah', [KontraktorController::class,'create'])->name('kontraktor.tambah');
+Route::get('/kontraktor/edit/{id}', [KontraktorController::class,'edit'])->name('kontraktor.edit');
+Route::get('/kontraktor/details/{id}', [KontraktorController::class,'show'])->name('kontraktor.details');
+Route::patch('/kontraktor/update/{id}', [KontraktorController::class,'update'])->name('kontraktor.update');
+Route::post('/kontraktor/store', [KontraktorController::class,'store'])->name('kontraktor.store');
+Route::delete('/kontraktor/hapus/{id}', [KontraktorController::class,'destroy'])->name('kontraktor.hapus');
 
 // Riwayat
+Route::get('/riwayat', [RiwayatController::class,'index'])->name('riwayat');
+Route::get('/riwayat/tambah/{id}', [RiwayatController::class,'create'])->name('riwayat.tambah');
+Route::get('/riwayat/edit/{id}', [RiwayatController::class,'edit'])->name('riwayat.edit');
+Route::get('/riwayat/details/{id}', [RiwayatController::class,'show'])->name('riwayat.details');
+Route::patch('/riwayat/update/{id}', [RiwayatController::class,'update'])->name('riwayat.update');
+Route::post('/riwayat/store', [RiwayatController::class,'store'])->name('riwayat.store');
+Route::delete('/riwayat/hapus/{id}', [RiwayatController::class,'destroy'])->name('riwayat.hapus');
+
+// Laporan
 Route::get('/laporan', [LaporanKontroller::class,'index'])->name('laporan');
 Route::get('/laporan/tambah/{id}', [LaporanKontroller::class,'create'])->name('laporan.tambah');
-// Route::get('/laporan/edit/{id}', [LaporanKontroller::class,'edit'])->name('laporan.edit');
-// Route::get('/laporan/details/{id}', [LaporanKontroller::class,'show'])->name('laporan.details');
-// Route::patch('/laporan/update/{id}', [LaporanKontroller::class,'update'])->name('laporan.update');
+Route::get('/laporan/edit/{id}', [LaporanKontroller::class,'edit'])->name('laporan.edit');
+Route::get('/laporan/details/{id}', [LaporanKontroller::class,'show'])->name('laporan.details');
+Route::patch('/laporan/update/{id}', [LaporanKontroller::class,'update'])->name('laporan.update');
 Route::post('/laporan/store', [LaporanKontroller::class,'store'])->name('laporan.store');
-// Route::delete('/laporan/hapus/{id}', [LaporanKontroller::class,'destroy'])->name('laporan.hapus');
+Route::delete('/laporan/hapus/{id}', [LaporanKontroller::class,'destroy'])->name('laporan.hapus');
 
 Route::group(['middleware' => 'auth'], function(){
 	// logout route
@@ -71,31 +91,31 @@ Route::group(['middleware' => 'auth'], function(){
 	// })->name('dashboard');
 
     // Jalan
-    Route::get('/jalan', [JalanController::class,'index'])->name('jalan');
-    Route::get('/jalan/tambah', [JalanController::class,'create'])->name('jalan.tambah');
-    Route::get('/jalan/edit/{id}', [JalanController::class,'edit'])->name('jalan.edit');
-    Route::get('/jalan/details/{id}', [JalanController::class,'show'])->name('jalan.details');
-    Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
-    Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
-    Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
+    // Route::get('/jalan', [JalanController::class,'index'])->name('jalan');
+    // Route::get('/jalan/tambah', [JalanController::class,'create'])->name('jalan.tambah');
+    // Route::get('/jalan/edit/{id}', [JalanController::class,'edit'])->name('jalan.edit');
+    // Route::get('/jalan/details/{id}', [JalanController::class,'show'])->name('jalan.details');
+    // Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
+    // Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
+    // Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
 
-    // Kontraktor
-    Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');
-    Route::get('/kontraktor/tambah', [KontraktorController::class,'create'])->name('kontraktor.tambah');
-    Route::get('/kontraktor/edit/{id}', [KontraktorController::class,'edit'])->name('kontraktor.edit');
-    Route::get('/kontraktor/details/{id}', [KontraktorController::class,'show'])->name('kontraktor.details');
-    Route::patch('/kontraktor/update/{id}', [KontraktorController::class,'update'])->name('kontraktor.update');
-    Route::post('/kontraktor/store', [KontraktorController::class,'store'])->name('kontraktor.store');
-    Route::delete('/kontraktor/hapus/{id}', [KontraktorController::class,'destroy'])->name('kontraktor.hapus');
+    // // Kontraktor
+    // Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');
+    // Route::get('/kontraktor/tambah', [KontraktorController::class,'create'])->name('kontraktor.tambah');
+    // Route::get('/kontraktor/edit/{id}', [KontraktorController::class,'edit'])->name('kontraktor.edit');
+    // Route::get('/kontraktor/details/{id}', [KontraktorController::class,'show'])->name('kontraktor.details');
+    // Route::patch('/kontraktor/update/{id}', [KontraktorController::class,'update'])->name('kontraktor.update');
+    // Route::post('/kontraktor/store', [KontraktorController::class,'store'])->name('kontraktor.store');
+    // Route::delete('/kontraktor/hapus/{id}', [KontraktorController::class,'destroy'])->name('kontraktor.hapus');
 
-    // Riwayat
-    Route::get('/riwayat', [RiwayatController::class,'index'])->name('riwayat');
-    Route::get('/riwayat/tambah/{id}', [RiwayatController::class,'create'])->name('riwayat.tambah');
-    Route::get('/riwayat/edit/{id}', [RiwayatController::class,'edit'])->name('riwayat.edit');
-    Route::get('/riwayat/details/{id}', [RiwayatController::class,'show'])->name('riwayat.details');
-    Route::patch('/riwayat/update/{id}', [RiwayatController::class,'update'])->name('riwayat.update');
-    Route::post('/riwayat/store', [RiwayatController::class,'store'])->name('riwayat.store');
-    Route::delete('/riwayat/hapus/{id}', [RiwayatController::class,'destroy'])->name('riwayat.hapus');
+    // // Riwayat
+    // Route::get('/riwayat', [RiwayatController::class,'index'])->name('riwayat');
+    // Route::get('/riwayat/tambah/{id}', [RiwayatController::class,'create'])->name('riwayat.tambah');
+    // Route::get('/riwayat/edit/{id}', [RiwayatController::class,'edit'])->name('riwayat.edit');
+    // Route::get('/riwayat/details/{id}', [RiwayatController::class,'show'])->name('riwayat.details');
+    // Route::patch('/riwayat/update/{id}', [RiwayatController::class,'update'])->name('riwayat.update');
+    // Route::post('/riwayat/store', [RiwayatController::class,'store'])->name('riwayat.store');
+    // Route::delete('/riwayat/hapus/{id}', [RiwayatController::class,'destroy'])->name('riwayat.hapus');
 
     //
 

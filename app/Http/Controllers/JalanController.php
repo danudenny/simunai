@@ -8,14 +8,74 @@ use App\Kecamatan;
 use App\Lampiran;
 use App\LaporanWarga;
 use App\Riwayat;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class JalanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = Jalan::all();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('nama_ruas', function($jalan) {
+                    $ruas = "<strong><a class='text-success' href='jalan/details/$jalan->id'>$jalan->nama_ruas <i class='ik ik-arrow-up-right' title='Details'></i> <a></strong>";
+                    return $ruas;
+                })
+                ->editColumn('status_jalan', function($jalan) {
+                    if ($jalan->status_jalan == null) {
+                        return "-";
+                    } else {
+                        return "Jalan " . ucfirst($jalan->status_jalan);
+                    }
+                })
+                ->editColumn('kelas_jalan', function($jalan) {
+                    if ($jalan->kelas_jalan == null) {
+                        return "-";
+                    } else {
+                        return $jalan->kelas_jalan;
+                    }
+                })
+                ->addColumn('kecamatan', function (Jalan $jalan) {
+                    return $jalan->kecamatan->nama;
+                })
+                ->addColumn('kondisi_jalan', function ($jalan) {
+                    if ($jalan->kondisi_jalan == 'baik') {
+                        $span = "<span class='badge badge-success'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
+                    } elseif ($jalan->kondisi_jalan == 'sedang') {
+                        $span = "<span class='badge badge-primary'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
+                    } elseif($jalan->kondisi_jalan == 'rusak') {
+                        $span = "<span class='badge badge-info'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
+                    } elseif($jalan->kondisi_jalan == 'rusak_ringan') {
+                        $span = "<span class='badge badge-warning'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
+                    } elseif($jalan->kondisi_jalan == 'rusak_berat') {
+                        $span = "<span class='badge badge-danger'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
+                    } else {
+                        $span = "-";
+                    }
+                    return $span;
+                })
+                ->addColumn('action', function($jalan){
+                    if (Auth::guest() ) {
+                        return '';
+                    } else{
+                        return "<div>
+                                <form action='jalan/hapus/$jalan->id' id='delete$jalan->id' method='POST'>
+                                    " . csrf_field() . "
+                                    <input type='hidden' name='_method' value='delete'>
+                                    <a class='btn btn-info btn-rounded' href='jalan/edit/$jalan->id'>Edit</a>
+                                    <button type='submit' class='btn btn-danger btn-rounded delete-confirm' data-id='$jalan->id'>Hapus</button>
+                                </form>
+                            </div>";
+                    }
+                })
+                ->rawColumns(['action', 'kondisi_jalan', 'nama_ruas'])
+                ->make(true);
+        }
         $jalan = Jalan::all();
         return view('pages.jalan.index', compact('jalan'));
     }

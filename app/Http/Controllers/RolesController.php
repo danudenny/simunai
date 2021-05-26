@@ -44,7 +44,7 @@ class RolesController extends Controller
 
     public function getRoleList(Request $request)
     {
-        
+
         $data  = Role::get();
 
         return Datatables::of($data)
@@ -64,7 +64,7 @@ class RolesController extends Controller
                     if($data->name == 'Super Admin'){
                         return '';
                     }
-                    if (Auth::user()->can('manage_roles')){
+                    if (Auth::user()->can('manage_role')){
                         return '<div class="table-actions">
                                     <a href="'.url('role/edit/'.$data->id).'" ><i class="ik ik-edit-2 f-16 mr-15 text-green"></i></a>
                                     <a href="'.url('role/delete/'.$data->id).'"  ><i class="ik ik-trash-2 f-16 text-red"></i></a>
@@ -88,7 +88,7 @@ class RolesController extends Controller
         $validator = Validator::make($request->all(), [
             'role' => 'required'
         ]);
-        
+
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', $validator->messages()->first());
         }
@@ -97,7 +97,7 @@ class RolesController extends Controller
             $role = Role::create(['name' => $request->role]);
             $role->syncPermissions($request->permissions);
 
-            if($role){ 
+            if($role){
                 return redirect('roles')->with('success', 'Role created succesfully!');
             }else{
                 return redirect('roles')->with('error', 'Failed to create role! Try again.');
@@ -127,19 +127,19 @@ class RolesController extends Controller
 
     public function update(Request $request)
     {
-        
+
 
         // update role
         $validator = Validator::make($request->all(), [
             'role' => 'required',
             'id'   => 'required'
         ]);
-        
+
         if ($validator->fails()) {
             return redirect()->back()->withInput()->with('error', $validator->messages()->first());
         }
         try{
-            
+
             $role = Role::find($request->id);
 
             $update = $role->update([

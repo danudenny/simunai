@@ -158,9 +158,7 @@
                 <div class="card-header" style="display: flex; justify-content: space-between;">
                     <h3><i class="ik ik-briefcase"></i> Riwayat Perbaikan Ruas Jalan <b class="text-primary">{{ $data->nama_ruas }}</b></h3>
                     <div class="tambah-button" style="pull-right: 0">
-                        @can('manage_kontraktor')
                         <a href="{{ route('riwayat.tambah', $data->id) }}" class="btn btn-outline-primary"><i class="ik ik-plus"></i> Tambah Data</a>
-                        @endcan
                     </div>
                 </div>
                 <div class="card-body">

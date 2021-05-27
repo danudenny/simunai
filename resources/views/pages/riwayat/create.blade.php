@@ -111,6 +111,11 @@
     <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 @endpush
 @endsection
 

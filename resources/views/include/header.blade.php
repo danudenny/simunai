@@ -3,17 +3,6 @@
         <div class="d-flex justify-content-between">
             <div class="top-menu d-flex align-items-center">
                 <button type="button" class="btn-icon mobile-nav-toggle d-lg-none"><span></span></button>
-
-                <div class="header-search">
-                    <div class="input-group">
-
-                        <span class="input-group-addon search-close">
-                            <i class="ik ik-x"></i>
-                        </span>
-                        <input type="text" class="form-control">
-                        <span class="input-group-addon search-btn"><i class="ik ik-search"></i></span>
-                    </div>
-                </div>
                 <img src="https://res.cloudinary.com/killtdj/image/upload/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="Logo Kabupaten" height="30px">&nbsp;&nbsp;
                 <h4> Sistem Informasi Monitoring Pembangunan Infrastruktur</h4>
             </div>

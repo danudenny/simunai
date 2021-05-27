@@ -40,6 +40,9 @@ class JalanController extends Controller
                         return $jalan->kelas_jalan;
                     }
                 })
+                ->editColumn('panjang', function($jalan) {
+                    return number_format($jalan->panjang);
+                })
                 ->addColumn('kecamatan', function (Jalan $jalan) {
                     return $jalan->kecamatan->nama;
                 })

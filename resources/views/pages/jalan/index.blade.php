@@ -55,7 +55,7 @@
                         <a href="{{ route('jalan.tambah') }}" class="btn btn-outline-primary"><i class="ik ik-plus"></i> Tambah Data</a>
                         @endcan
                         <a href="{{ route('jalan.pdf') }}" target="_blank" class="btn btn-outline-danger">PDF</a>
-                        <a href="#" class="btn btn-outline-success">Excel</a>
+                        <a href="{{ route('jalan.excel') }}" class="btn btn-outline-success">Excel</a>
                     </div>
 
                 </div>

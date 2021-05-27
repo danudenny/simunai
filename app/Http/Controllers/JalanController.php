@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JalanExport;
 use Illuminate\Http\Request;
 use App\Jalan;
 use App\Kecamatan;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class JalanController extends Controller
@@ -238,4 +240,8 @@ class JalanController extends Controller
             ->setPaper('a4', 'landscape');
         return $pdf->stream('Data Ruas Jalan Kabupaten Banyuasin.pdf');
     }
+
+    public function export_excel(){
+		return Excel::download(new JalanExport, 'Data Ruas Jalan Kabupaten Banyuasin.xlsx');
+	}
 }

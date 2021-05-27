@@ -53,6 +53,8 @@
                     @can('manage_jalan')
                     <div class="tambah-button" style="pull-right: 0">
                         <a href="{{ route('jalan.tambah') }}" class="btn btn-outline-primary"><i class="ik ik-plus"></i> Tambah Data</a>
+                        <a href="{{ route('jalan.pdf') }}" target="_blank" class="btn btn-outline-danger">PDF</a>
+                        <a href="#" class="btn btn-outline-success">Excel</a>
                     </div>
                     @endcan
                 </div>
@@ -145,6 +147,9 @@
                         targets: [3, 4, 5, 6, 7, 8],
                         className: "text-center"
                     }
+                ],
+                buttons: [
+                    'pdf'
                 ]
             });
         });

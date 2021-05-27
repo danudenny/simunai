@@ -39,7 +39,7 @@
                                     $totalPanjangJalan = \App\Jalan::sum('panjang');
                                 @endphp
                                 <h6>{{ __('Total Panjang Jalan')}}</h6>
-                                <h2>{{ $totalPanjangJalan }} Meter</h2>
+                                <h2>{{ number_format($totalPanjangJalan * 0.001, 2, ',', '.')  }} Km</h2>
                             </div>
                             <div class="icon">
                                 <i class="ik ik-git-commit"></i>

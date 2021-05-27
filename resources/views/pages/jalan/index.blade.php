@@ -50,13 +50,14 @@
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content: space-between;">
                     <h3>{{ __('Data Ruas Jalan')}}</h3>
-                    @can('manage_jalan')
                     <div class="tambah-button" style="pull-right: 0">
+                        @can('manage_jalan')
                         <a href="{{ route('jalan.tambah') }}" class="btn btn-outline-primary"><i class="ik ik-plus"></i> Tambah Data</a>
+                        @endcan
                         <a href="{{ route('jalan.pdf') }}" target="_blank" class="btn btn-outline-danger">PDF</a>
                         <a href="#" class="btn btn-outline-success">Excel</a>
                     </div>
-                    @endcan
+
                 </div>
                 <div class="card-body">
                     <table id="example" class="table table-bordered data-table">

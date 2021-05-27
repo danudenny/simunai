@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="{{ asset('all.css') }}">
 <link rel="stylesheet" href="{{ asset('dist/css/theme.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('plugins/icon-kit/dist/css/iconkit.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/ionicons/dist/css/ionicons.min.css') }}">
 

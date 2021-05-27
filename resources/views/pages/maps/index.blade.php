@@ -2,7 +2,6 @@
 @section('title', 'Detail Data Jalan')
 @section('content')
 @push('head')
-    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
     <script src="{{ asset('js/leaflet.min.js') }}"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">

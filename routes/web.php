@@ -50,6 +50,7 @@ Route::get('/jalan/details/{id}', [JalanController::class,'show'])->name('jalan.
 Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
 Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
 Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
+Route::get('/jalan/pdf', [JalanController::class, 'generatePdf'])->name('jalan.pdf');
 
 // Kontraktor
 Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');

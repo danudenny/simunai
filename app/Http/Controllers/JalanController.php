@@ -8,6 +8,7 @@ use App\Kecamatan;
 use App\Lampiran;
 use App\LaporanWarga;
 use App\Riwayat;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
@@ -19,7 +20,7 @@ class JalanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Jalan::all();
+            $data = Jalan::orderBy('id', 'ASC')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->editColumn('nama_ruas', function($jalan) {
@@ -223,5 +224,18 @@ class JalanController extends Controller
             'alert-type' => 'success'
         );
         return Redirect::back()->with($notification);
+    }
+
+    public function generatePdf() {
+        $jalan = Jalan::orderBy('id', 'ASC')->get();
+
+        $img_type = 'png';
+        $image = base64_encode(file_get_contents('https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png'));
+        $img_src = "data:image/".$img_type.";base64,".str_replace ("\n", "", $image);
+
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+            ->loadView('pdf.jalan-pdf', compact('jalan', 'img_src'))
+            ->setPaper('a4', 'landscape');
+        return $pdf->stream('Data Ruas Jalan Kabupaten Banyuasin.pdf');
     }
 }

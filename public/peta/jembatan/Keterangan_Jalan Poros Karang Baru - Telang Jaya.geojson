@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Keterangan_Jalan Poros Karang Baru - Telang Jaya",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Ket": "Jalan Poros Karang Baru - Telang Jaya", "Keterangan": "Jalan Poros Karang Baru - Telang Jaya" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.798828125, -2.68292236328125 ], [ 104.82086181640625, -2.6810302734375 ], [ 104.8404541015625, -2.6793212890625 ], [ 104.8602294921875, -2.6776123046875 ], [ 104.8701171875, -2.6766357421875 ], [ 104.88067626953125, -2.6756591796875 ], [ 104.901123046875, -2.67401123046875 ], [ 104.90179443359375, -2.67388916015625 ] ] ] } }
+]
+}

@@ -12,28 +12,28 @@
             font-family: 'Open Sans', sans-serif;
             color: #333;
         }
-        #customers {
+        #table {
             font-family: 'Open Sans', sans-serif;
             font-size: 12px;
             border-collapse: collapse;
             width: 100%;
         }
 
-        #customers td,
-        #customers th {
+        #table td,
+        #table th {
             border: 1px solid #ddd;
             padding: 8px;
         }
 
-        #customers tr:nth-child(even) {
+        #table tr:nth-child(even) {
             background-color: #f2f2f2;
         }
 
-        #customers tr:hover {
+        #table tr:hover {
             background-color: #ddd;
         }
 
-        #customers th {
+        #table th {
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-12">
                 <p style="font-size: 17px; font-weight: bold; text-align: center; text-decoration: underline; margin-bottom: 25px;">DATA RUAS JALAN KABUPATEN BANYUASIN</p>
-                <table id="customers">
+                <table id="table">
                     <thead>
                         <tr>
                             <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('No.')}}</th>

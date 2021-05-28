@@ -54,8 +54,15 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card card-484">
-                <div class="card-header">
+                <div class="card-header" style="display: flex; justify-content: space-between;">
                     <h3><i class="ik ik-git-branch"></i> Detail Ruas Jalan <b class="text-primary">{{ $data->nama_ruas }}</b></h3>
+                    <div class="tambah-button" style="pull-right: 0">
+                        <a href="{{ route('jalan.details-pdf', $data->id) }}" target="_blank" class="btn btn-outline-danger">PDF</a>
+                    </div>
+
+                </div>
+                <div class="card-header">
+
                 </div>
                 <div class="card-body">
                     <h4 class="sub-title">Informasi Dasar</h4>

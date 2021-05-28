@@ -46,6 +46,9 @@
                 <div class="nav-item {{ ($segment1 == 'jalan') ? 'active' : '' }}">
                     <a href="{{url('jalan')}}"><i class="ik ik-git-branch"></i><span>{{ __('Data Ruas Jalan')}}</span> </a>
                 </div>
+                <div class="nav-item {{ ($segment1 == 'jembatan') ? 'active' : '' }}">
+                    <a href="{{url('jembatan')}}"><i class="ik ik-git-branch"></i><span>{{ __('Data Jembatan')}}</span> </a>
+                </div>
                 <div class="nav-item {{ ($segment1 == 'kontraktor') ? 'active' : '' }}">
                     <a href="{{url('kontraktor')}}"><i class="ik ik-briefcase"></i><span>{{ __('Data Kontraktor')}}</span> </a>
                 </div>

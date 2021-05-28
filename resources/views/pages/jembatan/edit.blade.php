@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Edit Data Jalan')
+@section('title', 'Edit Data Jembatan')
 @section('content')
 @push('head')
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
@@ -12,8 +12,8 @@
                 <div class="page-header-title">
                     <i class="ik ik-edit bg-blue"></i>
                     <div class="d-inline">
-                        <h5>{{ __('Data Ruas Jalan')}}</h5>
-                        <span>{{ __('Informasi data ruas jalan Kabupaten Banyuasin.')}}</span>
+                        <h5>{{ __('Data Ruas Jembatan')}}</h5>
+                        <span>{{ __('Informasi data jembatan Kabupaten Banyuasin.')}}</span>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,9 @@
                             <a href="{{route('dashboard')}}"><i class="ik ik-home"></i></a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('jalan') }}">{{ __('Data Jalan')}}</a>
+                            <a href="{{ url('jembatan') }}">{{ __('Data Jembatan')}}</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Data Ruas Jalan</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Data Jembatan</li>
                     </ol>
                 </nav>
             </div>
@@ -38,18 +38,18 @@
         <div class="col-md-6">
             <div class="card card-484">
                 <div class="card-header">
-                    <h3>Form Edit Data Ruas Jalan</h3>
+                    <h3>Form Edit Data Jembatan</h3>
                 </div>
                 <div class="card-body">
                     <h4 class="sub-title">Informasi Dasar</h4>
-                    <form action="{{ route('jalan.update', $data->id) }}" enctype="multipart/form-data" method="POST" name="edit_jalan" class="forms-sample">
+                    <form action="{{ route('jembatan.update', $data->id) }}" enctype="multipart/form-data" method="POST" name="edit_jembatan" class="forms-sample">
                         @csrf
                         @method('PATCH')
                         <div class="form-group row">
-                            <label for="namaRuasInput" class="col-sm-3 col-form-label">Nama Ruas</label>
+                            <label for="namaJembatanInput" class="col-sm-3 col-form-label">Nama Jembatan</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="nama_ruas" value="{{ $data->nama_ruas }}" placeholder="Nama Ruas">
-                                <span class="text-danger">{{ $errors->first('nama_ruas') }}</span>
+                                <input type="text" class="form-control" name="nama_jembatan" value="{{ $data->nama_jembatan }}" placeholder="Nama Jembatan">
+                                <span class="text-danger">{{ $errors->first('nama_jembatan') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -78,28 +78,28 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="statusJalanInput" class="col-sm-3 col-form-label">Status Jalan</label>
+                            <label for="statusJembatanInput" class="col-sm-3 col-form-label">Status Jembatan</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="status_jalan">
-                                    <option value="">--Pilih Status Jalan--</option>
-                                    <option {{ $data->status_jalan == 'lokal' ? 'selected':'' }} value="lokal">Lokal</option>
-                                    <option {{ $data->status_jalan == 'kabupaten' ? 'selected':'' }} value="kabupaten">Kabupaten</option>
-                                    <option {{ $data->status_jalan == 'provinsi' ? 'selected':'' }} value="provinsi">Provinsi</option>
-                                    <option {{ $data->status_jalan == 'nasional' ? 'selected':'' }} value="nasional">Nasional</option>
-                                    <option {{ $data->status_jalan == 'lainnya' ? 'selected':'' }} value="lainnya">Lainnya</option>
+                                <select class="form-control select2" name="status_jembatan">
+                                    <option value="">--Pilih Status Jembatan--</option>
+                                    <option {{ $data->status_jembatan == 'lokal' ? 'selected':'' }} value="lokal">Lokal</option>
+                                    <option {{ $data->status_jembatan == 'kabupaten' ? 'selected':'' }} value="kabupaten">Kabupaten</option>
+                                    <option {{ $data->status_jembatan == 'provinsi' ? 'selected':'' }} value="provinsi">Provinsi</option>
+                                    <option {{ $data->status_jembatan == 'nasional' ? 'selected':'' }} value="nasional">Nasional</option>
+                                    <option {{ $data->status_jembatan == 'lainnya' ? 'selected':'' }} value="lainnya">Lainnya</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kondisiJalanInput" class="col-sm-3 col-form-label">Kondisi Jalan</label>
+                            <label for="kondisiJembatanInput" class="col-sm-3 col-form-label">Kondisi Jembatan</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="kondisi_jalan">
-                                    <option value="">--Pilih Kondisi Jalan--</option>
-                                    <option {{ $data->kondisi_jalan == 'baik' ? 'selected':'' }} value="baik">Baik</option>
-                                    <option {{ $data->kondisi_jalan == 'sedang' ? 'selected':'' }} value="sedang">Sedang</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak' ? 'selected':'' }} value="rusak">Rusak</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak_sedang' ? 'selected':'' }} value="rusak_sedang">Rusak Sedang</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak_berat' ? 'selected':'' }} value="rusak_berat">Rusak Berat</option>
+                                <select class="form-control select2" name="kondisi_jembatan">
+                                    <option value="">--Pilih Kondisi Jembatan--</option>
+                                    <option {{ $data->kondisi_jembatan == 'baik' ? 'selected':'' }} value="baik">Baik</option>
+                                    <option {{ $data->kondisi_jembatan == 'sedang' ? 'selected':'' }} value="sedang">Sedang</option>
+                                    <option {{ $data->kondisi_jembatan == 'rusak' ? 'selected':'' }} value="rusak">Rusak</option>
+                                    <option {{ $data->kondisi_jembatan == 'rusak_sedang' ? 'selected':'' }} value="rusak_sedang">Rusak Sedang</option>
+                                    <option {{ $data->kondisi_jembatan == 'rusak_berat' ? 'selected':'' }} value="rusak_berat">Rusak Berat</option>
                                 </select>
                             </div>
                         </div>
@@ -116,20 +116,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Kelas Jalan</label>
+                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">Kelas Jembatan</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="kelas_jalan">
-                                    <option value="">--Pilih Kelas Jalan--</option>
-                                    <option {{ $data->kelas_jalan == 'I' ? 'selected':'' }} value="I">I</option>
-                                    <option {{ $data->kelas_jalan == 'II' ? 'selected':'' }} value="II">II</option>
-                                    <option {{ $data->kelas_jalan == 'IIIA' ? 'selected':'' }} value="IIIA">IIIA</option>
-                                    <option {{ $data->kelas_jalan == 'IIIB' ? 'selected':'' }} value="IIIB">IIIB</option>
-                                    <option {{ $data->kelas_jalan == 'IIIC' ? 'selected':'' }} value="IIIC">IIIC</option>
+                                <select class="form-control select2" name="kelas_jembatan">
+                                    <option value="">--Pilih Kelas Jembatan--</option>
+                                    <option {{ $data->kelas_jembatan == 'I' ? 'selected':'' }} value="I">I</option>
+                                    <option {{ $data->kelas_jembatan == 'II' ? 'selected':'' }} value="II">II</option>
+                                    <option {{ $data->kelas_jembatan == 'IIIA' ? 'selected':'' }} value="IIIA">IIIA</option>
+                                    <option {{ $data->kelas_jembatan == 'IIIB' ? 'selected':'' }} value="IIIB">IIIB</option>
+                                    <option {{ $data->kelas_jembatan == 'IIIC' ? 'selected':'' }} value="IIIC">IIIC</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
+                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
                             <div class="col-sm-9">
                                 <input type="file" name="geojson" class="file-upload-default">
                                 <div class="input-group col-xs-12">
@@ -141,7 +141,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>
                             <div class="col-sm-9">
                                 <button class="file-upload-browse m-2 btn btn-success add-img" type="button">Tambah Gambar</button>
@@ -158,7 +158,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
 
                         {{-- <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Upload Video</label>
@@ -169,7 +169,7 @@
 
                         <div class="card-footer">
                         <button type="submit" class="btn btn-primary mr-2"><i class="ik ik-save" title="Simpan"></i> Simpan</button>
-                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('jalan') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
+                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('jembatan') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
                         </div>
                     </form>
                 </div>

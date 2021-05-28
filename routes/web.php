@@ -52,6 +52,7 @@ Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jal
 Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
 Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
 Route::get('/jalan/pdf', [JalanController::class, 'generatePdf'])->name('jalan.pdf');
+Route::get('/jalan/pdf/{id}', [JalanController::class, 'generateDetailsPdf'])->name('jalan.details-pdf');
 Route::get('/jalan/excel', [JalanController::class, 'export_excel'])->name('jalan.excel');
 
 // Jembatan

@@ -4,7 +4,6 @@
 @push('head')
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> --}}
 @endpush
 <div class="container-fluid">
     <div class="page-header">
@@ -46,14 +45,14 @@
                     <form action="{{ route('jembatan.store') }}" method="POST" enctype="multipart/form-data" name="tambah_jembatan" class="forms-sample">
                         {{ csrf_field() }}
                         <div class="form-group row">
-                            <label for="namaJembatanInput" class="col-sm-3 col-form-label">Nama Jembatan</label>
+                            <label class="col-sm-3 col-form-label">Nama Jembatan</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="nama_jembatan" placeholder="Nama Jembatan">
                                 <span class="text-danger">{{ $errors->first('nama_jembatan') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="wilayahKecamatanInput" class="col-sm-3 col-form-label">Wilayah Kecamatan</label>
+                            <label class="col-sm-3 col-form-label">Wilayah Kecamatan</label>
                             <div class="col-sm-9">
                                 <select class="form-control select2" name="kecamatan_id">
                                     <option value="">--Pilih Wilayah Kecamatan--</option>
@@ -65,80 +64,78 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="panjangInput" class="col-sm-3 col-form-label">Panjang (m)</label>
+                            <label class="col-sm-3 col-form-label">Ruas Jalan</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" name="ruas_jalan_id">
+                                    <option value="">--Pilih Ruas Jalan--</option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('ruas_jalan_id') }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Panjang (m)</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="panjang" placeholder="0">
                                 <span class="text-danger">{{ $errors->first('panjang') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="lebarInput" class="col-sm-3 col-form-label">Lebar (m)</label>
+                            <label class="col-sm-3 col-form-label">Lebar (m)</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="lebar" placeholder="0">
                                 <span class="text-danger">{{ $errors->first('lebar') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="statusJembatanInput" class="col-sm-3 col-form-label">Status Jembatan</label>
+                            <label class="col-sm-3 col-form-label">Elevasi</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="status_jembatan">
-                                    <option value="">--Pilih Status Jembatan--</option>
-                                    <option value="lokal">Lokal</option>
-                                    <option value="kabupaten">Kabupaten</option>
-                                    <option value="provinsi">Provinsi</option>
-                                    <option value="nasional">Nasional</option>
-                                    <option value="lainnya">Lainnya</option>
+                                <input type="text" class="form-control" name="elevasi" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Latitude (X)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="latitude" placeholder="Koordindat X">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Longitude (Y)</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="longitude" placeholder="Koordinat Y">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Tipe Lintasan</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" name="tipe_lintasan">
+                                    <option value="">--Pilih Tipe Lintasan--</option>
+                                    <option value="Jalan">Jalan</option>
+                                    <option value="Kereta Api">Kereta Api</option>
+                                    <option value="Sungai">Sungai</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kondisiJembatanInput" class="col-sm-3 col-form-label">Kondisi Jembatan</label>
+                            <label class="col-sm-3 col-form-label">Tipe Pondasi</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" name="tipe_pondasi">
+                                    <option value="">--Pilih Tipe Pondasi--</option>
+                                    <option value="Langsung">Langsung</option>
+                                    <option value="Dangkal">Dangkal</option>
+                                    <option value="Telapak">Telapak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">Kondisi Jembatan</label>
                             <div class="col-sm-9">
                                 <select class="form-control select2" name="kondisi_jembatan">
                                     <option value="">--Pilih Kondisi Jembatan--</option>
-                                    <option value="baik">Baik</option>
-                                    <option value="sedang">Sedang</option>
-                                    <option value="rusak">Rusak</option>
-                                    <option value="rusak_sedang">Rusak Sedang</option>
-                                    <option value="rusak_berat">Rusak Berat</option>
+                                    <option value="Baik">Baik</option>
+                                    <option value="Rusak Ringan">Rusak Ringan</option>
+                                    <option value="Rusak Sedang">Rusak Sedang</option>
+                                    <option value="Rusak Berat">Rusak Berat</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Jenis Perkerasan</label>
-                            <div class="col-sm-9">
-                                <select class="form-control select2" name="jenis_perkerasan">
-                                    <option value="">--Pilih Jenis Perkerasan--</option>
-                                    <option value="aspal">Aspal</option>
-                                    <option value="hotmix">Hotmix</option>
-                                    <option value="tanah">Tanah</option>
-                                    <option value="beton">Beton</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">Kelas Jembatan</label>
-                            <div class="col-sm-9">
-                                <select class="form-control select2" name="kelas_jembatan">
-                                    <option value="">--Pilih Kelas Jembatan--</option>
-                                    <option value="I">I</option>
-                                    <option value="II">II</option>
-                                    <option value="IIIA">IIIA</option>
-                                    <option value="IIIB">IIIB</option>
-                                    <option value="IIIC">IIIC</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
-                            <div class="col-sm-9">
-                                <input type="file" name="geojson" class="file-upload-default">
-                                <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled placeholder="File GeoJSON" accept="*/*">
-                                    <span class="input-group-append">
-                                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                                    </span>
-                                </div>
                             </div>
                         </div>
 
@@ -183,7 +180,6 @@
 @push('script')
     <script src="{{ asset('js/form-components.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
-    <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
     <script type="text/javascript">
@@ -205,6 +201,33 @@
           $("body").on("click",".rem-vid",function(){
               $(this).parents(".control-groups").remove();
           });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery('select[name="kecamatan_id"]').on('change', function () {
+                var kecamatanID = jQuery(this).val();
+                if (kecamatanID) {
+                    jQuery.ajax({
+                        url: 'kecamatan/' + kecamatanID,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) {
+                            jQuery('select[name="ruas_jalan_id"]').empty();
+                            jQuery.each(data, function (key, value) {
+                                $('select[name="ruas_jalan_id"]').append('<option value="' + key + '">' + value + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('select[name="ruas_jalan_id"]').empty();
+                }
+            });
         });
     </script>
 @endpush

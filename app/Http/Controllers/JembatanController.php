@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Kecamatan;
-use App\LampiranJembatan;
+use App\Jalan;
 use App\LaporanWarga;
 use App\Riwayat;
 use App\Jembatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class JembatanController extends Controller
 {
@@ -19,8 +23,57 @@ class JembatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $data = Jembatan::orderBy('id', 'ASC')->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->editColumn('nama_jembatan', function($jembatan) {
+                    $ruas = "<strong><a class='text-success' href='jembatan/details/$jembatan->id'>$jembatan->nama_jembatan <i class='ik ik-arrow-up-right' title='Details'></i> <a></strong>";
+                    return $ruas;
+                })
+                ->editColumn('panjang', function($jembatan) {
+                    return number_format($jembatan->panjang);
+                })
+                ->addColumn('kecamatan', function (Jembatan $jembatan) {
+                    return $jembatan->kecamatan->nama;
+                })
+                ->addColumn('jalan', function (Jembatan $jembatan) {
+                    $jalan = Jalan::where('id', '=', $jembatan->ruas_jalan_id)->get();
+                    return $jalan[0]->nama_ruas;
+                })
+                ->addColumn('kondisi_jembatan', function ($jembatan) {
+                    if ($jembatan->kondisi_jembatan == 'Baik') {
+                        $span = "<span class='badge badge-success'>" . $jembatan->kondisi_jembatan . "</span>";
+                    } elseif ($jembatan->kondisi_jembatan == 'Rusak Ringan') {
+                        $span = "<span class='badge badge-primary'>" . $jembatan->kondisi_jembatan . "</span>";
+                    } elseif($jembatan->kondisi_jembatan == 'Rusak Sedang') {
+                        $span = "<span class='badge badge-info'>" . $jembatan->kondisi_jembatan . "</span>";
+                    } elseif($jembatan->kondisi_jembatan == 'Rusak Berat') {
+                        $span = "<span class='badge badge-warning'>" . $jembatan->kondisi_jembatan . "</span>";
+                    } else {
+                        $span = '-';
+                    }
+                    return $span;
+                })
+                ->addColumn('action', function($jembatan){
+                    if (Auth::guest() ) {
+                        return '';
+                    } else{
+                        return "<div>
+                                <form action='jembatan/hapus/$jembatan->id' id='delete$jembatan->id' method='POST'>
+                                    " . csrf_field() . "
+                                    <input type='hidden' name='_method' value='delete'>
+                                    <a class='btn btn-info btn-rounded' href='jembatan/edit/$jembatan->id'>Edit</a>
+                                    <button type='submit' class='btn btn-danger btn-rounded delete-confirm' data-id='$jembatan->id'>Hapus</button>
+                                </form>
+                            </div>";
+                    }
+                })
+                ->rawColumns(['action', 'kondisi_jembatan', 'nama_jembatan'])
+                ->make(true);
+        }
         $jembatan = Jembatan::all();
         return view('pages.jembatan.index', compact('jembatan'));
     }
@@ -51,37 +104,31 @@ class JembatanController extends Controller
             'lebar' => 'required|numeric'
         ]);
 
-        if ($request->hasFile('geojson')) {
-            $request->file('geojson')->move(public_path('peta/jembatan/'), $request->file('geojson')->getClientOriginalName());
-        }
-
-        $tambahJembatan = Jembatan::create([
-            'nama_jembatan' => $request->nama_jembatan,
-            'kecamatan_id' => $request->kecamatan_id,
-            'panjang' => $request->panjang,
-            'lebar' => $request->lebar,
-            'status_jembatan' => $request->status_jembatan,
-            'kondisi_jembatan' => $request->kondisi_jembatan,
-            'jenis_perkerasan' => $request->jenis_perkerasan,
-            'kelas_jembatan' => $request->kelas_jembatan,
-            'geojson' => 'peta/jembatan/' . $request->file('geojson')->getClientOriginalName(),
-        ]);
-
         if($request->hasfile('images')) {
             foreach($request->file('images') as $image) {
                 $name = $image->getClientOriginalName();
                 $image->move(public_path('foto/jembatan/'), $name);
                 $dataimg[] = $name;
             }
-
-
-            $upload_images = new LampiranJembatan();
-            $upload_images->file_name = json_encode($dataimg);
-            $upload_images->jembatan_id = $tambahJembatan['id'];
-            $upload_images->is_video = ($request->url) ? true : false;
-            $upload_images->url = ($request->url) ? json_encode($request->url) : '';
-            $upload_images->save();
         }
+
+        $tambahJembatan = Jembatan::create([
+            'nama_jembatan' => $request->nama_jembatan,
+            'kecamatan_id' => $request->kecamatan_id,
+            'ruas_jalan_id' => $request->ruas_jalan_id,
+            'panjang' => $request->panjang,
+            'lebar' => $request->lebar,
+            'elevasi' => $request->elevasi,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'tipe_lintasan' => $request->tipe_lintasan,
+            'tipe_pondasi' => $request->tipe_pondasi,
+            'kondisi_jembatan' => $request->kondisi_jembatan,
+            'foto' => 'foto/jembatan/' . ($request->foto) ? json_encode($request->foto) : '',
+            'video' => $request->video
+        ]);
+
+
 
         $notification = array(
             'message' => 'Sukses Menambah Data Jembatan!',
@@ -102,10 +149,8 @@ class JembatanController extends Controller
         $where = array('id' => $id);
         $data = Jembatan::where($where)->first();
         $kecamatan = Kecamatan::orderBy('nama')->get();
-        $lampiran = LampiranJembatan::where('jembatan_id', '=', $id)->get();
-        // $laporan = LaporanWarga::where('jalan_id', '=', $id)->get();
-        // $riwayat = Riwayat::where('jalan_id', '=', $id)->orderBy('tahun', 'desc')->get();
-        return view('pages.jembatan.show', compact('data', 'kecamatan', 'lampiran'));
+        $jalan = Jalan::where('id', '=', $data->ruas_jalan_id)->first();
+        return view('pages.jembatan.show', compact('data', 'kecamatan', 'jalan'));
     }
 
     /**
@@ -168,13 +213,6 @@ class JembatanController extends Controller
                 $image->move(public_path('foto/jembatan/'), $name);
                 $dataimg[] = $name;
             }
-
-
-            $upload_images = LampiranJembatan::where('jembatan_id', $id)->update($update);
-            $upload_images->file_name = json_encode($dataimg);
-            $upload_images->is_video = ($request->url) ? true : false;
-            $upload_images->url = ($request->url) ? json_encode($request->url) : '';
-            $upload_images->save();
         }
 
         $notification = array(
@@ -201,5 +239,24 @@ class JembatanController extends Controller
             'alert-type' => 'success'
         );
         return Redirect::back()->with($notification);
+    }
+
+    public function getKecamatanById($id) {
+        $ruas_jalan = DB::table("jalan")->where("kecamatan_id",$id)->pluck("nama_ruas","id");
+        return json_encode($ruas_jalan);
+    }
+
+    public function generatePdf() {
+        $jembatan = Jembatan::orderBy('id', 'ASC')->get();
+        // $jalan = Jalan::where('id', '=', $jembatan->id)->first();
+
+        $img_type = 'png';
+        $image = base64_encode(file_get_contents('https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png'));
+        $img_src = "data:image/".$img_type.";base64,".str_replace ("\n", "", $image);
+
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+            ->loadView('pdf.jembatan-pdf', compact('jembatan', 'img_src'))
+            ->setPaper('a4', 'landscape');
+        return $pdf->stream('Data Jembatan Kabupaten Banyuasin.pdf');
     }
 }

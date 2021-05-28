@@ -54,13 +54,13 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="state">
                                 @php
-                                    $jumlahPanjangRusak = \App\Jalan::whereIn('kondisi_jalan', array('rusak', 'rusak_sedang', 'rusak_berat'))->count();
+                                    $jumlah_jembatan = \App\Jembatan::count();
                                 @endphp
-                                <h6>{{ __('Jumlah Jalan Rusak')}}</h6>
-                                <h2>{{ $jumlahPanjangRusak }}</h2>
+                                <h6>{{ __('Jumlah Jembatan')}}</h6>
+                                <h2>{{ $jumlah_jembatan }}</h2>
                             </div>
                             <div class="icon">
-                                <i class="ik ik-x-square"></i>
+                                <i class="ik ik-minimize"></i>
                             </div>
                         </div>
                     </div>

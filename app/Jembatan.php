@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Kecamatan;
+use App\Jalan;
 
 class Jembatan extends Model
 {
@@ -13,20 +15,26 @@ class Jembatan extends Model
 
     protected $fillable = [
         'nama_jembatan',
-        'kondisi_jembatan',
-        'status_jembatan',
         'panjang',
         'lebar',
-        'jenis_perkerasan',
-        'kelas_jembatan',
-        'geojson',
-        'style',
-        'kecamatan_id',
-        "created_at",
-        "updated_at"
+        'panjang',
+        'elevasi',
+        'lat',
+        'long',
+        'tipe_lintasan',
+        'kondisi_jembatan',
+        'tipe_pondasi',
+        "kecamatan_id",
+        "ruas_jalan_id",
+        "foto",
+        "video"
     ];
 
     public function kecamatan() {
         return $this->belongsTo(Kecamatan::class);
+    }
+
+    public function jalan() {
+        return $this->belongsTo(Jalan::class);
     }
 }

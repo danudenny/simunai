@@ -15,28 +15,31 @@ class CreateJembatanTable extends Migration
      * @return void
      */
     public function up()
-    {   
+    {
         Grammar::macro('typeRaw', function (Fluent $column) {
             return $column->get('raw_type');
         });
-        DB::unprepared("CREATE TYPE kondisiJembatanEnum AS ENUM ('baik', 'sedang', 'rusak', 'rusak_sedang', 'rusak_berat');");
-        DB::unprepared("CREATE TYPE statusJembatanEnum AS ENUM ('lokal', 'kabupaten', 'provinsi', 'nasional', 'lainnya');");
-      
-        DB::unprepared("CREATE TYPE kelasJembatanEnum AS ENUM ('I', 'II', 'IIIA', 'IIIB', 'IIIC');");
+        DB::unprepared("CREATE TYPE tipeLintasanEnum AS ENUM ('Jalan', 'Kereta Api', 'Sungai');");
+        DB::unprepared("CREATE TYPE kondisiJembatanEnum AS ENUM ('Baik', 'Rusak Ringan', 'Rusak Sedang', 'Rusak Berat');");
+        DB::unprepared("CREATE TYPE tipePondasiEnum AS ENUM ('Langsung', 'Dangkal', 'Telapak');");
 
         Schema::create('jembatan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_jembatan', 100);
+            $table->float('panjang')->default(0)->nullable();
+            $table->float('lebar')->default(0)->nullable();
+            $table->float('elevasi')->default(0)->nullable();
+            $table->float('lat')->default(0)->nullable();
+            $table->float('long')->default(0)->nullable();
+            $table->addColumn('raw', 'tipe_lintasan', ['raw_type' => 'tipeLintasanEnum'] )->nullable();
             $table->addColumn('raw', 'kondisi_jembatan', ['raw_type' => 'kondisiJembatanEnum'] )->nullable();
-            $table->addColumn('raw', 'status_jembatan', ['raw_type' => 'statusJembatanEnum'] )->nullable();
-            $table->float('panjang')->default(0);
-            $table->float('lebar')->default(0);
-            $table->addColumn('raw', 'jenis_perkerasan', ['raw_type' => 'jenisPerkerasanEnum'] )->nullable();
-            $table->addColumn('raw', 'kelas_jembatan', ['raw_type' => 'kelasJembatanEnum'] )->nullable();
-            $table->text('geojson');
-            $table->string('style', 10);
+            $table->addColumn('raw', 'tipe_pondasi', ['raw_type' => 'tipePondasiEnum'] )->nullable();
             $table->unsignedBigInteger('kecamatan_id');
             $table->foreign('kecamatan_id')->references('id')->on('kecamatan')->onDelete('cascade');
+            $table->unsignedBigInteger('ruas_jalan_id');
+            $table->foreign('ruas_jalan_id')->references('id')->on('jalan')->onDelete('cascade');
+            $table->string('foto');
+            $table->string('video');
             $table->timestamps();
         });
     }
@@ -48,10 +51,6 @@ class CreateJembatanTable extends Migration
      */
     public function down()
     {
-        DB::unprepared("DROP TYPE kondisiJembatanEnum");
-        DB::unprepared("DROP TYPE statusJembatanEnum");
-        DB::unprepared("DROP TYPE jenisPerkerasanEnum");
-        DB::unprepared("DROP TYPE kelasJembatanEnum");
         Schema::dropIfExists('jembatan');
     }
 }

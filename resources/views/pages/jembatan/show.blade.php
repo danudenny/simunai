@@ -5,16 +5,12 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+    <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
+    <script src="{{ asset('js/leaflet.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
     <style>
         #mapid {
-            height: 57vh;
+            height: 70vh;
         }
         .splide__slide img {
             width : 100%;
@@ -68,32 +64,40 @@
                             <span>: <b>{{ $data->kecamatan->nama }}</b></span>
                         </div>
                         <div class="form-group row">
+                            <label for="wilayahKecamatanInput" class="col-sm-3 col-form-label">Ruas Jalan</label>
+                            <span>: <b>{{ $jalan->nama_ruas }}</b></span>
+                        </div>
+                        <div class="form-group row">
                             <label for="panjangInput" class="col-sm-3 col-form-label">Panjang (m)</label>
                             <span>: <b>{{ number_format($data->panjang) }} Meter</b></span>
                         </div>
                         <div class="form-group row">
-                            <label for="lebarInput" class="col-sm-3 col-form-label">Lebar (m)</label>
+                            <label class="col-sm-3 col-form-label">Lebar (m)</label>
                             <span>: <b>{{ number_format($data->lebar) }} Meter</b></span>
                         </div>
                         <div class="form-group row">
-                            <label for="statusJalanInput" class="col-sm-3 col-form-label">Status Jembatan</label>
-                            <span>: <b> Jembatan {{ Str::ucfirst($data->status_jembatan) }}</b></span>
+                            <label class="col-sm-3 col-form-label">Elevasi</label>
+                            <span>: <b>{{ number_format($data->elevasi) }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Latitude (X)</label>
+                            <span>: <b>{{ $data->lat }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Longitude (Y)</label>
+                            <span>: <b>{{ $data->long }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="statusJalanInput" class="col-sm-3 col-form-label">Tipe Lintasan</label>
+                            <span>: <b> {{ Str::ucfirst($data->tipe_lintasan) }}</b></span>
                         </div>
                         <div class="form-group row">
                             <label for="kondisiJembatanInput" class="col-sm-3 col-form-label">Kondisi Jembatan</label>
                             <span>: <b>{{ Str::ucfirst($data->kondisi_jembatan) }}</b></span>
                         </div>
                         <div class="form-group row">
-                            <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Jenis Perkerasan</label>
-                            <span>: <b>{{ Str::ucfirst($data->jenis_perkerasan) }}</b></span>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">Kelas Jembatan</label>
-                            <span>: <b>{{ Str::ucfirst($data->kelas_jembatan) }}</b></span>
-                        </div>
-                        <div class="form-group row">
-                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
-                            <a href="{{ url($data->geojson) }}" class="text-info" target="_blank">: <b><i class="ik ik-download" title="Download"></i> {{ $data->geojson }}</b></a>
+                            <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Tipe Pondasi</label>
+                            <span>: <b>{{ Str::ucfirst($data->tipe_pondasi) }}</b></span>
                         </div>
 
                         <div class="card-footer">
@@ -126,18 +130,14 @@
                             <div id="image-slider" class="splide">
                                 <div class="splide__track">
                                     <ul class="splide__list">
-                                        @if ($lampiran->isEmpty())
+                                        @if ($data->foto == null)
                                             <li class="splide__slide">
                                                 <img src="{{ asset('/img/no-image.png') }}" />
                                             </li>
                                         @else
-                                            @foreach($lampiran as $image)
-                                                <?php foreach (json_decode($image->file_name)as $picture) { ?>
-                                                    <li class="splide__slide">
-                                                        <img src="{{ asset('/foto/jembatan/'.$picture) }}" />
-                                                    </li>
-                                                <?php } ?>
-                                            @endforeach
+                                            <li class="splide__slide">
+                                                <img src="{{ asset('/foto/jembatan/'.$data->foto) }}" />
+                                            </li>
                                         @endif
                                     </ul>
                                 </div>
@@ -258,22 +258,18 @@
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
     <script>
+        var greenIcon = L.icon({
+            iconUrl: '{{ url("mapicon/road.png") }}',
+        });
+        console.log(greenIcon)
         var map = L.map('mapid', {
             scrollWheelZoom: false
         });
-        var datageojson = "{{ url($data->geojson) }}";
-        function style(feature) {
-            return {
-                weight: 5,
-                color: 'red',  //Outline color
-            };
-        }
-        $.getJSON(datageojson, function(data) {
-            var geo = L.geoJson(data, {
-                style: style
-            }).addTo(map);
-            map.fitBounds(geo.getBounds());
-        })
+        var marker = new L.marker(['{{ $data->lat }}', '{{ $data->long }}'], {
+            icon: greenIcon
+        }).addTo(map);
+        map.setView(['{{ $data->lat }}', '{{ $data->long }}'], 14);
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);

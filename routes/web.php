@@ -57,12 +57,15 @@ Route::get('/jalan/excel', [JalanController::class, 'export_excel'])->name('jala
 
 // Jembatan
 Route::get('/jembatan', [JembatanController::class,'index'])->name('jembatan');
+Route::get('/jembatan/kecamatan/{id}', [JembatanController::class,'getKecamatanById'])->name('jembatan.kecamatan');
 Route::get('/jembatan/tambah', [JembatanController::class,'create'])->name('jembatan.tambah');
 Route::get('/jembatan/edit/{id}', [JembatanController::class,'edit'])->name('jembatan.edit');
 Route::get('/jembatan/details/{id}', [JembatanController::class,'show'])->name('jembatan.details');
 Route::patch('/jembatan/update/{id}', [JembatanController::class,'update'])->name('jembatan.update');
 Route::post('/jembatan/store', [JembatanController::class,'store'])->name('jembatan.store');
 Route::delete('/jembatan/hapus/{id}', [JembatanController::class,'destroy'])->name('jembatan.hapus');
+Route::get('/jembatan/pdf', [JembatanController::class, 'generatePdf'])->name('jembatan.pdf');
+Route::get('/jembatan/excel', [JembatanController::class, 'export_excel'])->name('jembatan.excel');
 
 // Kontraktor
 Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');

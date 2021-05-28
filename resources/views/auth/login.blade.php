@@ -33,9 +33,11 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 m-auto">
                         <div class="authentication-form mx-auto">
                             <div class="logo-centered">
-                                <a href="#"><h1>SIMUNAI</h1></a>
+                                <img src="{{ asset('logo_banyuasin.png') }}" width="100">
+                                <h1><a href="#">SIMUNAI</a></h1>
+                                <span>Sistem Informasi Monitoring Pembangunan Infrastruktur</span>
+                                <span>Kabupaten Banyuasin</span>
                             </div>
-                            <p>Welcome back! </p>
                             <form method="POST" action="{{ route('login') }}">
                             @csrf
                                 <div class="form-group">
@@ -72,10 +74,6 @@
                                 <div class="sign-btn text-center">
                                     <button class="btn btn-custom">Sign In</button>
                                 </div>
-                                <div class="register">
-                                    <p>{{ __('No account?')}} <a href="{{url('register')}}">{{ __('Sign Up')}}</a></p>
-                                </div>
-
                             </form>
                         </div>
                     </div>

@@ -56,7 +56,7 @@
                             <label for="wilayahKecamatanInput" class="col-sm-3 col-form-label">Wilayah Kecamatan</label>
                             <div class="col-sm-9">
                                 <select class="form-control select2" name="kecamatan_id">
-                                    <option value="">--Pilih Wilayah Kecamatan--</option>
+                                    <option value="">--Pilih Kecamatan--</option>
                                     @foreach ($kecamatan as $value)
                                         <option value="{{ $value->id }}">{{ $value->nama }}</option>
                                     @endforeach
@@ -205,6 +205,11 @@
           $("body").on("click",".rem-vid",function(){
               $(this).parents(".control-groups").remove();
           });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
         });
     </script>
 @endpush

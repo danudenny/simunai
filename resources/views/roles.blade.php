@@ -1,4 +1,4 @@
-@extends('layouts.main') 
+@extends('layouts.main')
 @section('title', 'Roles')
 @section('content')
     <!-- push external head elements to head -->
@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
     @endpush
 
-    
+
     <div class="container-fluid">
     	<div class="page-header">
             <div class="row align-items-end">
@@ -64,11 +64,11 @@
                                                 	{{ clean($permission,'titles')}}
                                                 </span>
                                             </label>
-	                                		
+
 	                                	</div>
-	                                	@endforeach 
+	                                	@endforeach
 	                                </div>
-	                                
+
 	                                <div class="form-group">
 	                                	<button type="submit" class="btn btn-primary btn-rounded">{{ __('Save')}}</button>
 	                                </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
@@ -38,8 +39,9 @@ Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetF
 Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
 
 // Maps
-Route::get('/', [MapsController::class,'index'])->name('maps');
+Route::get('/', [MapsController::class,'index'])->name('dashboard');
 Route::get('/maps', [MapsController::class,'index'])->name('maps');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Jalan
 Route::get('/jalan', [JalanController::class,'index'])->name('jalan');
@@ -49,6 +51,8 @@ Route::get('/jalan/details/{id}', [JalanController::class,'show'])->name('jalan.
 Route::patch('/jalan/update/{id}', [JalanController::class,'update'])->name('jalan.update');
 Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store');
 Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
+Route::get('/jalan/pdf', [JalanController::class, 'generatePdf'])->name('jalan.pdf');
+Route::get('/jalan/excel', [JalanController::class, 'export_excel'])->name('jalan.excel');
 
 // Jembatan
 Route::get('/jembatan', [JembatanController::class,'index'])->name('jembatan');
@@ -92,9 +96,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/clear-cache', [HomeController::class,'clearCache']);
 
 	// dashboard route
-	Route::get('/dashboard', function () {
-		return view('pages.dashboard');
-	})->name('dashboard');
+	// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Route::get('/', function () {
 	// 	return view('pages.dashboard');
@@ -130,34 +132,34 @@ Route::group(['middleware' => 'auth'], function(){
     //
 
 	//only those have manage_user permission will get access
+    Route::get('/users', [UserController::class,'index']);
+    Route::get('/user/get-list', [UserController::class,'getUserList']);
+    Route::get('/user/create', [UserController::class,'create']);
+    Route::post('/user/create', [UserController::class,'store'])->name('create-user');
+    Route::get('/user/{id}', [UserController::class,'edit']);
+    Route::post('/user/update', [UserController::class,'update']);
+    Route::get('/user/delete/{id}', [UserController::class,'delete']);
 	Route::group(['middleware' => 'can:manage_user'], function(){
-	Route::get('/users', [UserController::class,'index']);
-	Route::get('/user/get-list', [UserController::class,'getUserList']);
-		Route::get('/user/create', [UserController::class,'create']);
-		Route::post('/user/create', [UserController::class,'store'])->name('create-user');
-		Route::get('/user/{id}', [UserController::class,'edit']);
-		Route::post('/user/update', [UserController::class,'update']);
-		Route::get('/user/delete/{id}', [UserController::class,'delete']);
 	});
 
 	//only those have manage_role permission will get access
+    Route::get('/roles', [RolesController::class,'index']);
+    Route::get('/role/get-list', [RolesController::class,'getRoleList']);
+    Route::post('/role/create', [RolesController::class,'create']);
+    Route::get('/role/edit/{id}', [RolesController::class,'edit']);
+    Route::post('/role/update', [RolesController::class,'update']);
+    Route::get('/role/delete/{id}', [RolesController::class,'delete']);
 	Route::group(['middleware' => 'can:manage_role|manage_user'], function(){
-		Route::get('/roles', [RolesController::class,'index']);
-		Route::get('/role/get-list', [RolesController::class,'getRoleList']);
-		Route::post('/role/create', [RolesController::class,'create']);
-		Route::get('/role/edit/{id}', [RolesController::class,'edit']);
-		Route::post('/role/update', [RolesController::class,'update']);
-		Route::get('/role/delete/{id}', [RolesController::class,'delete']);
 	});
 
 
 	//only those have manage_permission permission will get access
+    Route::get('/permission', [PermissionController::class,'index']);
+    Route::get('/permission/get-list', [PermissionController::class,'getPermissionList']);
+    Route::post('/permission/create', [PermissionController::class,'create']);
+    Route::get('/permission/update', [PermissionController::class,'update']);
+    Route::get('/permission/delete/{id}', [PermissionController::class,'delete']);
 	Route::group(['middleware' => 'can:manage_permission|manage_user'], function(){
-		Route::get('/permission', [PermissionController::class,'index']);
-		Route::get('/permission/get-list', [PermissionController::class,'getPermissionList']);
-		Route::post('/permission/create', [PermissionController::class,'create']);
-		Route::get('/permission/update', [PermissionController::class,'update']);
-		Route::get('/permission/delete/{id}', [PermissionController::class,'delete']);
 	});
 
 	// get permissions

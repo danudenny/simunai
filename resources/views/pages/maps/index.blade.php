@@ -2,13 +2,8 @@
 @section('title', 'Detail Data Jalan')
 @section('content')
 @push('head')
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+    <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
+    <script src="{{ asset('js/leaflet.min.js') }}"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/zoomhome.css') }}">
@@ -137,11 +132,6 @@
                     if (previous) {
                         dehighlight(previous);
                     }
-                    map.on('popupopen', function(e) {
-                        var px = map.project(e.target._popup._latlng);
-                        px.y -= e.target._popup._container.clientHeight/4; // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-                        map.panTo([50, 50],{animate: true}); // pan to new center
-                    });
                 }
 
                 const popupOptions = {

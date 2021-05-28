@@ -2,10 +2,22 @@
 @section('title', 'Data Jalan')
 @section('content')
 @push('head')
-    <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
-@endpush
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.min.css') }}">
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
+    <style>
+        .pagination .page-item.active .page-link {
+            background-color: #233e8b !important;
+            color: #eaeaea !important;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+            background-color: red !important;
+        }
+    </style>
+@endpush
 
 <div class="container-fluid">
     <div class="page-header">
@@ -39,53 +51,35 @@
                 <div class="card-header" style="display: flex; justify-content: space-between;">
                     <h3>{{ __('Data Ruas Jalan')}}</h3>
                     <div class="tambah-button" style="pull-right: 0">
+                        @can('manage_jalan')
                         <a href="{{ route('jalan.tambah') }}" class="btn btn-outline-primary"><i class="ik ik-plus"></i> Tambah Data</a>
+                        @endcan
+                        <a href="{{ route('jalan.pdf') }}" target="_blank" class="btn btn-outline-danger">PDF</a>
+                        <a href="{{ route('jalan.excel') }}" class="btn btn-outline-success">Excel</a>
                     </div>
+
                 </div>
                 <div class="card-body">
-                    <table id="data_table" class="table">
+                    <table id="example" class="table table-bordered data-table">
                         <thead>
                             <tr>
-                                <th>{{ __('No.')}}</th>
-                                <th class="nosort">{{ __('Nama Ruas')}}</th>
-                                <th>{{ __('Kecamatan')}}</th>
-                                <th>{{ __('Kelas Jalan')}}</th>
-                                <th>{{ __('Status Jalan')}}</th>
-                                <th>{{ __('Dimensi Jalan')}}</th>
-                                <th>{{ __('Kondisi Jalan')}}</th>
-                                <th class="nosort">{{ __('Action')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('No.')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;" class="nosort">{{ __('Nama Ruas')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kecamatan')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kelas Jalan')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Status Jalan')}}</th>
+                                <th colspan="2" style="text-align: center;">{{ __('Dimensi Jalan')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kondisi Jalan')}}</th>
+                                @can('manage_jalan')
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;" class="nosort">{{ __('Action')}}</th>
+                                @endcan
+                            </tr>
+                            <tr>
+                                <th style="text-align: center;">Panjang (m)</th>
+                                <th style="text-align: center;">Lebar (m)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no=1 ?>
-                            @foreach ($jalan as $data)
-                            <tr>
-                                <td>{{ $no++ }}</td>
-                                <td><strong><a class="text-success" href="{{ route('jalan.details',$data->id) }}">{{ $data->nama_ruas }} <i class="ik ik-link" title="Details"></i> <a></strong></td>
-                                <td>{{ $data->kecamatan->nama }}</td>
-                                <td>{{ $data->kelas_jalan }}</td>
-                                <td>{{ ucfirst($data->status_jalan) }}</td>
-                                <td>P: {{ number_format($data->panjang) }} m, L: {{ number_format($data->lebar) }} m</td>
-                                <td><span class="badge badge-{{
-                                    ($data->kondisi_jalan == 'baik') ? 'primary' :
-                                    (($data->kondisi_jalan == 'rusak') ? 'warning' :
-                                    (($data->kondisi_jalan == 'sedang') ? 'info' :
-                                    (($data->kondisi_jalan == 'rusak_sedang' ? 'warning' : 'danger')))) }}">
-                                    {{ ucfirst($data->kondisi_jalan) }}</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <a class="btn btn-info btn-rounded" href="{{ route('jalan.edit',$data->id) }}">Edit</a>
-                                        <a class="btn btn-danger btn-rounded delete-confirm" data-id="{{ $data->id }}" href="#">Hapus
-                                            <form action="{{ route('jalan.hapus', $data->id) }}" id="delete{{ $data->id }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                            </form>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -94,10 +88,8 @@
     </div>
 </div>
 @push('script')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/datatables.js') }}"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     @if(Session::has('message'))
     <script>
     var type = "{{ Session::get('alert-type', 'info') }}";
@@ -122,7 +114,51 @@
     @endif
 
     <script>
-        $('.delete-confirm').click(function(e) {
+        $(function() {
+            var table = $('#example').dataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                autoWidth: false,
+                deferRender: true,
+                ajax: '{{ route('jalan') }}',
+                columns: [
+                    { data: 'DT_RowIndex', searchable: false },
+                    { data: 'nama_ruas', name: 'Nama Ruas' },
+                    { data: 'kecamatan', name: 'kecamatan' },
+                    { data: 'kelas_jalan', name: 'kelas_jalan' },
+                    { data: 'status_jalan', name: 'status_jalan' },
+                    { data: 'panjang', name: 'panjang' },
+                    { data: 'lebar', name: 'lebar' },
+                    {
+                        data: 'kondisi_jalan',
+                        name: 'kondisi_jalan',
+                        defaultContent: "-",
+                        textTransform: "uppercase"
+                    },
+                    { data: 'action', name: 'Action', orderable: false, searchable: false },
+                ],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: "text-center",
+                        width: "4%"
+                    },
+                    {
+                        targets: [3, 4, 5, 6, 7, 8],
+                        className: "text-center"
+                    }
+                ],
+                buttons: [
+                    'pdf'
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        $('#example tbody').on('click', '.delete-confirm', function (e) {
+            e.preventDefault();
             id = e.target.dataset.id;
             swal({
                 title: "Hapus Data Ruas Jalan?",

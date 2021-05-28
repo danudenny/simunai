@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\JalanController;
+use App\Http\Controllers\JembatanController;
 use App\Http\Controllers\KontraktorController;
 use App\Http\Controllers\LaporanKontroller;
 use App\Http\Controllers\MapsController;
@@ -52,6 +53,15 @@ Route::post('/jalan/store', [JalanController::class,'store'])->name('jalan.store
 Route::delete('/jalan/hapus/{id}', [JalanController::class,'destroy'])->name('jalan.hapus');
 Route::get('/jalan/pdf', [JalanController::class, 'generatePdf'])->name('jalan.pdf');
 Route::get('/jalan/excel', [JalanController::class, 'export_excel'])->name('jalan.excel');
+
+// Jembatan
+Route::get('/jembatan', [JembatanController::class,'index'])->name('jembatan');
+Route::get('/jembatan/tambah', [JembatanController::class,'create'])->name('jembatan.tambah');
+Route::get('/jembatan/edit/{id}', [JembatanController::class,'edit'])->name('jembatan.edit');
+Route::get('/jembatan/details/{id}', [JembatanController::class,'show'])->name('jembatan.details');
+Route::patch('/jembatan/update/{id}', [JembatanController::class,'update'])->name('jembatan.update');
+Route::post('/jembatan/store', [JembatanController::class,'store'])->name('jembatan.store');
+Route::delete('/jembatan/hapus/{id}', [JembatanController::class,'destroy'])->name('jembatan.hapus');
 
 // Kontraktor
 Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');

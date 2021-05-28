@@ -1,19 +1,20 @@
 @extends('layouts.main')
-@section('title', 'Edit Data Jalan')
+@section('title', 'Tambah Data Jembatan')
 @section('content')
 @push('head')
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> --}}
 @endpush
 <div class="container-fluid">
     <div class="page-header">
         <div class="row align-items-end">
             <div class="col-lg-8">
                 <div class="page-header-title">
-                    <i class="ik ik-edit bg-blue"></i>
+                    <i class="ik ik-plus bg-blue"></i>
                     <div class="d-inline">
-                        <h5>{{ __('Data Ruas Jalan')}}</h5>
-                        <span>{{ __('Informasi data ruas jalan Kabupaten Banyuasin.')}}</span>
+                        <h5>{{ __('Data Ruas Jembatan')}}</h5>
+                        <span>{{ __('Informasi data ruas jembatam Kabupaten Banyuasin.')}}</span>
                     </div>
                 </div>
             </div>
@@ -24,9 +25,9 @@
                             <a href="{{route('dashboard')}}"><i class="ik ik-home"></i></a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="{{ url('jalan') }}">{{ __('Data Jalan')}}</a>
+                            <a href="{{ url('jembatan') }}">{{ __('Data Jembatan')}}</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Data Ruas Jalan</li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah Data Jembatan</li>
                     </ol>
                 </nav>
             </div>
@@ -38,26 +39,26 @@
         <div class="col-md-6">
             <div class="card card-484">
                 <div class="card-header">
-                    <h3>Form Edit Data Ruas Jalan</h3>
+                    <h3>Form Tambah Data Ruas Jembatan</h3>
                 </div>
                 <div class="card-body">
                     <h4 class="sub-title">Informasi Dasar</h4>
-                    <form action="{{ route('jalan.update', $data->id) }}" enctype="multipart/form-data" method="POST" name="edit_jalan" class="forms-sample">
-                        @csrf
-                        @method('PATCH')
+                    <form action="{{ route('jembatan.store') }}" method="POST" enctype="multipart/form-data" name="tambah_jembatan" class="forms-sample">
+                        {{ csrf_field() }}
                         <div class="form-group row">
-                            <label for="namaRuasInput" class="col-sm-3 col-form-label">Nama Ruas</label>
+                            <label for="namaJembatanInput" class="col-sm-3 col-form-label">Nama Jembatan</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="nama_ruas" value="{{ $data->nama_ruas }}" placeholder="Nama Ruas">
-                                <span class="text-danger">{{ $errors->first('nama_ruas') }}</span>
+                                <input type="text" class="form-control" name="nama_jembatan" placeholder="Nama Jembatan">
+                                <span class="text-danger">{{ $errors->first('nama_jembatan') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="wilayahKecamatanInput" class="col-sm-3 col-form-label">Wilayah Kecamatan</label>
                             <div class="col-sm-9">
                                 <select class="form-control select2" name="kecamatan_id">
-                                    @foreach($kecamatan as $value)
-                                        <option value="{{ $value->id }}" {{ $value->id == $data->kecamatan->id ? 'selected' : '' }}>{{ $value->nama }}</option>
+                                    <option value="">--Pilih Wilayah Kecamatan--</option>
+                                    @foreach ($kecamatan as $value)
+                                        <option value="{{ $value->id }}">{{ $value->nama }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-danger">{{ $errors->first('kecamatan_id') }}</span>
@@ -66,40 +67,40 @@
                         <div class="form-group row">
                             <label for="panjangInput" class="col-sm-3 col-form-label">Panjang (m)</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" value="{{ $data->panjang }}" name="panjang" placeholder="0">
+                                <input type="text" class="form-control" name="panjang" placeholder="0">
                                 <span class="text-danger">{{ $errors->first('panjang') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="lebarInput" class="col-sm-3 col-form-label">Lebar (m)</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" value="{{ $data->lebar }}" name="lebar" placeholder="0">
+                                <input type="text" class="form-control" name="lebar" placeholder="0">
                                 <span class="text-danger">{{ $errors->first('lebar') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="statusJalanInput" class="col-sm-3 col-form-label">Status Jalan</label>
+                            <label for="statusJembatanInput" class="col-sm-3 col-form-label">Status Jembatan</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="status_jalan">
-                                    <option value="">--Pilih Status Jalan--</option>
-                                    <option {{ $data->status_jalan == 'lokal' ? 'selected':'' }} value="lokal">Lokal</option>
-                                    <option {{ $data->status_jalan == 'kabupaten' ? 'selected':'' }} value="kabupaten">Kabupaten</option>
-                                    <option {{ $data->status_jalan == 'provinsi' ? 'selected':'' }} value="provinsi">Provinsi</option>
-                                    <option {{ $data->status_jalan == 'nasional' ? 'selected':'' }} value="nasional">Nasional</option>
-                                    <option {{ $data->status_jalan == 'lainnya' ? 'selected':'' }} value="lainnya">Lainnya</option>
+                                <select class="form-control select2" name="status_jembatan">
+                                    <option value="">--Pilih Status Jembatan--</option>
+                                    <option value="lokal">Lokal</option>
+                                    <option value="kabupaten">Kabupaten</option>
+                                    <option value="provinsi">Provinsi</option>
+                                    <option value="nasional">Nasional</option>
+                                    <option value="lainnya">Lainnya</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kondisiJalanInput" class="col-sm-3 col-form-label">Kondisi Jalan</label>
+                            <label for="kondisiJembatanInput" class="col-sm-3 col-form-label">Kondisi Jembatan</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="kondisi_jalan">
-                                    <option value="">--Pilih Kondisi Jalan--</option>
-                                    <option {{ $data->kondisi_jalan == 'baik' ? 'selected':'' }} value="baik">Baik</option>
-                                    <option {{ $data->kondisi_jalan == 'sedang' ? 'selected':'' }} value="sedang">Sedang</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak' ? 'selected':'' }} value="rusak">Rusak</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak_sedang' ? 'selected':'' }} value="rusak_sedang">Rusak Sedang</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak_berat' ? 'selected':'' }} value="rusak_berat">Rusak Berat</option>
+                                <select class="form-control select2" name="kondisi_jembatan">
+                                    <option value="">--Pilih Kondisi Jembatan--</option>
+                                    <option value="baik">Baik</option>
+                                    <option value="sedang">Sedang</option>
+                                    <option value="rusak">Rusak</option>
+                                    <option value="rusak_sedang">Rusak Sedang</option>
+                                    <option value="rusak_berat">Rusak Berat</option>
                                 </select>
                             </div>
                         </div>
@@ -108,32 +109,32 @@
                             <div class="col-sm-9">
                                 <select class="form-control select2" name="jenis_perkerasan">
                                     <option value="">--Pilih Jenis Perkerasan--</option>
-                                    <option {{ $data->jenis_perkerasan == 'aspal' ? 'selected':'' }} value="aspal">Aspal</option>
-                                    <option {{ $data->jenis_perkerasan == 'hotmix' ? 'selected':'' }} value="hotmix">Hotmix</option>
-                                    <option {{ $data->jenis_perkerasan == 'tanah' ? 'selected':'' }} value="tanah">Tanah</option>
-                                    <option {{ $data->jenis_perkerasan == 'beton' ? 'selected':'' }} value="beton">Beton</option>
+                                    <option value="aspal">Aspal</option>
+                                    <option value="hotmix">Hotmix</option>
+                                    <option value="tanah">Tanah</option>
+                                    <option value="beton">Beton</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Kelas Jalan</label>
+                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">Kelas Jembatan</label>
                             <div class="col-sm-9">
-                                <select class="form-control select2" name="kelas_jalan">
-                                    <option value="">--Pilih Kelas Jalan--</option>
-                                    <option {{ $data->kelas_jalan == 'I' ? 'selected':'' }} value="I">I</option>
-                                    <option {{ $data->kelas_jalan == 'II' ? 'selected':'' }} value="II">II</option>
-                                    <option {{ $data->kelas_jalan == 'IIIA' ? 'selected':'' }} value="IIIA">IIIA</option>
-                                    <option {{ $data->kelas_jalan == 'IIIB' ? 'selected':'' }} value="IIIB">IIIB</option>
-                                    <option {{ $data->kelas_jalan == 'IIIC' ? 'selected':'' }} value="IIIC">IIIC</option>
+                                <select class="form-control select2" name="kelas_jembatan">
+                                    <option value="">--Pilih Kelas Jembatan--</option>
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="IIIA">IIIA</option>
+                                    <option value="IIIB">IIIB</option>
+                                    <option value="IIIC">IIIC</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
+                            <label for="kelasJembatanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
                             <div class="col-sm-9">
                                 <input type="file" name="geojson" class="file-upload-default">
                                 <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled placeholder="File GeoJSON" value="{{ $data->geojson }}" accept="*/*">
+                                    <input type="text" class="form-control file-upload-info" disabled placeholder="File GeoJSON" accept="*/*">
                                     <span class="input-group-append">
                                     <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                                     </span>
@@ -141,13 +142,14 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>
                             <div class="col-sm-9">
-                                <button class="file-upload-browse m-2 btn btn-success add-img" type="button">Tambah Gambar</button>
                                 <div class="input-group col-xs-12 control-group increment">
                                     <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
-                                   
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-success add-img" type="button">Tambah Gambar</button>
+                                    </span>
                                 </div>
                                 <div class="clone hide">
                                     <div class="input-group control-group col-xs-12">
@@ -158,18 +160,18 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Upload Video</label>
                             <div class="col-sm-9">
                                 <input type="text" name="url" class="form-control" placeholder="URL Video">
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="card-footer">
-                        <button type="submit" class="btn btn-primary mr-2"><i class="ik ik-save" title="Simpan"></i> Simpan</button>
-                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('jalan') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
+                        <button type="submit" class="btn btn-primary mr-2"><i class="ik ik-save" title="Sumbit"></i> Submit</button>
+                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('jembatan') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -184,7 +186,6 @@
     <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
-
     <script type="text/javascript">
         $(document).ready(function() {
           $(".add-img").click(function(){
@@ -196,10 +197,14 @@
           });
         });
 
-    </script>
-    <script>
         $(document).ready(function() {
-            $('.select2').select2();
+          $(".add-vid").click(function(){
+              var html = $(".clones").html();
+              $(".increments").after(html);
+          });
+          $("body").on("click",".rem-vid",function(){
+              $(this).parents(".control-groups").remove();
+          });
         });
     </script>
 @endpush

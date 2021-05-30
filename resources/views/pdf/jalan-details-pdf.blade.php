@@ -178,7 +178,7 @@
             </div>
             <hr>
             <div class="card-body">
-                <div id="mapid"></div>
+                <img src="{{ $map_image }}" alt="" height="230" width="490">
             </div>
         </div>
     </div>

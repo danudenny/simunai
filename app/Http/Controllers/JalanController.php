@@ -241,7 +241,7 @@ class JalanController extends Controller
         return $pdf->stream('Data Ruas Jalan Kabupaten Banyuasin.pdf');
     }
 
-    public function generateDetailsPdf($id) {
+    public function generateDetailsPdf(Request $request, $id) {
         $data = Jalan::find($id);
         $riwayat = Riwayat::where('jalan_id', '=', $id)->orderBy('tahun', 'desc')->get();
         $laporan = LaporanWarga::where('jalan_id', '=', $id)->get();
@@ -250,8 +250,11 @@ class JalanController extends Controller
         $image = base64_encode(file_get_contents('https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png'));
         $img_src = "data:image/".$img_type.";base64,".str_replace ("\n", "", $image);
 
+        $map_image = $request->input('mapimg');
+        // dd($map_image);
+
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-            ->loadView('pdf.jalan-details-pdf', compact('data', 'riwayat', 'laporan', 'img_src'))
+            ->loadView('pdf.jalan-details-pdf', compact('data', 'riwayat', 'laporan', 'img_src', 'map_image'))
             ->setPaper('a4', 'landscape');
         return $pdf->stream('Data Ruas Jalan Kabupaten Banyuasin.pdf');
     }

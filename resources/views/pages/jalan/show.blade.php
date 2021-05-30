@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
     <script src="{{ asset('js/leaflet.min.js') }}"></script>
+    <script src="{{ asset('js/html2canvas.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
     <style>
         #mapid {
@@ -52,12 +53,13 @@
             <div class="card card-484">
                 <div class="card-header" style="display: flex; justify-content: space-between;">
                     <h3><i class="ik ik-git-branch"></i> Detail Ruas Jalan <b class="text-primary">{{ $data->nama_ruas }}</b></h3>
-                    <div class="tambah-button" style="pull-right: 0">
-                        <a href="{{ route('jalan.details-pdf', $data->id) }}" target="_blank" class="btn btn-outline-danger">PDF</a>
-                    </div>
-
-                </div>
-                <div class="card-header">
+                    <form target="_blank" action="{{ route('jalan.details-pdf', $data->id) }}" method="post">
+                        <div class="tambah-button" style="pull-right: 0">
+                            @csrf
+                            <input type="hidden" name="mapimg" id="mapImgData">
+                            <button type="submit" id="btnSubmit" class="btn btn-outline-danger" disabled>PDF</button>
+                        </div>
+                    </form>
 
                 </div>
                 <div class="card-body">
@@ -255,6 +257,8 @@
 </div>
 @push('script')
     <script src="{{ asset('js/form-components.js') }}"></script>
+    <script src="{{ asset('js/leaflet-image.js') }}"></script>
+    <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
     <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
@@ -262,10 +266,19 @@
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('#btnSubmit').attr('disabled',false);
+        });
+     </script>
     <script>
         var map = L.map('mapid', {
-            scrollWheelZoom: false
+            scrollWheelZoom: false,
+            zoomControl: false,
+            preferCanvas: true
         });
+
         var datageojson = "{{ url($data->geojson) }}";
         function style(feature) {
             return {
@@ -279,9 +292,16 @@
             }).addTo(map);
             map.fitBounds(geo.getBounds());
         })
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
+
+        tileLayer.on("load", () => {
+            leafletImage(map, function (err, canvas) {
+                var img = document.getElementById('mapImgData');
+                img.value = canvas.toDataURL();
+            });
+        })
 
     </script>
 

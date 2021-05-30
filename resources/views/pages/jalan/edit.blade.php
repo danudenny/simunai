@@ -112,6 +112,7 @@
                                     <option {{ $data->jenis_perkerasan == 'hotmix' ? 'selected':'' }} value="hotmix">Hotmix</option>
                                     <option {{ $data->jenis_perkerasan == 'tanah' ? 'selected':'' }} value="tanah">Tanah</option>
                                     <option {{ $data->jenis_perkerasan == 'beton' ? 'selected':'' }} value="beton">Beton</option>
+                                    <option {{ $data->jenis_perkerasan == 'Batu Split' ? 'selected':'' }} value="Batu Split">Batu Split</option>
                                 </select>
                             </div>
                         </div>
@@ -147,7 +148,7 @@
                                 <button class="file-upload-browse m-2 btn btn-success add-img" type="button">Tambah Gambar</button>
                                 <div class="input-group col-xs-12 control-group increment">
                                     <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
-                                   
+
                                 </div>
                                 <div class="clone hide">
                                     <div class="input-group control-group col-xs-12">

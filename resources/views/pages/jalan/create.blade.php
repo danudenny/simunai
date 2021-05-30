@@ -112,6 +112,7 @@
                                     <option value="hotmix">Hotmix</option>
                                     <option value="tanah">Tanah</option>
                                     <option value="beton">Beton</option>
+                                    <option value="Batu Split">Batu Split</option>
                                 </select>
                             </div>
                         </div>

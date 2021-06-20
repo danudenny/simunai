@@ -9,7 +9,15 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index() {
+
         // Get Data Pekerasan Jalan
+        $baik = Jalan::select(DB::raw("SUM(baik) as baik"))->get();
+        $sedang = Jalan::select(DB::raw("SUM(sedang) as sedang"))->get();
+        $rusak_ringan = Jalan::select(DB::raw("SUM(rusak_ringan) as rusak_ringan"))->get();
+        $rusak_berat = Jalan::select(DB::raw("SUM(rusak_berat) as rusak_berat"))->get();
+        $mantap = Jalan::select(DB::raw("SUM(mantap) as mantap"))->get();
+        $tidak_mantap = Jalan::select(DB::raw("SUM(tidak_mantap) as tidak_mantap"))->get();
+
         $record = Jalan::select(DB::raw("COUNT(*) as count"), DB::raw("jenis_perkerasan as jenis_perkerasan"))
             ->groupBy('jenis_perkerasan')
             ->get();
@@ -19,8 +27,6 @@ class DashboardController extends Controller
             $data['perkerasan'][] = ($row->jenis_perkerasan != null) ? ucfirst($row->jenis_perkerasan) : 'Belum Terklasifikasi';
             $data['jumlah'][] = (int) $row->count;
         }
-
-        $data['chart_data'] = json_encode($data);
 
         // Get Data Status Jalan
         $recordStatus = Jalan::select(DB::raw("COUNT(*) as count"), DB::raw("status_jalan as status_jalan"))
@@ -33,8 +39,14 @@ class DashboardController extends Controller
             $dataStatus['jumlah'][] = (int) $rs->count;
         }
 
-        $dataStatus['chart_dataStatus'] = json_encode($dataStatus);
-
-        return view('pages.dashboard', $data, $dataStatus);
+        return view('pages.dashboard')
+            ->with('data',json_encode($data,JSON_NUMERIC_CHECK))
+            ->with('dataStatus',json_encode($dataStatus,JSON_NUMERIC_CHECK))
+            ->with('baik', $baik)
+            ->with('sedang', $sedang)
+            ->with('rusak_ringan', $rusak_ringan)
+            ->with('rusak_berat', $rusak_berat)
+            ->with('mantap', $mantap)
+            ->with('tidak_mantap', $tidak_mantap);
     }
 }

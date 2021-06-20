@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ asset('plugins/owl.carousel/dist/assets/owl.theme.default.min.css') }}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     @endpush
 
     <div class="container-fluid">
@@ -84,8 +85,6 @@
                     </div>
                 </div>
             </div>
-
-
             {{-- second --}}
             <div class="col-md-12 col-lg-6">
                 <div class="card">
@@ -115,6 +114,21 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{ __('Jalan Berdasarkan Kondisi')}}</h3>
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-container">
+                            <div class="pie-chart-container">
+                                <canvas id="bar-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 	<!-- push external js -->
@@ -128,7 +142,7 @@
         {{-- Perkerasan Jalan --}}
         <script>
             $(function () {
-                var cData = JSON.parse(`<?php echo $chart_data; ?>`);
+                var cData = JSON.parse(`<?php echo $data; ?>`);
                 var ctx = $("#pie-chart");
 
                 var data = {
@@ -182,7 +196,7 @@
         {{-- STatus Jalan --}}
         <script>
             $(function () {
-                var cDataStatus = JSON.parse(`<?php echo $chart_dataStatus; ?>`);
+                var cDataStatus = JSON.parse(`<?php echo $dataStatus; ?>`);
                 var ctxStatus = $("#pie-chartStatus");
 
                 var dataStatus = {
@@ -230,6 +244,49 @@
                     data: dataStatus,
                     options: options
                 });
+            });
+        </script>
+        <script>
+            let baik = {!! $baik[0]->baik !!};
+            let sedang = {!! $sedang[0]->sedang !!};
+            let rusak_ringan = {!! $rusak_ringan[0]->rusak_ringan !!};
+            let rusak_berat = {!! $rusak_berat[0]->rusak_berat !!};
+            let mantap = {!! $mantap[0]->mantap !!};
+            let tidak_mantap = {!! $tidak_mantap[0]->tidak_mantap !!};
+
+            new Chart(document.getElementById("bar-chart"), {
+                type: 'bar',
+                data: {
+                    labels: ["Baik", "Sedang", "Rusak Ringan", "Rusak Berat", "Mantap", "Tidak Mantap"],
+                    datasets: [
+                        {
+                            label: "Panjang Jalan (Km)",
+                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                            data: [baik,sedang,rusak_ringan,rusak_berat,mantap, tidak_mantap],
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: false },
+                    responsive: true,
+                    // cutoutPercentage: 80,
+                    // tooltips: {
+                    //     callbacks: {
+                    //         label: (tooltipItem, data) => {
+                    //             let value = data.datasets[0].data[tooltipItem.index];
+                    //             let total = data.datasets[0].data.reduce((a, b) => a + b, 0);
+                    //             let pct = 100 / total * value;
+                    //             let pctRounded = Math.round(pct * 10) / 10;
+                    //             return value + ' (' + pctRounded + '%)';
+                    //         }
+                    //     }
+                    // },
+                    plugins: {
+                        datalabels: {
+                            display: false,
+                        },
+                    }
+                }
             });
         </script>
     @endpush

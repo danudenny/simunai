@@ -30,7 +30,7 @@ use App\Http\Controllers\RiwayatController;
 Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class,'login']);
 Route::post('register', [RegisterController::class,'register']);
-
+Route::get('/clear-cache', [HomeController::class,'clearCache']);
 Route::get('password/forget',  function () {
 	return view('pages.forgot-password');
 })->name('password.forget');
@@ -97,7 +97,6 @@ Route::delete('/laporan/hapus/{id}', [LaporanKontroller::class,'destroy'])->name
 Route::group(['middleware' => 'auth'], function(){
 	// logout route
 	Route::get('/logout', [LoginController::class,'logout']);
-	Route::get('/clear-cache', [HomeController::class,'clearCache']);
 
 	// dashboard route
 	// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

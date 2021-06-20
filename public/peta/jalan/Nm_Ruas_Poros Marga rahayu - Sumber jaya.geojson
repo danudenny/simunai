@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Marga rahayu - Sumber jaya",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Marga rahayu - Sumber jaya", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 3.8562201688500002, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.903216587792969, -2.473248468506931 ], [ 104.903644893625454, -2.474421425101279 ], [ 104.904025304724442, -2.479711584932456 ], [ 104.904263018200055, -2.483637310885815 ], [ 104.904524659693664, -2.485791682137228 ], [ 104.904667335886671, -2.487491236989549 ], [ 104.904905147904046, -2.49007647677821 ], [ 104.905214236783848, -2.494385203198467 ], [ 104.905547130495805, -2.49864605657649 ], [ 104.906141727112541, -2.504295288517454 ], [ 104.906189202832863, -2.50604271049954 ], [ 104.906427069134693, -2.507933769574104 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Telang Karya 1",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Telang Karya 1", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 3.0412664243599998, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.820837303210197, -2.707782719200262 ], [ 104.820742966740937, -2.70179843534941 ], [ 104.820410762327271, -2.694665135754728 ], [ 104.820125969495308, -2.68887231927426 ], [ 104.819793584974661, -2.682983746965828 ], [ 104.819710039000526, -2.681049103999305 ], [ 104.819603551425914, -2.680302765077883 ] ] ] } }
+]
+}

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Panca Mukti - Sumber Mulya",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Panca Mukti - Sumber Mulya", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 7.5105501336099998, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.874021875000466, -2.568796027914849 ], [ 104.874763642345002, -2.577298591191328 ], [ 104.875277057016177, -2.584422348920423 ], [ 104.875619328115562, -2.589248119326483 ], [ 104.87621853310435, -2.595366522591354 ], [ 104.876456042762129, -2.600584851692668 ], [ 104.877074276549607, -2.60690432808363 ], [ 104.877311910409659, -2.610877923093436 ], [ 104.877692088422918, -2.617628244322654 ], [ 104.878024715407662, -2.623851942415492 ], [ 104.878262399337956, -2.627346793011312 ], [ 104.87869047980729, -2.631081033767657 ], [ 104.879118396049748, -2.636538750517783 ] ] ] } }
+]
+}

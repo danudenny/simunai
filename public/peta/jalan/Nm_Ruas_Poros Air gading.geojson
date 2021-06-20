@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Air gading",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Air gading", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 5.9540816863300003, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 105.158187564252842, -2.716111078458063 ], [ 105.160376695446757, -2.709791394179051 ], [ 105.160852393099603, -2.706918878686606 ], [ 105.162755776296478, -2.700024738472377 ], [ 105.164259445127882, -2.694651134745054 ], [ 105.164853395805721, -2.693272277037445 ], [ 105.165492837166028, -2.690330798863827 ], [ 105.167137224931494, -2.683666484452447 ], [ 105.167548371013893, -2.682379569268123 ], [ 105.170426061102972, -2.671119157219236 ], [ 105.172207469329493, -2.664179062700268 ] ] ] } }
+]
+}

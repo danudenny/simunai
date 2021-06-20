@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Muara Telang",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Muara Telang", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 0.53481355278999998, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.838625752654977, -2.504337671109607 ], [ 104.838199123761029, -2.505425323563283 ], [ 104.837696269929879, -2.507033839266048 ], [ 104.83711726409247, -2.508565746168157 ], [ 104.836995368042935, -2.508887446530947 ] ] ] } }
+]
+}

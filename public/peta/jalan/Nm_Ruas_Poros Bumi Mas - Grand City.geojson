@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Bumi Mas - Grand City",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Bumi Mas - Grand City", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 1.30144650821, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.669549493990615, -2.93221910165427 ], [ 104.6700873666951, -2.932864977639111 ], [ 104.670521437457495, -2.933508524795439 ], [ 104.670989866244767, -2.93389931035931 ], [ 104.6714926863485, -2.933922438072016 ], [ 104.6720868860466, -2.934094957544549 ], [ 104.672932546236993, -2.934106695925054 ], [ 104.673583969093016, -2.933991990886014 ], [ 104.674463643762536, -2.934934397552203 ], [ 104.675446210844868, -2.935738958201984 ], [ 104.676303151679008, -2.93626773057987 ], [ 104.678782618232489, -2.937635714947488 ], [ 104.679171089102027, -2.937911578168588 ] ] ] } }
+]
+}

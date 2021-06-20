@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Talang Kacang - bukit Indah",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 46, "Kl_Dat_Das": null, "Nm_Ruas": "Talang Kacang - bukit Indah", "Thn_Data": 2019, "Status": "Jalan Kabupaten", "Fungsi": "Kolektor", "Mendukung": "Strategis", "Ura_Dukung": "Terhubung Jalan Nasional", "Kd_Bd_PU": "2", "Kd_Jns_Inf": "1", "Kd_Inf": null, "Propinsi": "Sumatera Selatan", "Kab_Kot": "Kabupaten Banyuasin", "Kecamatan": "Banyuasin III", "Desa_Kel": null, "Tk_Ruas_Aw": "Sp Jl. Lintas", "Tk_Ruas_Ak": "Jl. Bukit Indah", "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.2, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.252, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 0.40758150746, "Lbr_Keras": 4.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 2, "MST": 0.0, "Tipe_Keras": "KERIKIL", "Tanah_Kri": 0.252, "Macadam": 0.0, "Aspal": 0.2, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 104.39582323499999, "Koord_Y_Aw": -2.889238305, "Koord_X_Ak": 104.39369200100001, "Koord_Y_Ak": -2.892166861, "P_real": 104.39582323499999 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.395823235000023, -2.889238304999878 ], [ 104.395414201000108, -2.889905696999961 ], [ 104.395056399000168, -2.890422678999926 ], [ 104.394884676000117, -2.890700425999967 ], [ 104.394620214000042, -2.891216282999949 ], [ 104.394275279000055, -2.891729038999927 ], [ 104.394140048000111, -2.891910630999917 ], [ 104.394010934000107, -2.892008264999902 ], [ 104.39369200100009, -2.892166860999907 ] ] ] } }
+]
+}

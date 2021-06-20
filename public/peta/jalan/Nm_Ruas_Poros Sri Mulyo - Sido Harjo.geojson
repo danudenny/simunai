@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Poros Sri Mulyo - Sido Harjo",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 0, "Kl_Dat_Das": null, "Nm_Ruas": "Poros Sri Mulyo - Sido Harjo", "Thn_Data": 0, "Status": "Jalan Desa", "Fungsi": null, "Mendukung": null, "Ura_Dukung": null, "Kd_Bd_PU": null, "Kd_Jns_Inf": null, "Kd_Inf": null, "Propinsi": null, "Kab_Kot": null, "Kecamatan": null, "Desa_Kel": null, "Tk_Ruas_Aw": null, "Tk_Ruas_Ak": null, "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.0, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 5.3648710737599998, "Lbr_Keras": 0.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 0, "MST": 0.0, "Tipe_Keras": null, "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.0, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 0.0, "Koord_Y_Aw": 0.0, "Koord_X_Ak": 0.0, "Koord_Y_Ak": 0.0, "P_real": 0.0 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.985391165809361, -2.699806554790235 ], [ 104.989847214299616, -2.700936436150516 ], [ 104.994150926023124, -2.702257797952682 ], [ 104.999692444703413, -2.703904691251053 ], [ 105.002339429617763, -2.704651529568757 ], [ 105.007595322621938, -2.706087739724092 ], [ 105.012451322196142, -2.707466481846501 ], [ 105.01500310700763, -2.708213293280958 ], [ 105.018811745867566, -2.709266476411988 ], [ 105.021877703749837, -2.71005156459752 ], [ 105.026010092313044, -2.711315366222563 ], [ 105.030390050184167, -2.712559997585256 ], [ 105.031842103350456, -2.712971679723208 ] ] ] } }
+]
+}

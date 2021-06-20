@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Rioseli - Rioseli",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 47, "Kl_Dat_Das": null, "Nm_Ruas": "Rioseli - Rioseli", "Thn_Data": 2019, "Status": "Jalan Kabupaten", "Fungsi": "Kolektor", "Mendukung": "Strategis", "Ura_Dukung": "Terhubung Jalan Nasional", "Kd_Bd_PU": "2", "Kd_Jns_Inf": "1", "Kd_Inf": null, "Propinsi": "Sumatera Selatan", "Kab_Kot": "Kabupaten Banyuasin", "Kecamatan": "Banyuasin III", "Desa_Kel": null, "Tk_Ruas_Aw": "Sp Jl. Lintas", "Tk_Ruas_Ak": "Sp Thalib Walib", "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 0.546, "Kon_Sdg": 0.0, "Kon_Rgn": 0.0, "Kon_Rusak": 0.0, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 0.53468662838000003, "Lbr_Keras": 5.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 2, "MST": 0.0, "Tipe_Keras": "KERIKIL", "Tanah_Kri": 0.0, "Macadam": 0.0, "Aspal": 0.546, "Rigid": 0.0, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 104.397450369, "Koord_Y_Aw": -2.890317362, "Koord_X_Ak": 104.396682536, "Koord_Y_Ak": -2.885545511, "P_real": 104.397450369 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.397450369000182, -2.890317361999905 ], [ 104.397368344000085, -2.889862972999879 ], [ 104.397248213000182, -2.88925497799994 ], [ 104.397152873000095, -2.888661245999913 ], [ 104.397109426000156, -2.888177962999976 ], [ 104.397055369000043, -2.887682805999873 ], [ 104.396970641000109, -2.887115195999968 ], [ 104.396889413000167, -2.886633087999883 ], [ 104.396788169000104, -2.886026288999972 ], [ 104.396682536000185, -2.885545510999975 ] ] ] } }
+]
+}

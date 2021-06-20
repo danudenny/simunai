@@ -21,10 +21,22 @@ class Jalan extends Model
         'jenis_perkerasan',
         'kelas_jalan',
         'geojson',
+        'th_data',
         'style',
         'kecamatan_id',
         "created_at",
-        "updated_at"
+        "updated_at",
+        'mendukung',
+        'uraian_dukungan',
+        'titik_pengenal_awal',
+        'titik_pengenal_akhir',
+        'kode_patok',
+        'baik',
+        'sedang',
+        'rusak_ringan',
+        'rusak_berat',
+        'mantap',
+        'tidak_mantap'
     ];
 
     public function kecamatan() {

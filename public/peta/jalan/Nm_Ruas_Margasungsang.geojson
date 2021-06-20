@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Nm_Ruas_Margasungsang",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Id": 29, "Kl_Dat_Das": null, "Nm_Ruas": "Margasungsang", "Thn_Data": 2019, "Status": "Jalan Kabupaten", "Fungsi": "Kolektor", "Mendukung": "Strategis", "Ura_Dukung": "Terhubung Jalan Propinsi", "Kd_Bd_PU": "2", "Kd_Jns_Inf": "1", "Kd_Inf": null, "Propinsi": "Sumatera Selatan", "Kab_Kot": "Kabupaten Banyuasin", "Kecamatan": "Banyuasin II", "Desa_Kel": null, "Tk_Ruas_Aw": "Sp. Tanjung Api2", "Tk_Ruas_Ak": "Ujung Desa", "Kd_Patok": null, "Km_Awal": 0.0, "Km_Akhir": 0.0, "Nm_Lintas": null, "Kon_Baik": 4.6, "Kon_Sdg": 1.2, "Kon_Rgn": 1.34, "Kon_Rusak": 0.6, "Kon_Mntp": 0.0, "Kon_T_Mntp": 0.0, "Panjang": 0.78973576579000004, "Lbr_Keras": 6.0, "LHRT": 0.0, "VCR": 0.0, "Tipe_Jln": 2, "MST": 0.0, "Tipe_Keras": "ASPAL", "Tanah_Kri": 0.6, "Macadam": 0.0, "Aspal": 4.6, "Rigid": 2.54, "Thn_Pen_Ak": 0, "Jns_Pen": null, "Koord_X_Aw": 104.88725691800001, "Koord_Y_Aw": -2.361094347, "Koord_X_Ak": 104.891314751, "Koord_Y_Ak": -2.366953963, "P_real": 104.88725691800001 }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 104.887256918, -2.361094346999948 ], [ 104.887603654000088, -2.361689423999906 ], [ 104.888200822000158, -2.362599143999944 ], [ 104.889000828000064, -2.363779045999877 ], [ 104.889681857000198, -2.364735509999889 ], [ 104.89035949100014, -2.365655495999874 ], [ 104.891314751000095, -2.366953962999958 ] ] ] } }
+]
+}

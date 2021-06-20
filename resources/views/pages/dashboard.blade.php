@@ -39,7 +39,7 @@
                                     $totalPanjangJalan = \App\Jalan::sum('panjang');
                                 @endphp
                                 <h6>{{ __('Total Panjang Jalan')}}</h6>
-                                <h2>{{ number_format($totalPanjangJalan * 0.001, 2, ',', '.')  }} Km</h2>
+                                <h2>{{ number_format($totalPanjangJalan, 2, ',', '.')  }} Km</h2>
                             </div>
                             <div class="icon">
                                 <i class="ik ik-git-commit"></i>
@@ -90,7 +90,7 @@
             <div class="col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3>{{ __('Persentase Jalan Berdasarkan Kondisi')}}</h3>
+                        <h3>{{ __('Persentase Jalan Berdasarkan Jenis Perkerasan')}}</h3>
                     </div>
                     <div class="card-block">
                         <div class="chart-container">
@@ -132,7 +132,7 @@
                 var ctx = $("#pie-chart");
 
                 var data = {
-                    labels: cData.kondisi,
+                    labels: cData.perkerasan,
                     datasets: [{
                         label: "Jumlah Ruas Jalan",
                         data: cData.jumlah,

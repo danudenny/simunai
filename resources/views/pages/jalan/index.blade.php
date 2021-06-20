@@ -16,6 +16,12 @@
         .dataTables_wrapper .dataTables_paginate .paginate_button:active {
             background-color: red !important;
         }
+        .dataTables_scrollHeadInner{
+            width:100% !important;
+        }
+        .dataTables_scrollHeadInner table{
+            width:150% !important;
+        }
     </style>
 @endpush
 
@@ -66,17 +72,23 @@
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('No.')}}</th>
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;" class="nosort">{{ __('Nama Ruas')}}</th>
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kecamatan')}}</th>
-                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kelas Jalan')}}</th>
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Status Jalan')}}</th>
                                 <th colspan="2" style="text-align: center;">{{ __('Dimensi Jalan')}}</th>
-                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kondisi Jalan')}}</th>
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Jenis Perkerasan')}}</th>
+                                <th colspan="6" style="text-align: center;vertical-align: middle;">{{ __('Kondisi Jalan (km)')}}</th>
                                 @can('manage_jalan')
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;" class="nosort">{{ __('Action')}}</th>
                                 @endcan
                             </tr>
                             <tr>
-                                <th style="text-align: center;">Panjang (m)</th>
+                                <th style="text-align: center;">Panjang (km)</th>
                                 <th style="text-align: center;">Lebar (m)</th>
+                                <th style="text-align: center;">Baik</th>
+                                <th style="text-align: center;">Sedang</th>
+                                <th style="text-align: center;">Rusak Ringan</th>
+                                <th style="text-align: center;">Rusak Berat</th>
+                                <th style="text-align: center;">Mantap</th>
+                                <th style="text-align: center;">Tidak Mantap</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,21 +133,23 @@
                 responsive: true,
                 autoWidth: false,
                 deferRender: true,
+                sScrollX: "150%",
+                sScrollXInner: "150%",
                 ajax: '{{ route('jalan') }}',
                 columns: [
                     { data: 'DT_RowIndex', searchable: false },
                     { data: 'nama_ruas', name: 'Nama Ruas' },
                     { data: 'kecamatan', name: 'kecamatan' },
-                    { data: 'kelas_jalan', name: 'kelas_jalan' },
                     { data: 'status_jalan', name: 'status_jalan' },
                     { data: 'panjang', name: 'panjang' },
                     { data: 'lebar', name: 'lebar' },
-                    {
-                        data: 'kondisi_jalan',
-                        name: 'kondisi_jalan',
-                        defaultContent: "-",
-                        textTransform: "uppercase"
-                    },
+                    { data: 'jenis_perkerasan', name: 'jenis_perkerasan' },
+                    { data: 'baik', name: 'baik' },
+                    { data: 'sedang', name: 'sedang' },
+                    { data: 'rusak_ringan', name: 'rusak_ringan' },
+                    { data: 'rusak_berat', name: 'rusak_berat' },
+                    { data: 'mantap', name: 'mantap' },
+                    { data: 'tidak_mantap', name: 'tidak_mantap' },
                     { data: 'action', name: 'Action', orderable: false, searchable: false },
                 ],
                 columnDefs: [
@@ -145,7 +159,7 @@
                         width: "4%"
                     },
                     {
-                        targets: [3, 4, 5, 6, 7, 8],
+                        targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
                         className: "text-center"
                     }
                 ],

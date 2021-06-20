@@ -142,12 +142,12 @@
                     <tr>
                         <td>Panjang (m)</td>
                         <td> : </td>
-                        <td class="table-data">{{ number_format($data->panjang) }}</td>
+                        <td class="table-data">{{ $data->panjang }}</td>
                     </tr>
                     <tr>
                         <td>Lebar (m)</td>
                         <td> : </td>
-                        <td class="table-data">{{ number_format($data->lebar) }}</td>
+                        <td class="table-data">{{ $data->lebar }}</td>
                     </tr>
                     <tr>
                         <td>Status Jalan</td>
@@ -183,6 +183,38 @@
         </div>
     </div>
 
+    <div class="container" style="margin-top: 100px;">
+        <div class="card-full">
+            <div class="card-header">
+                Data Kondisi Jalan
+            </div>
+            <hr>
+            <div class="card-body">
+                <table id="table">
+                    <thead>
+                    <tr>
+                        <th>{{ __('Baik')}}</th>
+                        <th>{{ __('Sedang')}}</th>
+                        <th>{{ __('Rusak Ringan')}}</th>
+                        <th>{{ __('Rusak Berat')}}</th>
+                        <th>{{ __('Mantap')}}</th>
+                        <th>{{ __('Tidak Mantap')}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ $data->baik }}</td>
+                            <td>{{ $data->sedang }}</td>
+                            <td>{{ $data->rusak_ringan }}</td>
+                            <td>{{ $data->rusak_berat }}</td>
+                            <td>{{ $data->mantap }}</td>
+                            <td>{{ $data->tidak_mantap }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <div class="container" style="margin-top: 150px;">
         <div class="card-full">
             <div class="card-header">
@@ -200,7 +232,6 @@
                             <th>{{ __('Kontraktor')}}</th>
                             <th>{{ __('Sumber Dana')}}</th>
                             <th>{{ __('Status')}}</th>
-                            <th>{{ __('Action')}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -216,17 +247,6 @@
                                 <td><span class="badge badge-{{
                                     ($rw->status == 'On Progress') ? 'warning' : 'success' }}">
                                     {{ $rw->status }}</span>
-                                </td>
-                                <td>
-                                    <div>
-                                        <a class="btn btn-info btn-rounded" href="{{ route('riwayat.edit',$rw->id) }}">Edit</a>
-                                        <a class="btn btn-danger btn-rounded delete-confirm" data-id="{{ $rw->id }}" href="#">Hapus
-                                            <form action="{{ route('riwayat.hapus', $rw->id) }}" id="delete{{ $rw->id }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                            </form>
-                                        </a>
-                                    </div>
                                 </td>
                             </tr>
                         @endforeach

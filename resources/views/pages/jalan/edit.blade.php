@@ -33,7 +33,9 @@
         </div>
     </div>
 
-
+    <form action="{{ route('jalan.update', $data->id) }}" enctype="multipart/form-data" method="POST" name="edit_jalan" class="forms-sample">
+    @csrf
+    @method('PATCH')
     <div class="row">
         <div class="col-md-6">
             <div class="card card-484">
@@ -42,9 +44,7 @@
                 </div>
                 <div class="card-body">
                     <h4 class="sub-title">Informasi Dasar</h4>
-                    <form action="{{ route('jalan.update', $data->id) }}" enctype="multipart/form-data" method="POST" name="edit_jalan" class="forms-sample">
-                        @csrf
-                        @method('PATCH')
+
                         <div class="form-group row">
                             <label for="namaRuasInput" class="col-sm-3 col-form-label">Nama Ruas</label>
                             <div class="col-sm-9">
@@ -91,19 +91,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kondisiJalanInput" class="col-sm-3 col-form-label">Kondisi Jalan</label>
-                            <div class="col-sm-9">
-                                <select class="form-control select2" name="kondisi_jalan">
-                                    <option value="">--Pilih Kondisi Jalan--</option>
-                                    <option {{ $data->kondisi_jalan == 'baik' ? 'selected':'' }} value="baik">Baik</option>
-                                    <option {{ $data->kondisi_jalan == 'sedang' ? 'selected':'' }} value="sedang">Sedang</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak' ? 'selected':'' }} value="rusak">Rusak</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak_sedang' ? 'selected':'' }} value="rusak_sedang">Rusak Sedang</option>
-                                    <option {{ $data->kondisi_jalan == 'rusak_berat' ? 'selected':'' }} value="rusak_berat">Rusak Berat</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Jenis Perkerasan</label>
                             <div class="col-sm-9">
                                 <select class="form-control select2" name="jenis_perkerasan">
@@ -130,54 +117,130 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
+                            <label for="lebarInput" class="col-sm-3 col-form-label">Tahun Data</label>
                             <div class="col-sm-9">
-                                <input type="file" name="geojson" class="file-upload-default">
-                                <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled placeholder="File GeoJSON" value="{{ $data->geojson }}" accept="*/*">
-                                    <span class="input-group-append">
-                                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                                    </span>
-                                </div>
+                                <input type="text" class="form-control" value="{{ $data->th_data }}" name="th_data">
+                                <span class="text-danger">{{ $errors->first('th_data') }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Mendukung</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" name="mendukung">
+                                    <option value="">--Pilih--</option>
+                                    <option {{ $data->mendukung == 'Strategis' ? 'selected':'' }} value="Strategis">Strategis</option>
+                                    <option {{ $data->mendukung == 'Non Strategis' ? 'selected':'' }} value="Non Strategis">Non Strategis</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Uraian Dukungan</label>
+                            <div class="col-sm-9">
+                                <select class="form-control select2" name="uraian_dukungan">
+                                    <option value="">--Pilih--</option>
+                                    <option {{ $data->uraian_dukungan == 'Terhubung Jalan Propinsi' ? 'selected':'' }} value="Terhubung Jalan Propinsi">Terhubung Jalan Propinsi</option>
+                                    <option {{ $data->uraian_dukungan == 'Terhubung Jalan Nasional dan Jalan Propinsi' ? 'selected':'' }} value="Terhubung Jalan Nasional dan Jalan Propinsi">Terhubung Jalan Nasional & Propinsi</option>
+                                    <option {{ $data->uraian_dukungan == 'Terhubung Jalan Nasional' ? 'selected':'' }} value="Terhubung Jalan Nasional">Terhubung Jalan Nasional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lebarInput" class="col-sm-3 col-form-label">Titik Pengenal Awal</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" value="{{ $data->titik_pengenal_awal }}"  name="titik_pengenal_awal" placeholder="Titik Pengenal Awal">
+                                <span class="text-danger">{{ $errors->first('titik_pengenal_awal') }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lebarInput" class="col-sm-3 col-form-label">Titik Pengenal Akhir</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" value="{{ $data->titik_pengenal_akhir }}"  name="titik_pengenal_akhir" placeholder="Titik Pengenal Akhir">
+                                <span class="text-danger">{{ $errors->first('titik_pengenal_akhir') }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lebarInput" class="col-sm-3 col-form-label">Kode Patok</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" value="{{ $data->kode_patok }}"  name="kode_patok" placeholder="Kode Patok">
+                                <span class="text-danger">{{ $errors->first('kode_patok') }}</span>
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>
-                            <div class="col-sm-9">
-                                <button class="file-upload-browse m-2 btn btn-success add-img" type="button">Tambah Gambar</button>
-                                <div class="input-group col-xs-12 control-group increment">
-                                    <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
-
-                                </div>
-                                <div class="clone hide">
-                                    <div class="input-group control-group col-xs-12">
-                                        <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
-                                        <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-danger rem-img" type="button">Hapus Gambar</button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Upload Video</label>
-                            <div class="col-sm-9">
-                                <input type="text" name="url" class="form-control" placeholder="URL Video">
-                            </div>
-                        </div> --}}
-
-                        <div class="card-footer">
-                        <button type="submit" class="btn btn-primary mr-2"><i class="ik ik-save" title="Simpan"></i> Simpan</button>
-                        <a onclick="return confirm('Apakah anda yakin, data tidak akan disimpan?')" class="btn btn-light" href="{{ route('jalan') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-
+        <div class="col-md-6">
+            <div class="card card-484">
+                <div class="card-header">
+                    <h3>Form Edit Data Ruas Jalan</h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="sub-title"><b><i class="ik ik-git-merge"></i> Informasi Kondisi Jalan</b></h4>
+                    <div class="form-group row">
+                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Baik (km)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ $data->baik }}" name="baik" placeholder="0">
+                            <span class="text-danger">{{ $errors->first('baik') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Sedang (km)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ $data->sedang }}" name="sedang" placeholder="0">
+                            <span class="text-danger">{{ $errors->first('sedang') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Rusak Ringan (km)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ $data->rusak_ringan }}" name="rusak_ringan" placeholder="0">
+                            <span class="text-danger">{{ $errors->first('rusak_ringan') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Rusak Berat (km)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ $data->rusak_berat }}" name="rusak_berat" placeholder="0">
+                            <span class="text-danger">{{ $errors->first('rusak_berat') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Mantap (km)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ $data->mantap }}" name="mantap" placeholder="0">
+                            <span class="text-danger">{{ $errors->first('mantap') }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Tidak Mantap (km)</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" value="{{ $data->tidak_mantap }}" name="tidak_mantap" placeholder="0">
+                            <span class="text-danger">{{ $errors->first('tidak_mantap') }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4 class="sub-title"><b><i class="ik ik-image"></i> Upload Data Peta, Gambar, dan Video</b></h4>
+                    <div class="form-group row">
+                        <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
+                        <div class="col-sm-9">
+                            <input type="file" name="geojson" class="file-upload-default">
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control file-upload-info" disabled placeholder="File GeoJSON" value="{{ $data->geojson }}" accept="*/*">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary pull-right"><i class="ik ik-save" title="Simpan"></i> Simpan</button>
+                    <a onclick="return confirm('Apakah anda yakin keluar? Data tidak akan disimpan.')" class="btn btn-light pull-right mr-2 " href="{{ route('jalan') }}"><i class="ik ik-repeat" title="Cancel"></i> Cancel</a>
+                </div>
+            </div>
+        </div>
     </div>
+    </form>
 </div>
 @push('script')
     <script src="{{ asset('js/form-components.js') }}"></script>

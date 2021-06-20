@@ -17,7 +17,7 @@
             font-weight: 500;
             font-size: 12px;
             line-height: 24px;
-            border-radius: 0px;
+            border-radius: 0;
             width: 400px;
             font-family: "Nunito", sans-serif;
         }

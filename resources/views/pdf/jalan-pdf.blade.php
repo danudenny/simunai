@@ -65,11 +65,18 @@
                             <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kelas Jalan')}}</th>
                             <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Status Jalan')}}</th>
                             <th colspan="2" style="text-align: center;">{{ __('Dimensi Jalan')}}</th>
-                            <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Kondisi Jalan')}}</th>
+                            <th rowspan="2" style="text-align: center;">{{ __('Jenis Perkerasan')}}</th>
+                            <th colspan="6" style="text-align: center;">{{ __('Kondisi Jalan (km)')}}</th>
                         </tr>
                         <tr>
                             <th style="text-align: center;">Panjang (m)</th>
                             <th style="text-align: center;">Lebar (m)</th>
+                            <th style="text-align: center;">Baik</th>
+                            <th style="text-align: center;">Sedang</th>
+                            <th style="text-align: center;">Rusak Ringan</th>
+                            <th style="text-align: center;">Rusak Berat</th>
+                            <th style="text-align: center;">Mantap</th>
+                            <th style="text-align: center;">Tidak Mantap</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,9 +88,15 @@
                             <td>{{ $data->kecamatan->nama }}</td>
                             <td style="text-align: center;">{{ ($data->kelas_jalan) ? $data->kelas_jalan : '-' }}</td>
                             <td style="text-align: center;">{{ ($data->status_jalan) ? ucfirst($data->status_jalan) : '-' }}</td>
-                            <td style="text-align: center;">{{ number_format($data->panjang) }} m</td>
-                            <td style="text-align: center;">{{ number_format($data->lebar) }} m</td>
-                            <td style="text-align: center;">{{ ($data->kondisi_jalan) ? ucfirst($data->kondisi_jalan) : '-' }}</td>
+                            <td style="text-align: center;">{{ $data->panjang }} m</td>
+                            <td style="text-align: center;">{{ $data->lebar }} m</td>
+                            <td style="text-align: center;">{{ $data->jenis_perkerasan }}</td>
+                            <td style="text-align: center;">{{ $data->baik }}</td>
+                            <td style="text-align: center;">{{ $data->sedang }}</td>
+                            <td style="text-align: center;">{{ $data->rusak_ringan }}</td>
+                            <td style="text-align: center;">{{ $data->rusak_berat }}</td>
+                            <td style="text-align: center;">{{ $data->mantap }}</td>
+                            <td style="text-align: center;">{{ $data->tidak_mantap }}</td>
                         </tr>
                         @endforeach
                     </tbody>

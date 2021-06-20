@@ -63,7 +63,7 @@
 
                 </div>
                 <div class="card-body">
-                    <h4 class="sub-title">Informasi Dasar</h4>
+                    <h4 class="sub-title"><i class="ik ik-info"></i> <i>Informasi Dasar</i></h4>
                         <div class="form-group row">
                             <label for="namaRuasInput" class="col-sm-3 col-form-label">Nama Ruas</label>
                             <span>: <b>{{ $data->nama_ruas }}</b></span>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="panjangInput" class="col-sm-3 col-form-label">Panjang (m)</label>
-                            <span>: <b>{{ number_format($data->panjang) }} Meter</b></span>
+                            <span>: <b>{{ $data->panjang }} Kilo Meter</b></span>
                         </div>
                         <div class="form-group row">
                             <label for="lebarInput" class="col-sm-3 col-form-label">Lebar (m)</label>
@@ -85,17 +85,60 @@
                             <span>: <b> Jalan {{ Str::ucfirst($data->status_jalan) }}</b></span>
                         </div>
                         <div class="form-group row">
-                            <label for="kondisiJalanInput" class="col-sm-3 col-form-label">Kondisi Jalan</label>
-                            <span>: <b>{{ Str::ucfirst($data->kondisi_jalan) }}</b></span>
-                        </div>
-                        <div class="form-group row">
                             <label for="jenisPerkerasanInput" class="col-sm-3 col-form-label">Jenis Perkerasan</label>
                             <span>: <b>{{ Str::ucfirst($data->jenis_perkerasan) }}</b></span>
                         </div>
                         <div class="form-group row">
                             <label for="kelasJalanInput" class="col-sm-3 col-form-label">Kelas Jalan</label>
-                            <span>: <b>{{ Str::ucfirst($data->kelas_jalan) }}</b></span>
+                            <span>: <b>{{ ($data->kelas_jalan) ? Str::ucfirst($data->kelas_jalan) : '-' }}</b></span>
                         </div>
+                    <hr>
+                    <h4 class="sub-title"><i class="ik ik-maximize-2"></i> <i>Informasi Tambahan</i></h4>
+                        <div class="form-group row">
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Kode Patok</label>
+                            <span>: <b>{{ ($data->kode_patok) ? $data->kode_patok : '-' }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Mendukung</label>
+                            <span>: <b>{{ $data->mendukung }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Uraian Dukungan</label>
+                            <span>: <b>{{ $data->uraian_dukungan }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Titik Pengenal Awal</label>
+                            <span>: <b>{{ $data->titik_pengenal_awal }}</b></span>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Titik Pengenal Akhir</label>
+                            <span>: <b>{{ $data->titik_pengenal_akhir }}</b></span>
+                        </div>
+                    <hr>
+                    <h4 class="sub-title"><i class="ik ik-grid"></i> <i>Informasi Kondisi (Kilometer)</i></h4>
+                        <table class="table table-bordered nowrap">
+                            <thead style="text-align: center">
+                                <tr>
+                                    <th>{{ __('Baik')}}</th>
+                                    <th>{{ __('Sedang')}}</th>
+                                    <th>{{ __('Rusak Ringan')}}</th>
+                                    <th>{{ __('Rusak Berat')}}</th>
+                                    <th>{{ __('Mantap')}}</th>
+                                    <th>{{ __('Tidak Mantap')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center">
+                                <tr>
+                                    <td>{{ $data->baik }}</td>
+                                    <td>{{ $data->sedang }}</td>
+                                    <td>{{ $data->rusak_ringan }}</td>
+                                    <td>{{ $data->rusak_berat }}</td>
+                                    <td>{{ $data->mantap }}</td>
+                                    <td>{{ $data->tidak_mantap }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                         <div class="form-group row">
                             <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
                             <a href="{{ url($data->geojson) }}" class="text-info" target="_blank">: <b><i class="ik ik-download" title="Download"></i> {{ $data->geojson }}</b></a>

@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index() {
-        // Get Data Kondisi Jalan
-        $record = Jalan::select(DB::raw("COUNT(*) as count"), DB::raw("kondisi_jalan as kondisi_jalan"))
-            ->groupBy('kondisi_jalan')
+        // Get Data Pekerasan Jalan
+        $record = Jalan::select(DB::raw("COUNT(*) as count"), DB::raw("jenis_perkerasan as jenis_perkerasan"))
+            ->groupBy('jenis_perkerasan')
             ->get();
 
         $data = [];
         foreach($record as $row) {
-            $data['kondisi'][] = ($row->kondisi_jalan != null) ? ucfirst($row->kondisi_jalan) : 'Belum Terklasifikasi';
+            $data['perkerasan'][] = ($row->jenis_perkerasan != null) ? ucfirst($row->jenis_perkerasan) : 'Belum Terklasifikasi';
             $data['jumlah'][] = (int) $row->count;
         }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\JalanExport;
+use App\Kondisi;
 use Illuminate\Http\Request;
 use App\Jalan;
 use App\Kecamatan;
@@ -36,34 +37,18 @@ class JalanController extends Controller
                         return "Jalan " . ucfirst($jalan->status_jalan);
                     }
                 })
-                ->editColumn('kelas_jalan', function($jalan) {
-                    if ($jalan->kelas_jalan == null) {
-                        return "-";
-                    } else {
-                        return $jalan->kelas_jalan;
-                    }
-                })
                 ->editColumn('panjang', function($jalan) {
-                    return number_format($jalan->panjang);
+                    return $jalan->panjang;
                 })
                 ->addColumn('kecamatan', function (Jalan $jalan) {
                     return $jalan->kecamatan->nama;
                 })
-                ->addColumn('kondisi_jalan', function ($jalan) {
-                    if ($jalan->kondisi_jalan == 'baik') {
-                        $span = "<span class='badge badge-success'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
-                    } elseif ($jalan->kondisi_jalan == 'sedang') {
-                        $span = "<span class='badge badge-primary'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
-                    } elseif($jalan->kondisi_jalan == 'rusak') {
-                        $span = "<span class='badge badge-info'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
-                    } elseif($jalan->kondisi_jalan == 'rusak_ringan') {
-                        $span = "<span class='badge badge-warning'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
-                    } elseif($jalan->kondisi_jalan == 'rusak_berat') {
-                        $span = "<span class='badge badge-danger'>" . ucfirst($jalan->kondisi_jalan) . "</span>";
+                ->editColumn('jenis_perkerasan', function($jalan) {
+                    if ($jalan->jenis_perkerasan == null) {
+                        return "-";
                     } else {
-                        $span = "-";
+                        return ucfirst($jalan->jenis_perkerasan);
                     }
-                    return $span;
                 })
                 ->addColumn('action', function($jalan){
                     if (Auth::guest() ) {
@@ -125,9 +110,20 @@ class JalanController extends Controller
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
             'status_jalan' => $request->status_jalan,
-            'kondisi_jalan' => $request->kondisi_jalan,
             'jenis_perkerasan' => $request->jenis_perkerasan,
             'kelas_jalan' => $request->kelas_jalan,
+            'th_data' => $request->th_data,
+            'mendukung' => $request->mendukung,
+            'uraian_dukungan' => $request->uraian_dukungan,
+            'titik_pengenal_awal' => $request->titik_pengenal_awal,
+            'titik_pengenal_akhir' => $request->titik_pengenal_akhir,
+            'kode_patok' => $request->kode_patok,
+            'baik' => $request->baik,
+            'sedang' => $request->sedang,
+            'rusak_ringan' => $request->rusak_ringan,
+            'rusak_berat' => $request->rusak_berat,
+            'mantap' => $request->mantap,
+            'tidak_mantap' => $request->tidak_mantap,
         ];
 
         if ($request->hasFile('geojson')) {
@@ -140,9 +136,20 @@ class JalanController extends Controller
         $update['panjang'] = $request->get('panjang');
         $update['lebar'] = $request->get('lebar');
         $update['status_jalan'] = $request->get('status_jalan');
-        $update['kondisi_jalan'] = $request->get('kondisi_jalan');
         $update['jenis_perkerasan'] = $request->get('jenis_perkerasan');
         $update['kelas_jalan'] = $request->get('kelas_jalan');
+        $update['th_data'] = $request->get('th_data');
+        $update['mendukung'] = $request->get('mendukung');
+        $update['uraian_dukungan'] = $request->get('uraian_dukungan');
+        $update['titik_pengenal_awal'] = $request->get('titik_pengenal_awal');
+        $update['titik_pengenal_akhir'] = $request->get('titik_pengenal_akhir');
+        $update['kode_patok'] = $request->get('kode_patok');
+        $update['baik'] = $request->get('baik');
+        $update['sedang'] = $request->get('sedang');
+        $update['rusak_ringan'] = $request->get('rusak_ringan');
+        $update['rusak_berat'] = $request->get('rusak_berat');
+        $update['mantap'] = $request->get('mantap');
+        $update['tidak_mantap'] = $request->get('tidak_mantap');
 
         if($request->hasfile('images')) {
             foreach($request->file('images') as $image) {
@@ -188,9 +195,20 @@ class JalanController extends Controller
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
             'status_jalan' => $request->status_jalan,
-            'kondisi_jalan' => $request->kondisi_jalan,
             'jenis_perkerasan' => $request->jenis_perkerasan,
             'kelas_jalan' => $request->kelas_jalan,
+            'th_data' => $request->th_data,
+            'mendukung' => $request->mendukung,
+            'uraian_dukungan' => $request->uraian_dukungan,
+            'titik_pengenal_awal' => $request->titik_pengenal_awal,
+            'titik_pengenal_akhir' => $request->titik_pengenal_akhir,
+            'kode_patok' => $request->kode_patok,
+            'baik' => $request->baik,
+            'sedang' => $request->sedang,
+            'rusak_ringan' => $request->rusak_ringan,
+            'rusak_berat' => $request->rusak_berat,
+            'mantap' => $request->mantap,
+            'tidak_mantap' => $request->tidak_mantap,
             'geojson' => 'peta/jalan/' . $request->file('geojson')->getClientOriginalName(),
         ]);
 

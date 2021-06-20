@@ -8,7 +8,6 @@
         <link rel="stylesheet" href="{{ asset('plugins/owl.carousel/dist/assets/owl.theme.default.min.css') }}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
     @endpush
 
     <div class="container-fluid">
@@ -118,7 +117,7 @@
             <div class="col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h3>{{ __('Jalan Berdasarkan Kondisi')}}</h3>
+                        <h3>{{ __('Jalan Berdasarkan Kondisi (Kilometer)')}}</h3>
                     </div>
                     <div class="card-block">
                         <div class="chart-container">
@@ -262,29 +261,26 @@
                         {
                             label: "Panjang Jalan (Km)",
                             backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                            data: [baik,sedang,rusak_ringan,rusak_berat,mantap, tidak_mantap],
+                            data: [
+                                baik.toPrecision(3),
+                                sedang.toPrecision(3),
+                                rusak_ringan.toPrecision(3),
+                                rusak_berat.toPrecision(3),
+                                mantap.toPrecision(3),
+                                tidak_mantap.toPrecision(3)],
                         }
                     ]
                 },
                 options: {
                     legend: { display: false },
                     responsive: true,
-                    // cutoutPercentage: 80,
-                    // tooltips: {
-                    //     callbacks: {
-                    //         label: (tooltipItem, data) => {
-                    //             let value = data.datasets[0].data[tooltipItem.index];
-                    //             let total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                    //             let pct = 100 / total * value;
-                    //             let pctRounded = Math.round(pct * 10) / 10;
-                    //             return value + ' (' + pctRounded + '%)';
-                    //         }
-                    //     }
-                    // },
                     plugins: {
                         datalabels: {
                             display: false,
                         },
+                        labels: {
+                            render: 'value'
+                        }
                     }
                 }
             });

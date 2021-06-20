@@ -95,6 +95,10 @@
                     <hr>
                     <h4 class="sub-title"><i class="ik ik-maximize-2"></i> <i>Informasi Tambahan</i></h4>
                         <div class="form-group row">
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Tahun Data</label>
+                            <span>: <b>{{ $data->th_data }}</b></span>
+                        </div>
+                        <div class="form-group row">
                             <label for="kelasJalanInput" class="col-sm-3 col-form-label">Kode Patok</label>
                             <span>: <b>{{ ($data->kode_patok) ? $data->kode_patok : '-' }}</b></span>
                         </div>

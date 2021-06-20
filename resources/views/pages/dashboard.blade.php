@@ -125,7 +125,7 @@
         {{-- <script src="{{ asset('js/widget-data.js') }}"></script> --}}
         {{-- <script src="{{ asset('js/dashboard-charts.js') }}"></script> --}}
 
-        {{-- Kondisi Jalan --}}
+        {{-- Perkerasan Jalan --}}
         <script>
             $(function () {
                 var cData = JSON.parse(`<?php echo $chart_data; ?>`);

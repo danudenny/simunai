@@ -46,7 +46,6 @@
                     <a href="#"><i class="ik ik-git-branch"></i><span>{{ __('Jalan dan Jembatan')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{url('jalan')}}" class="menu-item {{ ($segment1 == 'jalan') ? 'active' : '' }}"><span>{{ __('Data Ruas Jalan')}}</span> </a>
-                        <a href="#" class="menu-item"><span>{{ __('Data Jalan Per Kecamatan ')}}</span> </a>
                         <a href="{{ url('jembatan') }}" class="menu-item"><span>{{ __('Data Jembatan ')}}</span> </a>
                     </div>
                 </div>

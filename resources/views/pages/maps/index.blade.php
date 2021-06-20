@@ -142,15 +142,15 @@
                     "<label class='col-sm-5 col-form-label'>Kecamatan</label>" +
                     "<span>: <b>" + '{{ $value->kecamatan->nama }}' + "</b></span></br>" +
                     "<label class='col-sm-5 col-form-label'>Panjang</label>" +
-                    "<span>: <b>" + '{{ number_format($value->panjang) }}' + "</b></span></br>" +
+                    "<span>: <b>" + '{{ $value->panjang }}' + "</b></span></br>" +
                     "<label class='col-sm-5 col-form-label'>Lebar</label>" +
-                    "<span>: <b>" + '{{ number_format($value->lebar) }}' + "</b></span></br>" +
+                    "<span>: <b>" + '{{ $value->lebar }}' + "</b></span></br>" +
                     "<label class='col-sm-5 col-form-label'>Status Jalan</label>" +
                     "<span>: <b>Jalan" + '{{ $value->status_jalan }}' + "</b></span></br>" +
-                    "<label class='col-sm-5 col-form-label'>Kondisi Jalan</label>" +
-                    "<span>: <b>" + '{{ ucfirst($value->kondisi_jalan) }}' + "</b></span></br>" +
                     "<label class='col-sm-5 col-form-label'>Perkerasan</label>" +
                     "<span>: <b>" + '{{ ucfirst($value->jenis_perkerasan) }}' + "</b></span></br>" +
+                    "<label class='col-sm-5 col-form-label'>Tahun Data</label>" +
+                    "<span>: <b>" + '{{ $value->th_data }}' + "</b></span></br>" +
                     "<label class='col-sm-5 col-form-label'>Kelas Jalan</label>" +
                     "<span>: <b>" + '{{ $value->kelas_jalan }}' + "</b></span></br>" +
                     "<a class='btn btn-block btn-primary text-default'style='margin-top: 15px;' type='button' href='{{ route('jalan.details',$value->id) }}'><i class='ik ik-external-linkl'></i> Details</a>" +

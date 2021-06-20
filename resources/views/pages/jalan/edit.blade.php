@@ -165,6 +165,32 @@
                                 <span class="text-danger">{{ $errors->first('kode_patok') }}</span>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>
+                            <div class="col-sm-9">
+                                <div class="input-group col-xs-12 control-group increment">
+                                    <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-success add-img" type="button">Tambah Gambar</button>
+                                    </span>
+                                </div>
+                                <div class="clone hide">
+                                    <div class="input-group control-group col-xs-12">
+                                        <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-danger rem-img" type="button">Hapus Gambar</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Upload Video</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="url" value="{{$lampiran->url}}" class="form-control" placeholder="URL Video">
+                            </div>
+                        </div>
 
                 </div>
             </div>

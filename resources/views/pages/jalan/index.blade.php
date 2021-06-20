@@ -66,6 +66,53 @@
 
                 </div>
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <h5>Filter Jalan</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Kecamatan</label>
+                            <select id="filter-kecamatan" class="form-control filter">
+                            <option value="">--Pilih Wilayah Kecamatan--</option>
+                            @foreach($kecamatan as $data)
+                                <option value="{{$data->id}}">{{$data->nama}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Kelas Jalan</label>
+                            <select id="filter-kelas-jalan" class="form-control filter">
+                            <option value="">--Pilih Kelas Jalan--</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="IIIA">IIIA</option>
+                            <option value="IIIB">IIIB</option>
+                            <option value="IIIC">IIIC</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Status Jalan</label>
+                            <select id="filter-status-jalan" class="form-control filter">
+                            <option value="">--Pilih Status Jalan--</option>
+                            <option value="lokal">Lokal</option>
+                            <option value="kabupaten">Kabupaten</option>
+                            <option value="provinsi">Provinsi</option>
+                            <option value="nasional">Nasional</option>
+                            <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Kondisi Jalan</label>
+                            <select id="filter-kondisi-jalan" class="form-control filter">
+                                <option value="">--Pilih Kondisi Jalan--</option>
+                                <option value="baik">Baik</option>
+                                <option value="sedang">Sedang</option>
+                                <option value="rusak">Rusak</option>
+                                <option value="rusak_sedang">Rusak Sedang</option>
+                                <option value="rusak_berat">Rusak Berat</option>
+                            </select>
+                        </div>
+                    </div>
                     <table id="example" class="table table-bordered data-table">
                         <thead>
                             <tr>
@@ -126,8 +173,13 @@
     @endif
 
     <script>
+        let kecamatan = $("#filter-kecamatan").val()
+        let kelas_jalan = $("#filter-kelas-jalan").val()
+        let status_jalan = $("#filter-status-jalan").val()
+        let kondisi_jalan = $("#filter-kondisi-jalan").val()
+
         $(function() {
-            var table = $('#example').dataTable({
+            var table = $('#example').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -135,7 +187,25 @@
                 deferRender: true,
                 sScrollX: "150%",
                 sScrollXInner: "150%",
-                ajax: '{{ route('jalan') }}',
+                ajax:{
+                    url: "{{ route('jalan') }}",
+                    data:function(d){
+                        if(kecamatan != ''){
+                            d.kecamatan= kecamatan
+                        }
+                        if(kelas_jalan != ''){
+                            d.kelas_jalan= kelas_jalan
+                        }
+                        if(status_jalan != ''){
+                            d.status_jalan= status_jalan
+                        }
+                        if(kondisi_jalan != ''){
+                            d.kondisi_jalan= kondisi_jalan
+                        }
+
+                        return d
+                    }
+                },
                 columns: [
                     { data: 'DT_RowIndex', searchable: false },
                     { data: 'nama_ruas', name: 'Nama Ruas' },
@@ -167,7 +237,18 @@
                     'pdf'
                 ]
             });
+
+            $(".filter").on('change',function(){
+                console.log('s')
+                kecamatan = $("#filter-kecamatan").val()
+                kelas_jalan = $("#filter-kelas-jalan").val()
+                status_jalan = $("#filter-status-jalan").val()
+                kondisi_jalan = $("#filter-kondisi-jalan").val()
+                table.ajax.reload(null,false)
+            })
+
         });
+
     </script>
 
     <script>
@@ -191,6 +272,7 @@
                 }
             })
         })
+
     </script>
 @endpush
 @endsection

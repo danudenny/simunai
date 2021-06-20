@@ -23,8 +23,31 @@ class JalanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Jalan::orderBy('id', 'ASC')->get();
-            return Datatables::of($data)
+            
+            $hasil = [];
+            $jalan = Jalan::orderBy('id', 'ASC')->get();
+
+            if($request->kecamatan != null){
+                $jalan = $jalan->where('kecamatan_id', $request->kecamatan);
+            }
+
+            if($request->kelas_jalan != null){
+                $jalan = $jalan->where('kelas_jalan', $request->kelas_jalan);
+            }
+
+            if($request->status_jalan != null){
+                $jalan = $jalan->where('status_jalan', $request->status_jalan);
+            }
+
+            if($request->kondisi_jalan != null){
+                $jalan = $jalan->where('kondisi_jalan', $request->kondisi_jalan);
+            }
+
+            foreach($jalan as $data){
+                $hasil[] = $data;
+            }
+
+            return Datatables::of($hasil)
                 ->addIndexColumn()
                 ->editColumn('nama_ruas', function($jalan) {
                     $ruas = "<strong><a class='text-success' href='jalan/details/$jalan->id'>$jalan->nama_ruas <i class='ik ik-arrow-up-right' title='Details'></i> <a></strong>";
@@ -67,8 +90,9 @@ class JalanController extends Controller
                 ->rawColumns(['action', 'kondisi_jalan', 'nama_ruas'])
                 ->make(true);
         }
+        $kecamatan = Kecamatan::all();
         $jalan = Jalan::all();
-        return view('pages.jalan.index', compact('jalan'));
+        return view('pages.jalan.index', compact('jalan','kecamatan'));
     }
 
     public function create()
@@ -93,7 +117,8 @@ class JalanController extends Controller
         $where = array('id' => $id);
         $kecamatan = Kecamatan::orderBy('nama')->get();
         $data = Jalan::where($where)->first();
-        return view('pages.jalan.edit', compact('data', 'kecamatan'));
+        $lampiran = Lampiran::where(['jalan_id' => $id])->first();
+        return view('pages.jalan.edit', compact('data', 'kecamatan', 'lampiran'));
     }
 
     public function update(Request $request, $id)
@@ -159,11 +184,10 @@ class JalanController extends Controller
             }
 
 
-            $upload_images = Lampiran::where('jalan_id', $id)->update($update);
-            $upload_images->file_name = json_encode($dataimg);
-            $upload_images->is_video = ($request->url) ? true : false;
-            $upload_images->url = ($request->url) ? json_encode($request->url) : '';
-            $upload_images->save();
+            $update_lampiran['file_name'] = json_encode($dataimg);
+            $update_lampiran['is_video'] = ($request->url) ? true : false;
+            $update_lampiran['url'] = ($request->url) ? json_encode($request->url) : '';
+            $upload_images = Lampiran::where('jalan_id', $id)->update($update_lampiran);
         }
 
         $notification = array(

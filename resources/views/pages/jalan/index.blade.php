@@ -102,17 +102,18 @@
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <label>Kondisi Jalan</label>
-                            <select id="filter-kondisi-jalan" class="form-control filter">
-                                <option value="">--Pilih Kondisi Jalan--</option>
-                                <option value="baik">Baik</option>
-                                <option value="sedang">Sedang</option>
-                                <option value="rusak">Rusak</option>
-                                <option value="rusak_sedang">Rusak Sedang</option>
-                                <option value="rusak_berat">Rusak Berat</option>
+                            <label>Jenis Perkerasan</label>
+                            <select id="filter-jenis-perkerasan" class="form-control filter">
+                                <option value="">--Pilih Jenis Perkerasan--</option>
+                                <option value="aspal">Aspal</option>
+                                <option value="beton">Beton</option>
+                                <option value="hotmix">Hotmix</option>
+                                <option value="tanah">Tanah</option>
+                                <option value="batu_split">Batu Split</option>
                             </select>
                         </div>
                     </div>
+                    <hr>
                     <table id="example" class="table table-bordered data-table">
                         <thead>
                             <tr>
@@ -176,7 +177,7 @@
         let kecamatan = $("#filter-kecamatan").val()
         let kelas_jalan = $("#filter-kelas-jalan").val()
         let status_jalan = $("#filter-status-jalan").val()
-        let kondisi_jalan = $("#filter-kondisi-jalan").val()
+        let jenis_perkerasan = $("#filter-jenis-perkerasan").val()
 
         $(function() {
             var table = $('#example').DataTable({
@@ -199,8 +200,8 @@
                         if(status_jalan != ''){
                             d.status_jalan= status_jalan
                         }
-                        if(kondisi_jalan != ''){
-                            d.kondisi_jalan= kondisi_jalan
+                        if(jenis_perkerasan != ''){
+                            d.jenis_perkerasan= jenis_perkerasan
                         }
 
                         return d
@@ -243,7 +244,7 @@
                 kecamatan = $("#filter-kecamatan").val()
                 kelas_jalan = $("#filter-kelas-jalan").val()
                 status_jalan = $("#filter-status-jalan").val()
-                kondisi_jalan = $("#filter-kondisi-jalan").val()
+                jenis_perkerasan = $("#filter-jenis-perkerasan").val()
                 table.ajax.reload(null,false)
             })
 

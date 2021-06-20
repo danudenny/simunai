@@ -23,7 +23,7 @@ class JalanController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            
+
             $hasil = [];
             $jalan = Jalan::orderBy('id', 'ASC')->get();
 
@@ -39,8 +39,8 @@ class JalanController extends Controller
                 $jalan = $jalan->where('status_jalan', $request->status_jalan);
             }
 
-            if($request->kondisi_jalan != null){
-                $jalan = $jalan->where('kondisi_jalan', $request->kondisi_jalan);
+            if($request->jenis_perkerasan != null){
+                $jalan = $jalan->where('jenis_perkerasan', $request->jenis_perkerasan);
             }
 
             foreach($jalan as $data){

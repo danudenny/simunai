@@ -141,14 +141,14 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>
                             <div class="col-sm-9">
-                                <button class="file-upload-browse m-2 btn btn-success add-img" type="button">Tambah Gambar</button>
                                 <div class="input-group col-xs-12 control-group increment">
                                     <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
-
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-success add-img" type="button">Tambah Gambar</button>
+                                    </span>
                                 </div>
                                 <div class="clone hide">
                                     <div class="input-group control-group col-xs-12">
@@ -159,14 +159,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Upload Video</label>
                             <div class="col-sm-9">
-                                <input type="text" name="url" class="form-control" placeholder="URL Video">
+                            <input type="text" name="url" value="{{$lampiran->url}}" class="form-control" placeholder="URL Video">
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="card-footer">
                         <button type="submit" class="btn btn-primary mr-2"><i class="ik ik-save" title="Simpan"></i> Simpan</button>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exports\JalanExport;
-use App\Kondisi;
 use Illuminate\Http\Request;
 use App\Jalan;
 use App\Kecamatan;

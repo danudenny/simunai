@@ -16,12 +16,6 @@
         .dataTables_wrapper .dataTables_paginate .paginate_button:active {
             background-color: red !important;
         }
-        .dataTables_scrollHeadInner{
-            width:100% !important;
-        }
-        .dataTables_scrollHeadInner table{
-            width:150% !important;
-        }
     </style>
 @endpush
 
@@ -123,10 +117,10 @@
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Status Jalan')}}</th>
                                 <th colspan="2" style="text-align: center;">{{ __('Dimensi Jalan')}}</th>
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('Jenis Perkerasan')}}</th>
-                                <th colspan="6" style="text-align: center;vertical-align: middle;">{{ __('Kondisi Jalan (km)')}}</th>
-                                @can('manage_jalan')
-                                <th rowspan="2" style="text-align: center;vertical-align: middle;" class="nosort">{{ __('Action')}}</th>
-                                @endcan
+                                <th colspan="4" style="text-align: center;vertical-align: middle;">{{ __('Kondisi Jalan (km)')}}</th>
+{{--                                @can('manage_jalan')--}}
+                                <th rowspan="2" style="text-align: center;vertical-align: middle;" class="nosort">@can('manage_jalan'){{ __('Action')}} @endcan</th>
+{{--                                @endcan--}}
                             </tr>
                             <tr>
                                 <th style="text-align: center;">Panjang (km)</th>
@@ -135,8 +129,6 @@
                                 <th style="text-align: center;">Sedang</th>
                                 <th style="text-align: center;">Rusak Ringan</th>
                                 <th style="text-align: center;">Rusak Berat</th>
-                                <th style="text-align: center;">Mantap</th>
-                                <th style="text-align: center;">Tidak Mantap</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,7 +142,7 @@
 @push('script')
     <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
-    @if(Session::has('message'))
+    @if( Session::has('message'))
     <script>
     var type = "{{ Session::get('alert-type', 'info') }}";
     switch(type){
@@ -180,27 +172,25 @@
         let jenis_perkerasan = $("#filter-jenis-perkerasan").val()
 
         $(function() {
-            var table = $('#example').DataTable({
+            let table = $('#example').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
                 autoWidth: false,
                 deferRender: true,
-                sScrollX: "150%",
-                sScrollXInner: "150%",
                 ajax:{
                     url: "{{ route('jalan') }}",
                     data:function(d){
-                        if(kecamatan != ''){
+                        if(kecamatan !== ''){
                             d.kecamatan= kecamatan
                         }
-                        if(kelas_jalan != ''){
+                        if(kelas_jalan !== ''){
                             d.kelas_jalan= kelas_jalan
                         }
-                        if(status_jalan != ''){
+                        if(status_jalan !== ''){
                             d.status_jalan= status_jalan
                         }
-                        if(jenis_perkerasan != ''){
+                        if(jenis_perkerasan !== ''){
                             d.jenis_perkerasan= jenis_perkerasan
                         }
 
@@ -209,8 +199,8 @@
                 },
                 columns: [
                     { data: 'DT_RowIndex', searchable: false },
-                    { data: 'nama_ruas', name: 'Nama Ruas' },
-                    { data: 'kecamatan', name: 'kecamatan' },
+                    { data: 'nama_ruas', name: 'nama_ruas', searchable: true },
+                    { data: 'kecamatan', name: 'kecamatan', searchable: false  },
                     { data: 'status_jalan', name: 'status_jalan' },
                     { data: 'panjang', name: 'panjang' },
                     { data: 'lebar', name: 'lebar' },
@@ -219,8 +209,6 @@
                     { data: 'sedang', name: 'sedang' },
                     { data: 'rusak_ringan', name: 'rusak_ringan' },
                     { data: 'rusak_berat', name: 'rusak_berat' },
-                    { data: 'mantap', name: 'mantap' },
-                    { data: 'tidak_mantap', name: 'tidak_mantap' },
                     { data: 'action', name: 'Action', orderable: false, searchable: false },
                 ],
                 columnDefs: [
@@ -230,13 +218,14 @@
                         width: "4%"
                     },
                     {
-                        targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+                        targets: [3, 4, 5, 6, 7, 8, 9, 10, 11],
                         className: "text-center"
-                    }
+                    },
+                    { searchable: true, targets: 1 }
                 ],
                 buttons: [
                     'pdf'
-                ]
+                ],
             });
 
             $(".filter").on('change',function(){

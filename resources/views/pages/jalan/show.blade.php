@@ -127,8 +127,6 @@
                                     <th>{{ __('Sedang')}}</th>
                                     <th>{{ __('Rusak Ringan')}}</th>
                                     <th>{{ __('Rusak Berat')}}</th>
-                                    <th>{{ __('Mantap')}}</th>
-                                    <th>{{ __('Tidak Mantap')}}</th>
                                 </tr>
                             </thead>
                             <tbody style="text-align: center">
@@ -137,8 +135,6 @@
                                     <td>{{ $data->sedang }}</td>
                                     <td>{{ $data->rusak_ringan }}</td>
                                     <td>{{ $data->rusak_berat }}</td>
-                                    <td>{{ $data->mantap }}</td>
-                                    <td>{{ $data->tidak_mantap }}</td>
                                 </tr>
                             </tbody>
                         </table>

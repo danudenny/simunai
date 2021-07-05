@@ -250,13 +250,11 @@
             let sedang = {!! $sedang[0]->sedang !!};
             let rusak_ringan = {!! $rusak_ringan[0]->rusak_ringan !!};
             let rusak_berat = {!! $rusak_berat[0]->rusak_berat !!};
-            let mantap = {!! $mantap[0]->mantap !!};
-            let tidak_mantap = {!! $tidak_mantap[0]->tidak_mantap !!};
 
             new Chart(document.getElementById("bar-chart"), {
                 type: 'bar',
                 data: {
-                    labels: ["Baik", "Sedang", "Rusak Ringan", "Rusak Berat", "Mantap", "Tidak Mantap"],
+                    labels: ["Baik", "Sedang", "Rusak Ringan", "Rusak Berat"],
                     datasets: [
                         {
                             label: "Panjang Jalan (Km)",
@@ -265,9 +263,7 @@
                                 baik.toPrecision(3),
                                 sedang.toPrecision(3),
                                 rusak_ringan.toPrecision(3),
-                                rusak_berat.toPrecision(3),
-                                mantap.toPrecision(3),
-                                tidak_mantap.toPrecision(3)],
+                                rusak_berat.toPrecision(3)],
                         }
                     ]
                 },

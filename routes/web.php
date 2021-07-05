@@ -16,6 +16,7 @@ use App\Http\Controllers\KontraktorController;
 use App\Http\Controllers\LaporanKontroller;
 use App\Http\Controllers\MapsController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\MainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetF
 Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
 
 // Maps
-Route::get('/', [MapsController::class,'index'])->name('dashboard');
+Route::get('/', [MainController::class,'index'])->name('main');
 Route::get('/maps', [MapsController::class,'index'])->name('maps');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

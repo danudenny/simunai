@@ -204,20 +204,6 @@
                             <span class="text-danger">{{ $errors->first('rusak_berat') }}</span>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Mantap (km)</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" value="{{ $data->mantap }}" name="mantap" placeholder="0">
-                            <span class="text-danger">{{ $errors->first('mantap') }}</span>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="namaRuasInput" class="col-sm-3 col-form-label">Panjang Tidak Mantap (km)</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" value="{{ $data->tidak_mantap }}" name="tidak_mantap" placeholder="0">
-                            <span class="text-danger">{{ $errors->first('tidak_mantap') }}</span>
-                        </div>
-                    </div>
                     <hr>
                     <h4 class="sub-title"><b><i class="ik ik-image"></i> Upload Data Peta, Gambar, dan Video</b></h4>
                     <div class="form-group row">

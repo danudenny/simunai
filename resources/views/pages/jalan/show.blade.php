@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="wilayahKecamatanInput" class="col-sm-3 col-form-label">Wilayah Kecamatan</label>
-                            <span>: <b>{{ $data->kecamatan->nama }}</b></span>
+                            <span>: <b>{{ $data->kec_name }}</b></span>
                         </div>
                         <div class="form-group row">
                             <label for="panjangInput" class="col-sm-3 col-form-label">Panjang (m)</label>
@@ -139,11 +139,6 @@
                             </tbody>
                         </table>
 
-                        <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
-                            <a href="{{ url($data->geojson) }}" class="text-info" target="_blank">: <b><i class="ik ik-download" title="Download"></i> {{ $data->geojson }}</b></a>
-                        </div>
-
                         <div class="card-footer">
                         <a class="btn btn-success" href="{{ route('jalan') }}"><i class="ik ik-repeat" title="Cancel"></i> Kembali</a>
                         </div>
@@ -157,6 +152,7 @@
                 </div>
                 <div class="card-body">
                     <h4 class="sub-title">Lokasi Ruas Jalan</h4>
+                    <input type="hidden" id="featureLayer" value="{{ $data->feature_layer }}">
                     <div id="mapid"></div>
                 </div>
             </div>
@@ -176,7 +172,9 @@
                                     <ul class="splide__list">
                                         @if ($lampiran->isEmpty())
                                             <li class="splide__slide">
-                                                <img src="{{ asset('/img/no-image.png') }}" />
+                                                <div class="alert alert-primary text-center" role="alert">
+                                                    <h1>Tidak Ada Gambar / Foto</h1>
+                                                </div>
                                             </li>
                                         @else
                                             @foreach($lampiran as $image)
@@ -195,6 +193,11 @@
                     <div class="col-md-6">
                         <div class="card-body">
                             <h4 class="sub-title">Video Jalan</h4>
+                            @if ($lampiran->isEmpty())
+                            <div class="alert alert-primary text-center" role="alert">
+                                <h1>Tidak Ada Video</h1>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -322,19 +325,20 @@
             preferCanvas: true
         });
 
-        var datageojson = "{{ url($data->geojson) }}";
+
+        // var datageojson = JSON.parse("{!! json_encode($data->feature_layer) !!}");
+        let datageojson = document.getElementById("featureLayer").value; 
         function style(feature) {
             return {
                 weight: 5,
                 color: 'red',  //Outline color
             };
         }
-        $.getJSON(datageojson, function(data) {
-            var geo = L.geoJson(data, {
-                style: style
-            }).addTo(map);
-            map.fitBounds(geo.getBounds());
-        })
+        var geo = L.geoJson(JSON.parse(datageojson), {
+            style: style
+        }).addTo(map);
+
+        map.fitBounds(geo.getBounds());
         const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);

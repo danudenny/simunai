@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use Shapefile\Shapefile;
+use Shapefile\ShapefileException;
+use Shapefile\ShapefileReader;
+use ZipArchive;
 
 class JalanController extends Controller
 {
@@ -81,7 +85,7 @@ class JalanController extends Controller
                                     " . csrf_field() . "
                                     <input type='hidden' name='_method' value='delete'>
                                     <a class='btn btn-info btn-rounded' href='jalan/edit/$jalan->id'>Edit</a>
-                                    <button type='submit' class='btn btn-danger btn-rounded delete-confirm' data-id='$jalan->id'>Hapus</button>
+                                    <button type='submit' class='btn btn-danger btn-rounded delete-confirm' data-id='$jalan->id'>Del</button>
                                 </form>
                             </div>";
                     }
@@ -102,8 +106,33 @@ class JalanController extends Controller
 
     public function show($id)
     {
-        $where = array('id' => $id);
-        $data = Jalan::where($where)->first();
+        $where = array('jalan.id' => $id);
+        $data = \DB::table('jalan')
+            ->select('jalan.*', 'kecamatan.nama as kec_name',\DB::raw("json_build_object(
+                'type', 'FeatureCollection',
+                'crs',  json_build_object(
+                    'type',      'name', 
+                    'properties', json_build_object(
+                        'name', 'EPSG:4326'  
+                    )
+                ), 
+                'features', json_agg(
+                    json_build_object(
+                        'type', 'Feature',
+                        'id', jalan.id,
+                        'geometry', ST_AsGeoJSON(GEOM)::json,
+                        'properties', json_build_object(
+                            'id', jalan.id,
+                            'nama', jalan.nama_ruas
+                        )
+                    )
+                )
+            ) as feature_layer"))
+            ->leftJoin('kecamatan', 'kecamatan.id', 'jalan.kecamatan_id')
+            ->where($where)
+            ->groupBy('jalan.id', 'kecamatan.nama')
+            ->first();
+
         $kecamatan = Kecamatan::orderBy('nama')->get();
         $lampiran = Lampiran::where('jalan_id', '=', $id)->get();
         $laporan = LaporanWarga::where('jalan_id', '=', $id)->get();
@@ -212,6 +241,32 @@ class JalanController extends Controller
             $request->file('geojson')->move(public_path('peta/jalan/'), $request->file('geojson')->getClientOriginalName());
         }
 
+        $convertToGeom = [];
+        if ($request->hasFile('shp')) {
+            $file = $request->file('shp');
+            $originalName = $file->getClientOriginalName();
+            $request->file('shp')->move(public_path('peta/jalan/'), $originalName);
+            $zip = new ZipArchive();
+            $status = $zip->open($request->file("shp")->getRealPath());
+            if ($status) {
+                $storageDestinationPath= public_path("tmp/peta/unzip/".$originalName."/");
+                if (!\File::exists( $storageDestinationPath)) {
+                    \File::makeDirectory($storageDestinationPath, 0755, true);
+                }
+                $zip->extractTo($storageDestinationPath);
+                $getShpFile = \File::glob($storageDestinationPath."*.shp");
+                $Shapefile = new ShapefileReader($getShpFile[0]);
+
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                    $getGeojson = $Geometry->getGeoJSON();
+                    $toGeom = \DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
+                    array_push($convertToGeom, $toGeom);
+                }
+
+            }
+
+        }
+
         $tambahJalan = Jalan::create([
             'nama_ruas' => $request->nama_ruas,
             'kecamatan_id' => $request->kecamatan_id,
@@ -232,7 +287,7 @@ class JalanController extends Controller
             'rusak_berat' => $request->rusak_berat,
             'mantap' => $request->mantap,
             'tidak_mantap' => $request->tidak_mantap,
-            'geojson' => 'peta/jalan/' . $request->file('geojson')->getClientOriginalName(),
+            'geom' => $convertToGeom[0],
         ]);
 
         if($request->hasfile('images')) {

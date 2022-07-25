@@ -20,7 +20,6 @@ class Jalan extends Model
         'lebar',
         'jenis_perkerasan',
         'kelas_jalan',
-        'geojson',
         'th_data',
         'style',
         'kecamatan_id',
@@ -35,8 +34,7 @@ class Jalan extends Model
         'sedang',
         'rusak_ringan',
         'rusak_berat',
-        'mantap',
-        'tidak_mantap'
+        'geom'
     ];
 
     public function kecamatan() {

@@ -11,6 +11,7 @@ use App\LaporanWarga;
 use App\Riwayat;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -107,8 +108,8 @@ class JalanController extends Controller
     public function show($id)
     {
         $where = array('jalan.id' => $id);
-        $data = \DB::table('jalan')
-            ->select('jalan.*', 'kecamatan.nama as kec_name',\DB::raw("json_build_object(
+        $data = DB::table('jalan')
+            ->select('jalan.*', 'kecamatan.nama as kec_name',DB::raw("json_build_object(
                 'type', 'FeatureCollection',
                 'crs',  json_build_object(
                     'type',      'name', 
@@ -145,8 +146,31 @@ class JalanController extends Controller
         $where = array('id' => $id);
         $kecamatan = Kecamatan::orderBy('nama')->get();
         $data = Jalan::where($where)->first();
+        $mapData = DB::table('jalan')
+            ->select(DB::raw("json_build_object(
+                'type', 'FeatureCollection',
+                'crs',  json_build_object(
+                    'type',      'name', 
+                    'properties', json_build_object(
+                        'name', 'EPSG:4326'  
+                    )
+                ), 
+                'features', json_agg(
+                    json_build_object(
+                        'type', 'Feature',
+                        'id', jalan.id,
+                        'geometry', ST_AsGeoJSON(GEOM)::json,
+                        'properties', json_build_object(
+                            'id', jalan.id,
+                            'nama', jalan.nama_ruas
+                        )
+                    )
+                )
+            ) as feature_layer"))
+            ->where($where)
+            ->first();
         $lampiran = Lampiran::where(['jalan_id' => $id])->first();
-        return view('pages.jalan.edit', compact('data', 'kecamatan', 'lampiran'));
+        return view('pages.jalan.edit', compact('data', 'kecamatan', 'lampiran', 'mapData'));
     }
 
     public function update(Request $request, $id)
@@ -157,6 +181,7 @@ class JalanController extends Controller
             'panjang' => 'required|numeric',
             'lebar' => 'required|numeric',
         ]);
+
         $update = [
             'nama_ruas' => $request->nama_ruas,
             'kecamatan_id' => $request->kecamatan_id,
@@ -175,13 +200,77 @@ class JalanController extends Controller
             'sedang' => $request->sedang,
             'rusak_ringan' => $request->rusak_ringan,
             'rusak_berat' => $request->rusak_berat,
-            'mantap' => $request->mantap,
-            'tidak_mantap' => $request->tidak_mantap,
         ];
 
         if ($request->hasFile('geojson')) {
             $request->file('geojson')->move(public_path('peta/jalan/'), $request->file('geojson')->getClientOriginalName());
             $update['geojson'] = 'peta/jalan/' . $request->file('geojson')->getClientOriginalName();
+        }
+
+        if($request->hasfile('images')) {
+            foreach($request->file('images') as $image) {
+                $name = $image->getClientOriginalName();
+                $image->move(public_path('foto/jalan/'), $name);
+                $dataimg[] = $name;
+            }
+
+            $update_lampiran['file_name'] = json_encode($dataimg);
+            $update_lampiran['is_video'] = ($request->url) ? true : false;
+            $update_lampiran['url'] = ($request->url) ? json_encode($request->url) : '';
+
+            $getLampiranImages = Lampiran::where('jalan_id', $id)->where('is_video', false)->first();
+            $getLampiranVideo = Lampiran::where('jalan_id', $id)->where('is_video', true)->first();
+            // dd($getLampiranVideo);
+            if ($getLampiranImages == null) {
+                $createLampiran= Lampiran::create([
+                    'jalan_id' => $id,
+                    'file_name' => json_encode($dataimg),
+                    'is_video' => false,
+                    'url' => '',
+                ]);
+
+                $createLampiran->save();
+            }
+
+            if ($getLampiranVideo == null) {
+                $createLampiran= Lampiran::create([
+                    'jalan_id' => $id,
+                    'file_name' => '',
+                    'is_video' => true,
+                    'url' => ($request->url) ? json_encode($request->url) : '',
+                ]); 
+                // dd($createLampiran);
+            }
+            $upload_images = Lampiran::where('jalan_id', $id)->update($update_lampiran);
+
+        }
+
+        $convertToGeom = [];
+        if ($request->hasFile('shp')) {
+            $file = $request->file('shp');
+            $originalName = $file->getClientOriginalName();
+            $zip = new ZipArchive();
+            $status = $zip->open($request->file("shp")->getRealPath());
+            if ($status) {
+                $storageDestinationPath= public_path("tmp/peta/unzip/".$originalName."/");
+                if (!File::exists( $storageDestinationPath)) {
+                    File::makeDirectory($storageDestinationPath, 0755, true);
+                }
+                $zip->extractTo($storageDestinationPath);
+                $getShpFile = File::glob($storageDestinationPath."*.shp");
+                $Shapefile = new ShapefileReader($getShpFile[0]);
+
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                    $getGeojson = $Geometry->getGeoJSON();
+                    $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
+                    array_push($convertToGeom, $toGeom);
+                }
+
+                $update['geom'] = $toGeom ;
+
+            }
+            $request->file('shp')->move(public_path('peta/jalan/'), $originalName);
+
         }
 
         $update['nama_ruas'] = $request->get('nama_ruas');
@@ -201,22 +290,6 @@ class JalanController extends Controller
         $update['sedang'] = $request->get('sedang');
         $update['rusak_ringan'] = $request->get('rusak_ringan');
         $update['rusak_berat'] = $request->get('rusak_berat');
-        $update['mantap'] = $request->get('mantap');
-        $update['tidak_mantap'] = $request->get('tidak_mantap');
-
-        if($request->hasfile('images')) {
-            foreach($request->file('images') as $image) {
-                $name = $image->getClientOriginalName();
-                $image->move(public_path('foto/jalan/'), $name);
-                $dataimg[] = $name;
-            }
-
-
-            $update_lampiran['file_name'] = json_encode($dataimg);
-            $update_lampiran['is_video'] = ($request->url) ? true : false;
-            $update_lampiran['url'] = ($request->url) ? json_encode($request->url) : '';
-            $upload_images = Lampiran::where('jalan_id', $id)->update($update_lampiran);
-        }
 
         $notification = array(
             'message' => 'Sukses Memperbarui Data Ruas Jalan!',
@@ -250,16 +323,16 @@ class JalanController extends Controller
             $status = $zip->open($request->file("shp")->getRealPath());
             if ($status) {
                 $storageDestinationPath= public_path("tmp/peta/unzip/".$originalName."/");
-                if (!\File::exists( $storageDestinationPath)) {
-                    \File::makeDirectory($storageDestinationPath, 0755, true);
+                if (!File::exists( $storageDestinationPath)) {
+                    File::makeDirectory($storageDestinationPath, 0755, true);
                 }
                 $zip->extractTo($storageDestinationPath);
-                $getShpFile = \File::glob($storageDestinationPath."*.shp");
+                $getShpFile = File::glob($storageDestinationPath."*.shp");
                 $Shapefile = new ShapefileReader($getShpFile[0]);
 
                 while ($Geometry = $Shapefile->fetchRecord()) {
                     $getGeojson = $Geometry->getGeoJSON();
-                    $toGeom = \DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
+                    $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                     array_push($convertToGeom, $toGeom);
                 }
 

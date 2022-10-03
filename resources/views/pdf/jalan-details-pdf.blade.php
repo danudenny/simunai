@@ -178,7 +178,7 @@
             </div>
             <hr>
             <div class="card-body">
-                <img src="{{ $map_image }}" alt="" height="230" width="490">
+                <img src="{{ $map_image }}" alt="" height="350" width="490">
             </div>
         </div>
     </div>
@@ -215,7 +215,7 @@
             </div>
         </div>
     </div>
-    <div class="container" style="margin-top: 150px;">
+    <div class="container">
         <div class="card-full">
             <div class="card-header">
                 Data Riwayat Pemeliharaan Jalan
@@ -287,16 +287,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="card-full">
-            <div class="card-header">
-                Foto Ruas Jalan
-            </div>
-            <hr>
-            <div class="card-body">
             </div>
         </div>
     </div>

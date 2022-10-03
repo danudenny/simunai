@@ -228,21 +228,6 @@
                             <h4 class="sub-title"><b><i class="ik ik-image"></i> Upload Data Peta, Gambar, dan Video</b>
                             </h4>
                             <div class="form-group row">
-                                <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
-                                <div class="col-sm-9">
-                                    <input type="file" name="geojson" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled
-                                            placeholder="File GeoJSON" accept="*/*">
-                                        <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-primary"
-                                                type="button">Upload</button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
                                 <label for="kelasJalanInput" class="col-sm-3 col-form-label">File SHP</label>
                                 <div class="col-sm-9">
                                     <input type="file" name="shp" class="file-upload-default">

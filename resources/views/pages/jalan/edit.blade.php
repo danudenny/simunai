@@ -4,6 +4,13 @@
 @push('head')
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
+    <script src="{{ asset('js/leaflet.min.js') }}"></script>
+    <style>
+        #mapid {
+            height: 30vh;
+        }
+    </style>
 @endpush
 <div class="container-fluid">
     <div class="page-header">
@@ -206,7 +213,7 @@
                     </div>
                     <hr>
                     <h4 class="sub-title"><b><i class="ik ik-image"></i> Upload Data Peta, Gambar, dan Video</b></h4>
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label for="kelasJalanInput" class="col-sm-3 col-form-label">File GeoJSON</label>
                         <div class="col-sm-9">
                             <input type="file" name="geojson" class="file-upload-default">
@@ -217,32 +224,51 @@
                                     </span>
                             </div>
                         </div>
+                    </div> --}}
+
+                    <h4 class="sub-title">Lokasi Ruas Jalan</h4>
+                    <input type="hidden" id="featureLayer" value="{{ $mapData->feature_layer }}">
+                    <div id="mapid"></div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="kelasJalanInput" class="col-sm-3 col-form-label">Update SHP</label>
+                        <div class="col-sm-9">
+                            <input type="file" name="shp" class="file-upload-default">
+                            <div class="input-group col-xs-12">
+                                <input type="text" class="form-control file-upload-info" disabled
+                                    placeholder="File SHP" accept="*/*">
+                                <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-primary"
+                                        type="button">Upload</button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-{{--                    <div class="form-group row">--}}
-{{--                        <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>--}}
-{{--                        <div class="col-sm-9">--}}
-{{--                            <div class="input-group col-xs-12 control-group increment">--}}
-{{--                                <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">--}}
-{{--                                <span class="input-group-append">--}}
-{{--                                        <button class="file-upload-browse btn btn-success add-img" type="button">Tambah Gambar</button>--}}
-{{--                                    </span>--}}
-{{--                            </div>--}}
-{{--                            <div class="clone hide">--}}
-{{--                                <div class="input-group control-group col-xs-12">--}}
-{{--                                    <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">--}}
-{{--                                    <span class="input-group-append">--}}
-{{--                                            <button class="file-upload-browse btn btn-danger rem-img" type="button">Hapus Gambar</button>--}}
-{{--                                        </span>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="form-group row">--}}
-{{--                        <label class="col-sm-3 col-form-label">Upload Video</label>--}}
-{{--                        <div class="col-sm-9">--}}
-{{--                            <input type="text" name="url" value="{{ ($lampiran == null) ? '' : $lampiran->url }}" class="form-control" placeholder="URL Video">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                   <div class="form-group row">
+                       <label class="col-sm-3 col-form-label">Upload Gambar / Foto</label>
+                       <div class="col-sm-9">
+                           <div class="input-group col-xs-12 control-group increment">
+                               <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
+                               <span class="input-group-append">
+                                       <button class="file-upload-browse btn btn-success add-img" type="button">Tambah Gambar</button>
+                                   </span>
+                           </div>
+                           <div class="clone hide">
+                               <div class="input-group control-group col-xs-12">
+                                   <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
+                                   <span class="input-group-append">
+                                           <button class="file-upload-browse btn btn-danger rem-img" type="button">Hapus Gambar</button>
+                                       </span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-group row">
+                       <label class="col-sm-3 col-form-label">Upload Video</label>
+                       <div class="col-sm-9">
+                           <input type="text" name="url" value="{{ ($lampiran == null) ? '' : $lampiran->url }}" class="form-control" placeholder="URL Video">
+                       </div>
+                   </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary pull-right"><i class="ik ik-save" title="Simpan"></i> Simpan</button>
@@ -257,6 +283,7 @@
     <script src="{{ asset('js/form-components.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
+    <script src="{{ asset('js/leaflet-image.js') }}"></script>
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
 
@@ -277,6 +304,40 @@
             $('.select2').select2();
         });
     </script>
+    <script>
+        var map = L.map('mapid', {
+            scrollWheelZoom: false,
+            zoomControl: false,
+            preferCanvas: true
+        });
+
+
+        // var datageojson = JSON.parse("{!! json_encode($data->feature_layer) !!}");
+        let datageojson = document.getElementById("featureLayer").value; 
+        function style(feature) {
+            return {
+                weight: 5,
+                color: 'red',  //Outline color
+            };
+        }
+        var geo = L.geoJson(JSON.parse(datageojson), {
+            style: style
+        }).addTo(map);
+
+        map.fitBounds(geo.getBounds());
+        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        tileLayer.on("load", () => {
+            leafletImage(map, function (err, canvas) {
+                var img = document.getElementById('mapImgData');
+                img.value = canvas.toDataURL();
+            });
+        })
+
+    </script>
+    
 @endpush
 @endsection
 

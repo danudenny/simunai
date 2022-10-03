@@ -50,6 +50,7 @@
             margin-left: 500px;
             text-align: left;
             padding: 10px;
+            width: auto;
         }
 
         .card-full {
@@ -178,7 +179,7 @@
             </div>
             <hr>
             <div class="card-body">
-                <img src="{{ $map_image }}" alt="" height="350" width="490">
+                <img src="{{ $map_image }}" alt="" height="300" width="auto">
             </div>
         </div>
     </div>

@@ -63,9 +63,15 @@
                     </li>
                 </ul>
                 <!-- Button trigger modal -->
+                @if (Auth::check())
+                <a type="button" class="btn btn-primary nav-btn" href="{{ route('dashboard') }}">
+                    Dashboard
+                </a>
+                @else
                 <a type="button" class="btn btn-primary nav-btn" href="{{ url('login') }}">
                     Login
                 </a>
+                @endif
             </div>
         </div>
     </nav>
@@ -282,10 +288,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="map">
-                                        <iframe
-                                            src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6030.418742494061!2d-111.34563870463673!3d26.01036670629853!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1471908546569"
-                                            width="100%" height="325" style="border: 0" allowfullscreen></iframe>
-                                    </div>
+                                        <div class="mapouter"><div class="gmap_canvas"><iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=600&amp;height=325&amp;hl=en&amp;q=bappeda banyuasin&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a href="https://embed-google-maps.com/">Embed Google Map</a></div><style>.mapouter{position:relative;text-align:right;width:100%;height:325px;}.gmap_canvas {overflow:hidden;background:none!important;width:100%;height:325px;}.gmap_iframe {height:325px!important;}</style></div>                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.webgis')
 @section('title', 'Peta Ruas Jalan')
 @section('content')
 @push('head')
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.0/css/font-awesome.min.css" integrity="sha512-FEQLazq9ecqLN5T6wWq26hCZf7kPqUbFC9vsHNbXMJtSZZWAcbJspT+/NEAQkBfFReZ8r9QlA9JHaAuo28MTJA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style> 
         #mapid {
-            height: 80vh;
+            height: 90vh;
         }
         .jalan_popup .leaflet-popup-content-wrapper {
             background: #fff;
@@ -31,9 +31,18 @@
         .leaflet-popup-content {
             width: auto !important;
         }
+
+        .wrapper .page-wrap .main-content {
+            padding: 0 !important;
+            margin-top: 0 !important;
+        }
+        .wrapper .header-top {
+            padding-left: 0 !important;
+        }
+
     </style>
 @endpush
-<div class="container-fluid">
+<div>
     <div class="row">
         <div class="col-md-12">
             <div id="mapid"></div>
@@ -44,7 +53,7 @@
     <script src="{{ asset('js/zoomhome.min.js') }}"></script>
     <script>
         var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: 'Bappedalitbang Kab. Banyuasin &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         });
 
         var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -60,7 +69,7 @@
         var jalan = L.layerGroup();
 
         var map = L.map('mapid', {
-            center: [-2.3985758, 104.2561946],
+            center: [-2.40818,104.6379751],
             zoom: 9,
             zoomControl: false,
             layers: [osm, jalan, administrasi]

@@ -115,7 +115,7 @@
     <div>
         <img src="{{ $img_src }}" alt="" width="80px" style="position: relative">
         <div style="margin-left: 95px; margin-top: -95px; line-height: 1pt;">
-            <p style="font-size: 22px; font-weight: bold; margin-bottom: -10px; margin-top:40px">PEMERINTAH KABUPATEN BANYUASIN<p>
+            <p style="font-size: 22px; font-weight: bold;">PEMERINTAH KABUPATEN BANYUASIN<p>
             <p style="font-size: 17px; font-weight: bold; ">BAPPEDA DAN LITBANG KABUPATEN BANYUASIN</p>
             <p style="font-size: 12px;">Jl. Lingkaran No. 5. Kedondong Raye. Banyuasin III. Kabupaten Banyuasin. Sumatera Selatan 30753</p>
         </div>
@@ -175,11 +175,11 @@
         </div>
         <div class="card2">
             <div class="card-header">
-                Peta Lokasi Ruas Jalan
+                Lokasi Ruas Jalan
             </div>
             <hr>
-            <div class="card-body" style="height: 350px">
-                <img src="{{ $map_image }}" alt="" height="350" width="auto">
+            <div class="card-body" style="height: 300px">
+                <img src="{{ $map_image }}" alt="" height="300" width="auto">
             </div>
         </div>
     </div>

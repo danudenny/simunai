@@ -57,7 +57,7 @@
                         <div class="tambah-button" style="pull-right: 0">
                             @csrf
                             <input type="hidden" name="mapimg" id="mapImgData">
-                            <button type="submit" id="btnSubmit" class="btn btn-outline-danger" disabled>PDF</button>
+                            <button type="submit" id="btnSubmit" class="btn btn-outline-danger">PDF</button>
                         </div>
                     </form>
 

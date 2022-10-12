@@ -115,14 +115,14 @@
     <div>
         <img src="{{ $img_src }}" alt="" width="80px" style="position: relative">
         <div style="margin-left: 95px; margin-top: -95px; line-height: 1pt;">
-            <p style="font-size: 22px; font-weight: bold;">PEMERINTAH KABUPATEN BANYUASIN<p>
+            <p style="font-size: 22px; font-weight: bold; margin-bottom: -10px; margin-top:40px">PEMERINTAH KABUPATEN BANYUASIN<p>
             <p style="font-size: 17px; font-weight: bold; ">BAPPEDA DAN LITBANG KABUPATEN BANYUASIN</p>
             <p style="font-size: 12px;">Jl. Lingkaran No. 5. Kedondong Raye. Banyuasin III. Kabupaten Banyuasin. Sumatera Selatan 30753</p>
         </div>
         <hr>
     </div>
     <div class="container">
-        <p style="font-size: 20px; font-weight: bold; text-align: center; text-decoration: underline; margin-bottom: 25px;">DATA RUAS {{ Str::upper($data->nama_ruas) }}</p>
+        <p style="font-size: 20px; font-weight: bold; text-align: center; text-decoration: underline; margin-bottom: 25px;">RUAS {{ Str::upper($data->nama_ruas) }}</p>
         <div class="card1">
             <div class="card-header">
                 Detail Ruas Jalan
@@ -175,11 +175,11 @@
         </div>
         <div class="card2">
             <div class="card-header">
-                Lokasi Ruas Jalan
+                Peta Lokasi Ruas Jalan
             </div>
             <hr>
-            <div class="card-body">
-                <img src="{{ $map_image }}" alt="" height="300" width="auto">
+            <div class="card-body" style="height: 350px">
+                <img src="{{ $map_image }}" alt="" height="350" width="auto">
             </div>
         </div>
     </div>
@@ -198,8 +198,6 @@
                         <th>{{ __('Sedang')}}</th>
                         <th>{{ __('Rusak Ringan')}}</th>
                         <th>{{ __('Rusak Berat')}}</th>
-                        <th>{{ __('Mantap')}}</th>
-                        <th>{{ __('Tidak Mantap')}}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -208,8 +206,6 @@
                             <td>{{ $data->sedang }}</td>
                             <td>{{ $data->rusak_ringan }}</td>
                             <td>{{ $data->rusak_berat }}</td>
-                            <td>{{ $data->mantap }}</td>
-                            <td>{{ $data->tidak_mantap }}</td>
                         </tr>
                     </tbody>
                 </table>

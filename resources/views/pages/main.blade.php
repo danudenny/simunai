@@ -28,6 +28,43 @@
     <!-- css -->
     <link rel="stylesheet" href="{{ asset('landing_page/css/style.css') }}" type="text/css" />
 
+    <style>
+        .float {
+            position: fixed;
+            width: 150px;
+            height: 130px;
+            bottom: 70px;
+            background-color: #00776d;
+            color: #FFF;
+            text-align: center;
+            box-shadow: 2px 2px 3px #BEBDBD;
+            z-index: 99;
+        }
+
+        .my-float {
+            text-align: left;
+            padding: 13px;
+            /* line-height: px; */
+        }
+
+        .my-float .desc {
+            font-size: 13px;
+        }
+
+        .my-float .tanggal {
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        @media screen and (max-width: 600px) {
+            .float {
+                visibility: hidden;
+                clear: both;
+                display: none;
+            }
+        }
+    </style>
+
 
 </head>
 
@@ -64,13 +101,13 @@
                 </ul>
                 <!-- Button trigger modal -->
                 @if (Auth::check())
-                <a type="button" class="btn btn-primary nav-btn" href="{{ route('dashboard') }}">
-                    Dashboard
-                </a>
+                    <a type="button" class="btn btn-primary nav-btn" href="{{ route('dashboard') }}">
+                        Dashboard
+                    </a>
                 @else
-                <a type="button" class="btn btn-primary nav-btn" href="{{ url('login') }}">
-                    Login
-                </a>
+                    <a type="button" class="btn btn-primary nav-btn" href="{{ url('login') }}">
+                        Login
+                    </a>
                 @endif
             </div>
         </div>
@@ -203,7 +240,7 @@
         <!-- end Features -->
 
         <!-- Start cta -->
-        <section class="section cta" id="team" >
+        <section class="section cta" id="team">
             <div class="container">
                 <div class="row justify-content-center text-center">
                     <div class="col-lg-6">
@@ -288,7 +325,32 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="map">
-                                        <div class="mapouter"><div class="gmap_canvas"><iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=600&amp;height=325&amp;hl=en&amp;q=bappeda banyuasin&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a href="https://embed-google-maps.com/">Embed Google Map</a></div><style>.mapouter{position:relative;text-align:right;width:100%;height:325px;}.gmap_canvas {overflow:hidden;background:none!important;width:100%;height:325px;}.gmap_iframe {height:325px!important;}</style></div>                                    </div>
+                                        <div class="mapouter">
+                                            <div class="gmap_canvas"><iframe class="gmap_iframe" width="100%"
+                                                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                                                    src="https://maps.google.com/maps?width=600&amp;height=325&amp;hl=en&amp;q=bappeda banyuasin&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a
+                                                    href="https://embed-google-maps.com/">Embed Google Map</a></div>
+                                            <style>
+                                                .mapouter {
+                                                    position: relative;
+                                                    text-align: right;
+                                                    width: 100%;
+                                                    height: 325px;
+                                                }
+
+                                                .gmap_canvas {
+                                                    overflow: hidden;
+                                                    background: none !important;
+                                                    width: 100%;
+                                                    height: 325px;
+                                                }
+
+                                                .gmap_iframe {
+                                                    height: 325px !important;
+                                                }
+                                            </style>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -349,13 +411,23 @@
             <!--end container-->
         </section>
         <!-- End contect -->
+        <div class="float">
+            <div class="my-float">
+                <span>PENGUNJUNG</span>
+                <span class="desc">Hari Ini : {{ $visitorsToday[0]->total }}</span><br>
+                <span class="desc">Total : {{ $visitorsTotal }}</span><br>
+                <span class="tanggal">{{ Carbon\Carbon::now() }}</span>
+            </div>
+
+        </div>
 
         <!-- START FOOTER -->
         <footer class="section footer">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 col-sm-10 text-center">
-                        <img src="https://res.cloudinary.com/killtdj/image/upload/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="" width="150px">
+                        <img src="https://res.cloudinary.com/killtdj/image/upload/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png"
+                            alt="" width="150px">
                         <a href="javascript:void(0)"><img src="images/logo-light.png" height="24"
                                 alt=""></a>
                         <p class="mx-auto mt-sm-4">SISTEM INFORMASI MONITORING PEMBANGUNAN</p>
@@ -379,7 +451,7 @@
                             <p class="mb-0 text-white fs-15">©
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> 
+                                </script>
                             </p>
                         </div>
                     </div>

@@ -169,6 +169,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Shetabit\Visitor\Provider\VisitorServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -233,7 +234,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'Visitor' => Shetabit\Visitor\Facade\Visitor::class,
     ],
 
 ];

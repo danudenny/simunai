@@ -27,9 +27,12 @@
             font-weight: 600 !important;
             font-size: 15px !important;
         }
+        .navbars {
+            width: 100vw;
+        }
     }
 </style>
-<div class="container-fluid bg-info">
+<div class="container-fluid bg-info navbars">
     <nav class="navbar navbar-expand-md navbar-light bg-info">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="" width="32">

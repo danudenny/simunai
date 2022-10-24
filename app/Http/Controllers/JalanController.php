@@ -303,34 +303,12 @@ class JalanController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'nama_ruas' => 'required',
             'kecamatan_id' => 'required',
             'panjang' => 'required|numeric',
             'lebar' => 'required|numeric'
         ]);
-
-        $tambahJalan = new Jalan();
-        $tambahJalan->nama_ruas = $request['nama_ruas'];
-        $tambahJalan->kecamatan_id = $request['kecamatan_id'];
-        $tambahJalan->panjang = $request['panjang'];
-        $tambahJalan->lebar = $request['lebar'];
-        $tambahJalan->status_jalan = $request['status_jalan'];
-        $tambahJalan->jenis_perkerasan = $request['jenis_perkerasan'];
-        $tambahJalan->kelas_jalan = $request['kelas_jalan'];
-        $tambahJalan->th_data = $request['th_data'];
-        $tambahJalan->mendukung = $request['mendukung'];
-        $tambahJalan->uraian_dukungan = $request['uraian_dukungan'];
-        $tambahJalan->titik_pengenal_awal = $request['titik_pengenal_awal'];
-        $tambahJalan->titik_pengenal_akhir = $request['titik_pengenal_akhir'];
-        $tambahJalan->kode_patok = $request['kode_patok'];
-        $tambahJalan->baik = $request['baik'];
-        $tambahJalan->sedang = $request['sedang'];
-        $tambahJalan->rusak_ringan = $request['rusak_ringan'];
-        $tambahJalan->rusak_berat = $request['rusak_berat'];
-        $tambahJalan->mantap = $request['mantap'];
-        $tambahJalan->tidak_mantap = $request['tidak_mantap'];
 
         if ($request->hasFile('geojson')) {
             $request->file('geojson')->move(public_path('peta/jalan/'), $request->file('geojson')->getClientOriginalName());
@@ -355,13 +333,33 @@ class JalanController extends Controller
                     $getGeojson = $Geometry->getGeoJSON();
                     $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                     array_push($convertToGeom, $toGeom);
-                    $tambahJalan->geom = $toGeom;
                 }
             }
 
         }
 
-        $tambahJalan->save();
+        $tambahJalan = Jalan::create([
+            'nama_ruas' => $request->nama_ruas,
+            'kecamatan_id' => $request->kecamatan_id,
+            'panjang' => $request->panjang,
+            'lebar' => $request->lebar,
+            'status_jalan' => $request->status_jalan,
+            'jenis_perkerasan' => $request->jenis_perkerasan,
+            'kelas_jalan' => $request->kelas_jalan,
+            'th_data' => $request->th_data,
+            'mendukung' => $request->mendukung,
+            'uraian_dukungan' => $request->uraian_dukungan,
+            'titik_pengenal_awal' => $request->titik_pengenal_awal,
+            'titik_pengenal_akhir' => $request->titik_pengenal_akhir,
+            'kode_patok' => $request->kode_patok,
+            'baik' => $request->baik,
+            'sedang' => $request->sedang,
+            'rusak_ringan' => $request->rusak_ringan,
+            'rusak_berat' => $request->rusak_berat,
+            'mantap' => $request->mantap,
+            'tidak_mantap' => $request->tidak_mantap,
+            'geom' => $convertToGeom[0],
+        ]);
 
         if($request->hasfile('images')) {
             foreach($request->file('images') as $image) {

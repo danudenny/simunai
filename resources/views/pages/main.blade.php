@@ -130,14 +130,7 @@
                         <p class="text-white-50 fs-20">Sistem Informasi Monitoring Pembangunan Infrastruktur Kabupaten
                             Banyuasin.</p>
                         <div class="home-btn hstack gap-2 flex-column d-sm-block">
-                            <a class="btn btn-white me-1" href="{{ url('dashboard') }}">Dashboard</a>
-                            <a class="modal-btn" href="{{ url('dashboard') }}">
-                                <span class="avatar-sm">
-                                    <span class="avatar-title rounded-circle btn-icon">
-                                        <i class="mdi mdi-play"></i>
-                                    </span>
-                                </span>
-                            </a>
+                            <a class="btn btn-info text-white me-1" href="{{ url('dashboard') }}">Dashboard</a>
                         </div>
                     </div><!-- end col-->
                 </div><!-- end row-->

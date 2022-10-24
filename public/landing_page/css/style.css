@@ -811,7 +811,7 @@ html {
 }
 
 .home-2 {
-  background-image: url("https://images.unsplash.com/photo-1565347878137-a5d5613ee61a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80");
+  background-image: url("https://images.unsplash.com/photo-1465447142348-e9952c393450?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80");
   background-position: center;
   height: 95vh;
 }
@@ -826,7 +826,7 @@ html {
   object-fit: cover;
 }
 .home-2 .bg-overlay {
-  background-color: rgba(37, 45, 49, 0.6);
+  background-color: rgba(37, 45, 49, 0.8);
   background-image: none;
 }
 

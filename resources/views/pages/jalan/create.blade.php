@@ -156,6 +156,8 @@
                                         <option value="Terhubung Jalan Nasional dan Jalan Propinsi">Terhubung Jalan
                                             Nasional & Propinsi</option>
                                         <option value="Terhubung Jalan Nasional">Terhubung Jalan Nasional</option>
+                                        <option value="Food Estate">Food Estate</option>
+                                        <option value="Layanan Dasar">Layanan Dasar</option>
                                     </select>
                                 </div>
                             </div>
@@ -176,10 +178,10 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="lebarInput" class="col-sm-3 col-form-label">Kode Patok</label>
+                                <label for="lebarInput" class="col-sm-3 col-form-label">Nomor Ruas</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" name="kode_patok"
-                                        placeholder="Kode Patok">
+                                        placeholder="Nomor Ruas">
                                     <span class="text-danger">{{ $errors->first('kode_patok') }}</span>
                                 </div>
                             </div>

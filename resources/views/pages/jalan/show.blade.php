@@ -99,7 +99,7 @@
                             <span>: <b>{{ $data->th_data }}</b></span>
                         </div>
                         <div class="form-group row">
-                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Kode Patok</label>
+                            <label for="kelasJalanInput" class="col-sm-3 col-form-label">Nomor Ruas</label>
                             <span>: <b>{{ ($data->kode_patok) ? $data->kode_patok : '-' }}</b></span>
                         </div>
                         <div class="form-group row">

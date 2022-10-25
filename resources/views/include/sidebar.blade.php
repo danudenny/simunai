@@ -54,6 +54,11 @@
                     <a href="{{url('kontraktor')}}"><i class="ik ik-briefcase"></i><span>{{ __('Data Kontraktor')}}</span> </a>
                 </div>
                 @endcan
+                @can('manage_laporan')
+                <div class="nav-item {{ ($segment1 == 'laporan') ? 'active' : '' }}">
+                    <a href="{{url('laporan')}}"><i class="ik ik-paperclip"></i><span>{{ __('Laporan')}}</span> </a>
+                </div>
+                @endcan
         </div>
     </div>
 </div>

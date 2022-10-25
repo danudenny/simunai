@@ -319,23 +319,22 @@
                                 <div class="card-body">
                                     <div class="map">
                                         <div class="mapouter">
-                                            <div class="gmap_canvas"><iframe class="gmap_iframe" width="100%"
+                                            <div class="gmap_canvas"><iframe class="gmap_iframe" width="100%" height="100%"
                                                     frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                                                    src="https://maps.google.com/maps?width=600&amp;height=325&amp;hl=en&amp;q=bappeda banyuasin&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a
-                                                    href="https://embed-google-maps.com/">Embed Google Map</a></div>
+                                                    src="https://maps.google.com/maps?width=600&amp;height=600&amp;hl=en&amp;q=bappeda banyuasin&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe></div>
                                             <style>
                                                 .mapouter {
                                                     position: relative;
                                                     text-align: right;
                                                     width: 100%;
-                                                    height: 325px;
+                                                    height: 600;
                                                 }
 
                                                 .gmap_canvas {
                                                     overflow: hidden;
                                                     background: none !important;
                                                     width: 100%;
-                                                    height: 325px;
+                                                    height: 600;
                                                 }
 
                                                 .gmap_iframe {
@@ -351,45 +350,41 @@
                     <!--end col-->
                     <div class="col-lg-6">
                         <div data-aos="fade-left" data-aos-duration="1800">
-                            <form method="post" onsubmit="return validateForm()" class="contact-form"
-                                name="myForm" id="myForm">
+                            <form action="{{ route('laporan.store.landing') }}" method="POST" enctype="multipart/form-data" name="tambah_laporan" class="forms-sample">
+                                {{ csrf_field() }}
                                 <span id="error-msg"></span>
                                 <div class="row rounded-3 py-3">
-                                    <div class="col-lg-12">
+                                    <input type="hidden" name='jalan_id' value="">
+                                    <div class="form-group col-lg-12">
                                         <div class="position-relative mb-3">
-                                            <span class="input-group-text"><i
-                                                    class="mdi mdi-account-outline"></i></span>
-                                            <input name="name" id="name" type="text" class="form-control"
-                                                placeholder="Enter your name*">
+                                            <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="position-relative mb-3">
-                                            <span class="input-group-text"><i
-                                                    class="mdi mdi-email-outline"></i></span>
-                                            <input name="email" id="email" type="email" class="form-control"
-                                                placeholder="Enter your email*">
+                                            <input type="text" class="form-control" name="phone" placeholder="Telepon">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="position-relative mb-3">
-                                            <span class="input-group-text"><i
-                                                    class="mdi mdi-file-document-outline"></i></span>
-                                            <input name="subject" id="subject" type="text" class="form-control"
-                                                placeholder="Subject">
+                                            <input type="text" class="form-control" name="subject" placeholder="Judul Laporan">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="position-relative mb-3">
-                                            <span class="input-group-text align-items-start"><i
-                                                    class="mdi mdi-comment-text-outline"></i></span>
-                                            <textarea name="comments" id="comments" rows="4" class="form-control" placeholder="Enter your message*"></textarea>
+                                            <textarea type="text" class="form-control" name="description" placeholder="Deskripsi Laporan" rows="3"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="form-group col-lg-12">
+                                        <div class="position-relative mb-3">
+                                            <div class="input-group col-xs-12">
+                                                <input type="file" name="foto" class="form-control file-upload-info" placeholder="Foto" accept="*/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12">
                                         <div class="text-end">
-                                            <input type="submit" id="submit" name="send"
-                                                class="btn btn-primary" value="Send Message">
+                                            <button type="submit" class="btn btn-primary"> Kirim</button>
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +418,7 @@
                             alt="" width="150px">
                         <a href="javascript:void(0)"><img src="images/logo-light.png" height="24"
                                 alt=""></a>
-                        <p class="mx-auto mt-sm-4">SISTEM INFORMASI MONITORING PEMBANGUNAN</p>
+                        <p class="mx-auto mt-sm-4">SISTEM INFORMASI MONITORING PEMBANGUNAN INFRASTRUKTUR</p>
                         <p>KABUPATEN BANYUASIN. SUMATERA SELATAN. 2022</p>
                     </div>
                     <!--end col-->
@@ -479,6 +474,9 @@
 
     <!-- App Js -->
     <script src="{{ asset('landing_page/js/app.js') }}"></script>
+    <script src="{{ asset('js/form-components.js') }}"></script>
+    <script src="{{ asset('js/form-advanced.js') }}"></script>
+
 
 </body>
 

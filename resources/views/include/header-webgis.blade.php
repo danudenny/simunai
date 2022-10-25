@@ -7,6 +7,11 @@
     .mobile-judul {
         display: none
     }
+
+    .header__title {
+        font-weight: 800;
+        color: white
+    }
     @media only screen and (max-width: 600px) {
         h4 {
             display: none;
@@ -36,7 +41,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-info">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="" width="32">
-            SIMUNAI WEBGIS</a>
+            <span class="header__title">SIMUNAI WEBGIS</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>

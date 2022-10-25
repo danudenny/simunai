@@ -49,17 +49,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Email</label>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control" name="email" placeholder="email@email.com">
-                                <span class="text-danger">{{ $errors->first('email') }}</span>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Telepon</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="phone" placeholder="082xxxx">
                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Judul</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="subject" placeholder="Judul Laporan">
+                                <span class="text-danger">{{ $errors->first('subject') }}</span>
                             </div>
                         </div>
                         <div class="form-group row">

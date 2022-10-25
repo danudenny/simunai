@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Data Kontraktor')
+@section('title', 'Laporan Warga')
 @section('content')
 @push('head')
     <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
@@ -14,8 +14,8 @@
                 <div class="page-header-title">
                     <i class="ik ik-briefcase bg-blue"></i>
                     <div class="d-inline">
-                        <h5>{{ __('Data Kontraktor')}}</h5>
-                        <span>{{ __('Informasi data kontraktor.')}}</span>
+                        <h5>{{ __('Data Laporan Warga')}}</h5>
+                        <span>{{ __('Informasi data laporan warga.')}}</span>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{route('dashboard')}}"><i class="ik ik-home"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Data Kontraktor</li>
+                        <li class="breadcrumb-item active" aria-current="page">Data Laporan Warga</li>
                     </ol>
                 </nav>
             </div>
@@ -37,48 +37,34 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="display: flex; justify-content: space-between;">
-                    <h3>{{ __('Data Kontraktor')}}</h3>
-                    <div class="tambah-button" style="pull-right: 0">
-                        <a href="{{ route('kontraktor.tambah') }}" class="btn btn-outline-primary"><i class="ik ik-plus"></i> Tambah Data</a>
-                    </div>
+                    <h3>{{ __('Data Laporan')}}</h3>
                 </div>
                 <div class="card-body">
                     <table id="data_table" class="table">
                         <thead>
                             <tr>
                                 <th>{{ __('No.')}}</th>
-                                <th>{{ __('Nama Kontraktor')}}</th>
+                                <th>{{ __('Nama Pelapor')}}</th>
                                 <th>{{ __('Telepon')}}</th>
-                                <th>{{ __('Email')}}</th>
-                                <th>{{ __('Alamat')}}</th>
-                                <th>{{ __('Status')}}</th>
-                                <th class="nosort">{{ __('Action')}}</th>
+                                <th>{{ __('Judul')}}</th>
+                                <th>{{ __('Deskripsi')}}</th>
+                                {{-- <th class="nosort">{{ __('Action')}}</th> --}}
                             </tr>
                         </thead>
                         <tbody>
                             <?php $no=1 ?>
-                            @foreach ($kontraktor as $data)
+                            @foreach ($laporan as $data)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td><strong><a class="text-success" href="{{ route('kontraktor.details',$data->id) }}">{{ $data->nama }} <i class="ik ik-link" title="Details"></i> <a></strong></td>
-                                <td>{{ $data->telepon }}</td>
-                                <td>{{ $data->email }}</td>
-                                <td>{{ $data->alamat }}</td>
-                                <td><span class="badge badge-{{
-                                    ($data->is_active == true) ? 'success' : 'danger' }}">
-                                    {{ ($data->is_active == true) ? 'Aktif' : 'Non Aktif' }}</span>
-                                </td>
-                                <td>
+                                <td><strong><a class="text-success" href="{{ route('laporan.details',$data->id) }}">{{ $data->nama }} <i class="ik ik-link" title="Details"></i> <a></strong></td>
+                                <td>{{ $data->phone }}</td>
+                                <td>{{ $data->subject }}</td>
+                                <td>{{ $data->description }}</td>
+                                {{-- <td>
                                     <div>
-                                        <a class="btn btn-info btn-rounded" href="{{ route('kontraktor.edit',$data->id) }}">Edit</a>
-                                        <a class="btn btn-danger btn-rounded delete-confirm" data-id="{{ $data->id }}" href="#">Hapus
-                                            <form action="{{ route('kontraktor.hapus', $data->id) }}" id="delete{{ $data->id }}" method="POST">
-                                                @csrf
-                                                @method('delete')
-                                            </form>
-                                        </a>
+                                        <a class="btn btn-info btn-rounded" href="{{ route('laporan.edit',$data->id) }}">Edit</a>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                             @endforeach
                         </tbody>
@@ -120,14 +106,14 @@
         $('.delete-confirm').click(function(e) {
             id = e.target.dataset.id;
             swal({
-                title: "Hapus Data Kontraktor?",
+                title: "Hapus Data Laporan?",
                 text: "Data yang sudah dihapus tidak dapt dikembalikan lagi.",
                 icon: 'warning',
                 buttons: true,
                 dangerMode: true
             }).then((willDelete) => {
                 if(willDelete) {
-                    swal("Data Kontraktor Berhasil Dihapus", {
+                    swal("Data Laporan Berhasil Dihapus", {
                         icon: 'success'
                     });
                     $(`#delete${id}`).submit();

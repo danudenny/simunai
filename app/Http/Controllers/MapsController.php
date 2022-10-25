@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class MapsController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         $data = Jalan::with('kecamatan')
+            ->when($request->has('kecamatan_id'), function($query) use ($request) {
+                $query->where('kecamatan_id', '=', $request->kecamatan_id);
+            })
             ->select('jalan.*', 'kecamatan.nama as kec_name',DB::raw("json_build_object(
                 'type', 'FeatureCollection',
                 'crs',  json_build_object(

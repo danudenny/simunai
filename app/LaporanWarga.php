@@ -12,7 +12,7 @@ class LaporanWarga extends Model
 
     protected $fillable = [
         'nama',
-        'email',
+        'subject',
         'phone',
         'description',
         'foto',

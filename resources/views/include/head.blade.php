@@ -7,8 +7,9 @@
 <link rel="icon" href="{{ asset('favicon.png')}}" />
 
 <!-- font awesome library -->
-<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
 <script src="{{ asset('js/app.js') }}"></script>
 
 <!-- themekit admin template asstes -->

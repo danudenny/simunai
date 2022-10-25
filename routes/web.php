@@ -93,6 +93,7 @@ Route::get('/laporan/edit/{id}', [LaporanKontroller::class,'edit'])->name('lapor
 Route::get('/laporan/details/{id}', [LaporanKontroller::class,'show'])->name('laporan.details');
 Route::patch('/laporan/update/{id}', [LaporanKontroller::class,'update'])->name('laporan.update');
 Route::post('/laporan/store', [LaporanKontroller::class,'store'])->name('laporan.store');
+Route::post('/laporan/store_landing', [LaporanKontroller::class,'store_landing'])->name('laporan.store.landing');
 Route::delete('/laporan/hapus/{id}', [LaporanKontroller::class,'destroy'])->name('laporan.hapus');
 
 Route::group(['middleware' => 'auth'], function(){

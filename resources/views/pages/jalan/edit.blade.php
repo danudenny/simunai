@@ -148,6 +148,8 @@
                                     <option {{ $data->uraian_dukungan == 'Terhubung Jalan Propinsi' ? 'selected':'' }} value="Terhubung Jalan Propinsi">Terhubung Jalan Propinsi</option>
                                     <option {{ $data->uraian_dukungan == 'Terhubung Jalan Nasional dan Jalan Propinsi' ? 'selected':'' }} value="Terhubung Jalan Nasional dan Jalan Propinsi">Terhubung Jalan Nasional & Propinsi</option>
                                     <option {{ $data->uraian_dukungan == 'Terhubung Jalan Nasional' ? 'selected':'' }} value="Terhubung Jalan Nasional">Terhubung Jalan Nasional</option>
+                                    <option {{ $data->uraian_dukungan == 'Food Estate' ? 'selected':'' }} value="Food Estate">Food Estate</option>
+                                    <option {{ $data->uraian_dukungan == 'Layanan Dasar' ? 'selected':'' }} value="Layanan Dasar">Layanan Dasar</option>
                                 </select>
                             </div>
                         </div>
@@ -166,9 +168,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="lebarInput" class="col-sm-3 col-form-label">Kode Patok</label>
+                            <label for="lebarInput" class="col-sm-3 col-form-label">Nomor Ruas</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" value="{{ $data->kode_patok }}"  name="kode_patok" placeholder="Kode Patok">
+                                <input type="text" class="form-control" value="{{ $data->kode_patok }}"  name="kode_patok" placeholder="Nomor Ruas">
                                 <span class="text-danger">{{ $errors->first('kode_patok') }}</span>
                             </div>
                         </div>

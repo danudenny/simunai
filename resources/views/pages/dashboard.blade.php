@@ -114,6 +114,23 @@
                 </div>
             </div>
 
+            {{-- Third --}}
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{ __('Panjang Jalan Per Kecamatan (Kilometer)')}}</h3>
+                    </div>
+                    <div class="card-block">
+                        <div class="chart-container">
+                            <div class="pie-chart-container">
+                                <canvas id="bar-chart-panjang"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Fourth --}}
             <div class="col-md-12 col-lg-6">
                 <div class="card">
                     <div class="card-header">
@@ -245,6 +262,60 @@
                 });
             });
         </script>
+        
+        <script>
+            let panjang = {!! json_encode($panjang, true) !!}
+            let kecamatan = {!! json_encode($kecamatan, true) !!}
+
+            new Chart(document.getElementById("bar-chart-panjang"), {
+                type: 'bar',
+                data: {
+                    labels: kecamatan,
+                    datasets: [
+                        {
+                            label: "Panjang Jalan (Km)",
+                            backgroundColor: [
+                                "#3e95cd",
+                                "#8e5ea2",
+                                "#3cba9f",
+                                "#e8c3b9",
+                                "#c45850",
+                                "#20214F",
+                                "#20603D",
+                                "#ED760E",
+                                "#AF2B1E",
+                                "#025669",
+                                "#C1876B",
+                                "#3B3C36",
+                                "#BEBD7F",
+                                "#CFD3CD",
+                                "#641C34",
+                                "#7FB5B5",
+                                "#924E7D",
+                                "#2271B3",
+                                "#008F39",
+                                "#CF3476",
+                            ],
+                            data: panjang
+                        }
+                    ]
+                },
+                options: {
+                    legend: { display: false },
+                    responsive: true,
+                    plugins: {
+                        datalabels: {
+                            display: true
+                        },
+                        labels: {
+                            render: 'value',
+                            precision: 2
+                        }
+                    }
+                }
+            });
+        </script>
+
         <script>
             let baik = {!! $baik[0]->baik !!};
             let sedang = {!! $sedang[0]->sedang !!};

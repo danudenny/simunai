@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
         // Get Data Pekerasan Jalan
         $baik = Jalan::select(DB::raw("SUM(baik) as baik"))->get();
@@ -39,6 +39,23 @@ class DashboardController extends Controller
             $dataStatus['jumlah'][] = (int) $rs->count;
         }
 
+        // Get Data Jalan By Kecamatan
+        $dataPanjangPerKecamatan = [];
+        $recordKec = Jalan::select(DB::raw("SUM(panjang) as panjang"), 'jalan.kecamatan_id')->with('kecamatan')
+            ->when($request->has('kecamatan_id'), function($query) use ($request) {
+                $query->where('kecamatan_id', $request->kecamatan_id);
+            })
+            ->groupBy('jalan.kecamatan_id')
+            ->orderBy('panjang')
+            ->get();
+        
+        foreach($recordKec as $rk) {
+            $dataPanjangPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
+            $dataPanjangPerKecamatan['panjang'][] = sprintf("%.2f", $rk->panjang);
+        }
+
+        // dd($dataPanjangPerKecamatan['panjang']);
+
         return view('pages.dashboard')
             ->with('data',json_encode($data,JSON_NUMERIC_CHECK))
             ->with('dataStatus',json_encode($dataStatus,JSON_NUMERIC_CHECK))
@@ -47,6 +64,8 @@ class DashboardController extends Controller
             ->with('rusak_ringan', $rusak_ringan)
             ->with('rusak_berat', $rusak_berat)
             ->with('mantap', $mantap)
-            ->with('tidak_mantap', $tidak_mantap);
+            ->with('tidak_mantap', $tidak_mantap)
+            ->with('panjang', $dataPanjangPerKecamatan['panjang'])
+            ->with('kecamatan', $dataPanjangPerKecamatan['kecamatan']);
     }
 }

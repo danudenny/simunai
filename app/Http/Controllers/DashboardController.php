@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jalan;
+use App\Kecamatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class DashboardController extends Controller
         $mantap = Jalan::select(DB::raw("SUM(mantap) as mantap"))->get();
         $tidak_mantap = Jalan::select(DB::raw("SUM(tidak_mantap) as tidak_mantap"))->get();
 
-        $record = Jalan::select(DB::raw("COUNT(*) as count"), DB::raw("jenis_perkerasan as jenis_perkerasan"))
+        $record = Jalan::select(DB::raw("COUNT(*) as count"), "jenis_perkerasan")
             ->groupBy('jenis_perkerasan')
             ->get();
 
@@ -42,19 +43,73 @@ class DashboardController extends Controller
         // Get Data Jalan By Kecamatan
         $dataPanjangPerKecamatan = [];
         $recordKec = Jalan::select(DB::raw("SUM(panjang) as panjang"), 'jalan.kecamatan_id')->with('kecamatan')
-            ->when($request->has('kecamatan_id'), function($query) use ($request) {
-                $query->where('kecamatan_id', $request->kecamatan_id);
-            })
             ->groupBy('jalan.kecamatan_id')
             ->orderBy('panjang')
             ->get();
-        
+
         foreach($recordKec as $rk) {
             $dataPanjangPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
             $dataPanjangPerKecamatan['panjang'][] = sprintf("%.2f", $rk->panjang);
         }
 
-        // dd($dataPanjangPerKecamatan['panjang']);
+        // Get Data Perkerasan Jalan By Kecamatan
+        $dataPerkerasanAspalPerKecamatan = [];
+        $recordPerkerasanAspal = Jalan::select(DB::raw("COUNT(*) as count"), 'jenis_perkerasan', 'jalan.kecamatan_id')->with('kecamatan')
+            ->where('jenis_perkerasan', 'aspal')
+            ->groupBy('jenis_perkerasan', 'kecamatan_id')
+            ->get();
+
+        $dataPerkerasanHotmixPerKecamatan = [];
+        $recordPerkerasanHotmix = Jalan::select(DB::raw("COUNT(*) as count"), 'jenis_perkerasan', 'jalan.kecamatan_id')->with('kecamatan')
+            ->where('jenis_perkerasan', 'hotmix')
+            ->groupBy('jenis_perkerasan', 'kecamatan_id')
+            ->get();
+
+        $dataPerkerasanTanahPerKecamatan = [];
+        $recordPerkerasanTanah = Jalan::select(DB::raw("COUNT(*) as count"), 'jenis_perkerasan', 'jalan.kecamatan_id')->with('kecamatan')
+            ->where('jenis_perkerasan', 'tanah')
+            ->groupBy('jenis_perkerasan', 'kecamatan_id')
+            ->get();
+
+        $dataPerkerasanBetonPerKecamatan = [];
+        $recordPerkerasanBeton = Jalan::select(DB::raw("COUNT(*) as count"), 'jenis_perkerasan', 'jalan.kecamatan_id')->with('kecamatan')
+            ->where('jenis_perkerasan', 'beton')
+            ->groupBy('jenis_perkerasan', 'kecamatan_id')
+            ->get();
+
+        $dataPerkerasanBatuSplitPerKecamatan = [];
+        $recordPerkerasanBatuSplit = Jalan::select(DB::raw("COUNT(*) as count"), 'jenis_perkerasan', 'jalan.kecamatan_id')->with('kecamatan')
+            ->where('jenis_perkerasan', 'batu_split')
+            ->groupBy('jenis_perkerasan', 'kecamatan_id')
+            ->get();
+
+        foreach($recordPerkerasanAspal as $rk) {
+            $dataPerkerasanAspalPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
+            $dataPerkerasanAspalPerKecamatan['count'][] = $rk->count;
+        }
+
+        foreach($recordPerkerasanHotmix as $rk) {
+            $dataPerkerasanHotmixPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
+            $dataPerkerasanHotmixPerKecamatan['count'][] = $rk->count;
+        }
+
+        foreach($recordPerkerasanTanah as $rk) {
+            $dataPerkerasanTanahPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
+            $dataPerkerasanTanahPerKecamatan['count'][] = $rk->count;
+        }
+
+        foreach($recordPerkerasanBeton as $rk) {
+            $dataPerkerasanBetonPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
+            $dataPerkerasanBetonPerKecamatan['count'][] = $rk->count;
+        }
+
+        foreach($recordPerkerasanBatuSplit as $rk) {
+            $dataPerkerasanBatuSplitPerKecamatan['kecamatan'][] = $rk->kecamatan->nama;
+            $dataPerkerasanBatuSplitPerKecamatan['count'][] = $rk->count;
+        }
+
+        // Get Data Kecamatan
+        $dataKecamatan = Kecamatan::all();
 
         return view('pages.dashboard')
             ->with('data',json_encode($data,JSON_NUMERIC_CHECK))
@@ -66,6 +121,12 @@ class DashboardController extends Controller
             ->with('mantap', $mantap)
             ->with('tidak_mantap', $tidak_mantap)
             ->with('panjang', $dataPanjangPerKecamatan['panjang'])
-            ->with('kecamatan', $dataPanjangPerKecamatan['kecamatan']);
+            ->with('kecamatan', $dataPanjangPerKecamatan['kecamatan'])
+            ->with('dataKecamatan', $dataKecamatan)
+            ->with('aspal', $dataPerkerasanAspalPerKecamatan)
+            ->with('hotmix', $dataPerkerasanHotmixPerKecamatan)
+            ->with('tanah', $dataPerkerasanTanahPerKecamatan)
+            ->with('beton', $dataPerkerasanBetonPerKecamatan)
+            ->with('batu_split', $dataPerkerasanBatuSplitPerKecamatan);
     }
 }

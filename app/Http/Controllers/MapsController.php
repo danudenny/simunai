@@ -30,7 +30,8 @@ class MapsController extends Controller
                         'geometry', ST_AsGeoJSON(GEOM)::json,
                         'properties', json_build_object(
                             'id', jalan.id,
-                            'nama', jalan.nama_ruas
+                            'nama', jalan.nama_ruas,
+                            'kecamatan_id', jalan.kecamatan_id
                         )
                     )
                 )

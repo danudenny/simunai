@@ -1,4 +1,10 @@
 <style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+    }
     h4 {
         font-weight: bold;
         margin: 0 auto;
@@ -11,6 +17,10 @@
     .header__title {
         font-weight: 800;
         color: white
+    }
+    .navbars {
+        background-color: #063970;
+        height: 7vh
     }
     @media only screen and (max-width: 600px) {
         h4 {
@@ -37,8 +47,8 @@
         }
     }
 </style>
-<div class="container-fluid bg-info navbars">
-    <nav class="navbar navbar-expand-md navbar-light bg-info">
+<div class="container-fluid navbars">
+    <nav class="navbar navbar-expand-md navbar-light">
         <a class="navbar-brand" href="{{ url('/') }}">
             <img src="https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="" width="32">
             <span class="header__title">SIMUNAI WEBGIS</span></a>

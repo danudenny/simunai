@@ -7,19 +7,13 @@
 
 </head>
 <body id="app" >
-    <div class="wrapper">
     	<!-- initiate header-->
     	@include('include.header-webgis')
-    	<div class="page-wrap">
 	    	<!-- initiate sidebar-->
-	    	<div class="main-content">
+	    	<div class="main-map">
 	    		<!-- yeild contents here -->
 	    		@yield('content')
 	    	</div>
-
-
-    	</div>
-    </div>
 
 	<!-- initiate scripts-->
 	@include('include.script')

@@ -329,11 +329,23 @@ class JalanController extends Controller
                 $getShpFile = File::glob($storageDestinationPath."*.shp");
                 $Shapefile = new ShapefileReader($getShpFile[0]);
 
-                while ($Geometry = $Shapefile->fetchRecord()) {
+                $wgs84Projection = 'GEOGCS["GCS_WGS_84",DATUM["D_WGS_1984",SPHEROID["WGS_84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["Degree",0.017453292519943278,AUTHORITY["EPSG","9102"]],AUTHORITY["EPSG","4326"]]';
+                
+                if($Shapefile->getPRJ() !== $wgs84Projection) {
+                    while ($Geometry = $Shapefile->fetchRecord()) {    
+                        $getGeojson = $Geometry->getGeoJSON();
+                        $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
+                        $toWgs = DB::raw("ST_Transform(ST_SetSRID(".$toGeom.", 32748), 4326)");
+                        array_push($convertToGeom, $toWgs);
+                    }
+                } else {while ($Geometry = $Shapefile->fetchRecord()) {    
                     $getGeojson = $Geometry->getGeoJSON();
                     $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                     array_push($convertToGeom, $toGeom);
                 }
+
+                }
+
             }
 
         }

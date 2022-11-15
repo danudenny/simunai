@@ -51,6 +51,23 @@
                 font-weight: 700;
             }
 
+            .faskes_popup .leaflet-popup-content-wrapper {
+                background: #fff;
+                color: #333;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 24px;
+                border-radius: 0;
+                width: 400px;
+                font-family: "Nunito", sans-serif;
+            }
+
+            .faskes_popup .leaflet-popup-content-wrapper h5 {
+                font-family: "Nunito", sans-serif;
+                text-align: center;
+                font-weight: 700;
+            }
+
             .leaflet-popup-content {
                 width: auto !important;
             }
@@ -260,6 +277,15 @@
                             </div>
                             <div class="form-check">
                                 <label class="switch">
+                                    <input type="checkbox" id="layerFaskes" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Fasilitas Kesehatan
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="switch">
                                     <input type="checkbox" id="layerJembatan">
                                     <span class="slider"></span>
                                 </label>
@@ -283,18 +309,18 @@
                             <span class="sidepanel-title"><i class="fas fa-stream"></i> Informasi</span>
                         </div>
                         <div id="information" class="sidepanel-content">
-                            
+
                         </div>
                     </div>
                     <div>
                         <div id="legend" class="sidepanel-content-bottom">
                             <img
-                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Coat_of_arms_of_South_Sumatra.svg/1200px-Coat_of_arms_of_South_Sumatra.svg.png" 
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Coat_of_arms_of_South_Sumatra.svg/1200px-Coat_of_arms_of_South_Sumatra.svg.png"
                                 alt=""
                                 width="55"
                             >
                             <img
-                                src="https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" 
+                                src="https://res.cloudinary.com/killtdj/image/upload/q_40/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png"
                                 alt=""
                                 width="70"
                             >
@@ -343,12 +369,13 @@
 
             var administrasi = L.layerGroup();
             var jalan = L.layerGroup();
+            var faskes = L.layerGroup();
 
             var map = L.map('mapid', {
                 center: [-2.40818, 104.6379751],
                 zoom: 9,
                 zoomControl: false,
-                layers: [mapboxStreet, jalan, administrasi]
+                layers: [mapboxStreet, jalan, administrasi, faskes]
             });
 
             var zoomHome = L.Control.zoomHome();
@@ -391,6 +418,15 @@
                         return;
                     } else {
                         jalan.remove();
+                        return;
+                    }
+                });
+                $("#layerFaskes").change(function() {
+                    if ($(this).prop("checked")) {
+                        faskes.addTo(map);
+                        return;
+                    } else {
+                        faskes.remove();
                         return;
                     }
                 });
@@ -478,7 +514,6 @@
                 }).addTo(jalan).bindPopup(popupInfo, popupOption).bringToFront()
 
                 geo.clearLayers();
-                console.log();
                 geo.addData(JSON.parse(datageojson));
 
                 function style(feature) {
@@ -514,6 +549,64 @@
                         dehighlight(previous);
                     }
                 }
+            @endforeach
+
+            // Faskes Geojson Processing
+            @foreach ($faskes as $value)
+            var datageojsonFaskes = '<?php echo $value->feature_layer; ?>';
+            var selectedFaskes = null;
+            var popupOptionFaskes = {
+                className: "faskes_popup"
+            };
+            var faskesIcon = L.icon({
+                iconUrl: '{{ url("mapicon/hospital.png") }}',
+                iconSize: [32, 34],
+            });
+            var popupFaskesInfo =
+                "<h5 class='text-warning'>" + '{{ $value->nama_faskes }}' + "</h5><hr>" +
+                "<label class='col-sm-5 col-form-label'>Kecamatan</label>" +
+                "<span>: <b>" + '{{ $value->kecamatan->nama }}' + "</b></span></br>" +
+                "<label class='col-sm-5 col-form-label'>Kemampuan Pelayanan</label>" +
+                "<span>: <b>" + '{{ $value->kemampuan_pelayanan == "rawat_inap" ? "Rawat Inap" : "Non Rawat Inap" }}' + "</b></span></br>" +
+                "<label class='col-sm-5 col-form-label'>Status</label>" +
+                "<span>: <b>" + '{{ $value->status == "memenuhi" ? "Memenuhi" : "Tidak Memenuhi" }}' + "</b></span></br>" +
+                "<label class='col-sm-5 col-form-label'>Tipe</label>" +
+                "<span>: <b>" + '{{ $value->type == "puskesmas" ? "Puskesmas" : "Rumah Sakit" }}' + "</b></span></br>" +
+                "<label class='col-sm-5 col-form-label'>Kode</label>" +
+                "<span>: <b>" + '{{ $value->kode }}' + "</b></span></br>" +
+                "<label class='col-sm-5 col-form-label'>Alamat</label>" +
+                "<span>: <b>" + '{{ $value->alamat }}' + "</b></span></br>" +
+                "<a class='btn btn-block btn-primary text-default'style='margin-top: 15px;' type='button' href='{{ route('faskes.details', $value->id) }}'><i class='ik ik-external-linkl'></i> Details</a>";
+            // let selected = null;
+            var geoFaskes = L.geoJson(JSON.parse(datageojsonFaskes), {
+                filter: function(feature) {
+                    $('#select-kecamatan').change(function() {
+                        let selectedIds = $(this).children('option:selected').val();
+                        if (selectedIds != 0) {
+                            return feature.properties.kecamatan_id == selectedIds;
+                        }
+                    })
+                    return true
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, {icon: faskesIcon});
+                },
+            }).addTo(faskes).bindPopup(popupFaskesInfo, popupOptionFaskes).bringToFront()
+
+            geoFaskes.clearLayers();
+            geoFaskes.addData(JSON.parse(datageojsonFaskes));
+
+            function styleFaskes(feature) {
+                return {
+                    radius: 8,
+                    fillColor: "#ff7800",
+                    color: "#333",
+                    weight: 5,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                };
+            }
+
             @endforeach
             // });
         </script>

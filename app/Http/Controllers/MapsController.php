@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Faskes;
 use App\Jalan;
 use App\Kecamatan;
 use App\Lampiran;
@@ -18,11 +19,11 @@ class MapsController extends Controller
             ->select('jalan.*', 'kecamatan.nama as kec_name',DB::raw("json_build_object(
                 'type', 'FeatureCollection',
                 'crs',  json_build_object(
-                    'type',      'name', 
+                    'type',      'name',
                     'properties', json_build_object(
-                        'name', 'EPSG:4326'  
+                        'name', 'EPSG:4326'
                     )
-                ), 
+                ),
                 'features', json_agg(
                     json_build_object(
                         'type', 'Feature',
@@ -39,7 +40,34 @@ class MapsController extends Controller
             ->leftJoin('kecamatan', 'kecamatan.id', 'jalan.kecamatan_id')
             ->groupBy('jalan.id', 'kecamatan.nama', 'jalan.nama_ruas', 'jalan.kondisi_jalan','jalan.status_jalan','jalan.panjang','jalan.lebar','jalan.jenis_perkerasan','jalan.kelas_jalan','jalan.geojson','jalan.style','jalan.kecamatan_id','jalan.created_at','jalan.updated_at','jalan.th_data','jalan.mendukung','jalan.uraian_dukungan','jalan.titik_pengenal_awal','jalan.titik_pengenal_akhir','jalan.kode_patok','jalan.baik','jalan.sedang','jalan.rusak_ringan','jalan.rusak_berat','jalan.mantap','jalan.tidak_mantap','jalan.geom')
             ->get();
+
+        $faskes = Faskes::with('kecamatan')
+            ->select('kesehatan.*', 'kecamatan.nama as kec_name',DB::raw("json_build_object(
+                'type', 'FeatureCollection',
+                'crs',  json_build_object(
+                    'type',      'name',
+                    'properties', json_build_object(
+                        'name', 'EPSG:4326'
+                    )
+                ),
+                'features', json_agg(
+                    json_build_object(
+                        'type', 'Feature',
+                        'id', kesehatan.id,
+                        'geometry', ST_AsGeoJSON(GEOM)::json,
+                        'properties', json_build_object(
+                            'id', kesehatan.id,
+                            'nama', kesehatan.nama_faskes,
+                            'kecamatan_id', kesehatan.kecamatan_id
+                        )
+                    )
+                )
+            ) as feature_layer"))
+            ->leftJoin('kecamatan', 'kecamatan.id', 'kesehatan.kecamatan_id')
+            ->whereNotNull('kesehatan.geom')
+            ->groupBy('kesehatan.id', 'kecamatan.nama')
+            ->get();
         $kecamatan = Kecamatan::all();
-        return view('pages.maps.index', compact('data', 'kecamatan'));
+        return view('pages.maps.index', compact('data', 'kecamatan', 'faskes'));
     }
 }

@@ -112,11 +112,11 @@ class JalanController extends Controller
             ->select('jalan.*', 'kecamatan.nama as kec_name',DB::raw("json_build_object(
                 'type', 'FeatureCollection',
                 'crs',  json_build_object(
-                    'type',      'name', 
+                    'type',      'name',
                     'properties', json_build_object(
-                        'name', 'EPSG:4326'  
+                        'name', 'EPSG:4326'
                     )
-                ), 
+                ),
                 'features', json_agg(
                     json_build_object(
                         'type', 'Feature',
@@ -150,11 +150,11 @@ class JalanController extends Controller
             ->select(DB::raw("json_build_object(
                 'type', 'FeatureCollection',
                 'crs',  json_build_object(
-                    'type',      'name', 
+                    'type',      'name',
                     'properties', json_build_object(
-                        'name', 'EPSG:4326'  
+                        'name', 'EPSG:4326'
                     )
-                ), 
+                ),
                 'features', json_agg(
                     json_build_object(
                         'type', 'Feature',
@@ -238,7 +238,7 @@ class JalanController extends Controller
                     'file_name' => '',
                     'is_video' => true,
                     'url' => ($request->url) ? json_encode($request->url) : '',
-                ]); 
+                ]);
                 // dd($createLampiran);
             }
             $upload_images = Lampiran::where('jalan_id', $id)->update($update_lampiran);
@@ -261,16 +261,16 @@ class JalanController extends Controller
                 $Shapefile = new ShapefileReader($getShpFile[0]);
 
                 $wgs84Projection = 'GEOGCS["GCS_WGS_84",DATUM["D_WGS_1984",SPHEROID["WGS_84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["Degree",0.017453292519943278,AUTHORITY["EPSG","9102"]],AUTHORITY["EPSG","4326"]]';
-                
+
                 if($Shapefile->getPRJ() !== $wgs84Projection) {
-                    while ($Geometry = $Shapefile->fetchRecord()) {    
+                    while ($Geometry = $Shapefile->fetchRecord()) {
                         $getGeojson = $Geometry->getGeoJSON();
                         $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                         $toWgs = DB::raw("ST_Transform(ST_SetSRID(".$toGeom.", 32748), 4326)");
                         array_push($convertToGeom, $toWgs);
                     }
                 } else {
-                    while ($Geometry = $Shapefile->fetchRecord()) {    
+                    while ($Geometry = $Shapefile->fetchRecord()) {
                         $getGeojson = $Geometry->getGeoJSON();
                         $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                         array_push($convertToGeom, $toGeom);
@@ -341,16 +341,16 @@ class JalanController extends Controller
                 $Shapefile = new ShapefileReader($getShpFile[0]);
 
                 $wgs84Projection = 'GEOGCS["GCS_WGS_84",DATUM["D_WGS_1984",SPHEROID["WGS_84",6378137,298.257223563,AUTHORITY["EPSG","7030"]],AUTHORITY["EPSG","6326"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["Degree",0.017453292519943278,AUTHORITY["EPSG","9102"]],AUTHORITY["EPSG","4326"]]';
-                
+
                 if($Shapefile->getPRJ() !== $wgs84Projection) {
-                    while ($Geometry = $Shapefile->fetchRecord()) {    
+                    while ($Geometry = $Shapefile->fetchRecord()) {
                         $getGeojson = $Geometry->getGeoJSON();
                         $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                         $toWgs = DB::raw("ST_Transform(ST_SetSRID(".$toGeom.", 32748), 4326)");
                         array_push($convertToGeom, $toWgs);
                     }
                 } else {
-                    while ($Geometry = $Shapefile->fetchRecord()) {    
+                    while ($Geometry = $Shapefile->fetchRecord()) {
                         $getGeojson = $Geometry->getGeoJSON();
                         $toGeom = DB::raw("ST_GeomFromGeoJSON('$getGeojson')");
                         array_push($convertToGeom, $toGeom);

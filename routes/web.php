@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FaskesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -67,6 +68,17 @@ Route::post('/jembatan/store', [JembatanController::class,'store'])->name('jemba
 Route::delete('/jembatan/hapus/{id}', [JembatanController::class,'destroy'])->name('jembatan.hapus');
 Route::get('/jembatan/pdf', [JembatanController::class, 'generatePdf'])->name('jembatan.pdf');
 Route::get('/jembatan/excel', [JembatanController::class, 'export_excel'])->name('jembatan.excel');
+
+Route::get('/faskes', [FaskesController::class,'index'])->name('faskes');
+Route::get('/faskes/kecamatan/{id}', [FaskesController::class,'getKecamatanById'])->name('faskes.kecamatan');
+Route::get('/faskes/tambah', [FaskesController::class,'create'])->name('faskes.tambah');
+Route::get('/faskes/edit/{id}', [FaskesController::class,'edit'])->name('faskes.edit');
+Route::get('/faskes/details/{id}', [FaskesController::class,'show'])->name('faskes.details');
+Route::patch('/faskes/update/{id}', [FaskesController::class,'update'])->name('faskes.update');
+Route::post('/faskes/store', [FaskesController::class,'store'])->name('faskes.store');
+Route::delete('/faskes/hapus/{id}', [FaskesController::class,'destroy'])->name('faskes.hapus');
+Route::get('/faskes/pdf', [FaskesController::class, 'generatePdf'])->name('faskes.pdf');
+Route::get('/faskes/excel', [FaskesController::class, 'export_excel'])->name('faskes.excel');
 
 // Kontraktor
 Route::get('/kontraktor', [KontraktorController::class,'index'])->name('kontraktor');

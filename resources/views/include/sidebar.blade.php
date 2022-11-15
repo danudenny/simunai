@@ -40,13 +40,14 @@
 
                 <div class="nav-lavel">{{ __('Master Data')}} </div>
                 <div class="nav-item {{ ($segment1 == 'maps') ? 'active' : '' }}">
-                    <a href="{{url('maps')}}"><i class="ik ik-map"></i><span>{{ __('Peta Ruas Jalan')}}</span> </a>
+                    <a href="{{url('maps')}}"><i class="ik ik-map"></i><span>{{ __('Webgis Infrastruktur')}}</span> </a>
                 </div>
-                <div class="nav-item {{ ($segment1 == 'jalan') ? 'active open' : '' }} has-sub">
-                    <a href="#"><i class="ik ik-git-branch"></i><span>{{ __('Jalan dan Jembatan')}}</span></a>
+                <div class="nav-item {{ ($segment1 == 'jalan' || $segment1 == 'jembatan' || $segment1 == 'faskes') ? 'active open' : '' }} has-sub">
+                    <a href="#"><i class="ik ik-git-branch"></i><span>{{ __('Infrasturktur')}}</span></a>
                     <div class="submenu-content">
                         <a href="{{url('jalan')}}" class="menu-item {{ ($segment1 == 'jalan') ? 'active' : '' }}"><span>{{ __('Data Ruas Jalan')}}</span> </a>
-                        <a href="{{ url('jembatan') }}" class="menu-item"><span>{{ __('Data Jembatan ')}}</span> </a>
+                        <a href="{{ url('jembatan') }}" class="menu-item {{ ($segment1 == 'jembatan') ? 'active' : '' }}"><span>{{ __('Data Jembatan ')}}</span> </a>
+                        <a href="{{ url('faskes') }}" class="menu-item {{ ($segment1 == 'faskes') ? 'active' : '' }}"><span>{{ __('Data Fasilitas Kesehatan ')}}</span> </a>
                     </div>
                 </div>
                 @can('manage_kontraktor')

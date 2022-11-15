@@ -41,4 +41,8 @@ class Jalan extends Model
         return $this->belongsTo(Kecamatan::class);
     }
 
+    public function video() {
+        return $this->belongsTo(VideoJalan::class);
+    }
+
 }

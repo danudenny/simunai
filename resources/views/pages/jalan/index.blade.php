@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <hr>
-                    <table id="example" class="table table-bordered data-table">
+                    <table id="example" class="table table-bordered data-table table-responsive">
                         <thead>
                             <tr>
                                 <th rowspan="2" style="text-align: center;vertical-align: middle;">{{ __('No.')}}</th>

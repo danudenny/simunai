@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/DataTables/datatables.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.21.0/video-js.min.css" integrity="sha512-kCCb9I/QM9hw+hm+JlN2ounNo2bRFZ4r9guSBv0BYk7RezWV2H8eI1unYnpJrU8+2g773WW1qNG+fSQ0X7M3Tg==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
     <script src="{{ asset('js/leaflet.min.js') }}"></script>
     <script src="{{ asset('js/html2canvas.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css">
@@ -193,11 +193,23 @@
                     <div class="col-md-6">
                         <div class="card-body">
                             <h4 class="sub-title">Video Jalan</h4>
-                            @if ($lampiran->isEmpty())
-                            <div class="alert alert-primary text-center" role="alert">
-                                <h1>Tidak Ada Video</h1>
-                            </div>
+                            @if ($video->isEmpty())
+                                <div class="alert alert-primary text-center" role="alert">
+                                    <h1>Tidak Ada Video</h1>
+                                </div>
+                            @else
+                                @foreach($video as $value)
+                                    <video
+                                        id="vid1"
+                                        class="video-js vjs-default-skin"
+                                        controls
+                                        width="560" height="315"
+                                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "{{ urldecode($value->url) }}" }] }'
+                                    >
+                                    </video>
+                                @endforeach
                             @endif
+
                         </div>
                     </div>
                 </div>
@@ -216,7 +228,7 @@
                 </div>
                 <div class="card-body">
                     <div class="dt-responsive">
-                        <table id="scr-vrt-dt" class="table table-bordered nowrap">
+                        <table id="scr-vrt-dt" class="table table-bordered nowrap table-responsive">
                             <thead>
                                 <tr>
                                     <th>{{ __('No.')}}</th>
@@ -270,7 +282,7 @@
                 <div class="card-body">
                     <div class="dt-responsive">
                         <table id="scr-vrt-dt"
-                               class="table table-striped table-bordered nowrap">
+                               class="table table-striped table-bordered nowrap table-responsive">
                             <thead>
                                 <tr>
                                     <th>{{ __('No.')}}</th>
@@ -303,12 +315,14 @@
 </div>
 @push('script')
     <script src="{{ asset('js/form-components.js') }}"></script>
-    <script src="{{ asset('js/leaflet-image.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.21.0/video.min.js" integrity="sha512-oopweCRDrrFVLujKxO9K52XE3h4aRIMHuHMnnPSF/aAxcBH6MzO/P6saQJHIJLun7hsNEmxlBd5nNx7B6hjFmw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js" integrity="sha512-mF+XuiEvJq707N/B9Fm/fI2wgMcWuFLsoztIp0UzEKgHCZgczbYpO2+Vq2TEi0LmE4crVj2r8AYru7X5QjVotw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    <script src="{{ asset('js/leaflet-image.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
     <script src="{{ asset('plugins/DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/datatables.js') }}"></script>
+{{--    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>--}}
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
 
     <script src="{{ asset('js/form-advanced.js') }}"></script>
@@ -327,7 +341,7 @@
 
 
         // var datageojson = JSON.parse("{!! json_encode($data->feature_layer) !!}");
-        let datageojson = document.getElementById("featureLayer").value; 
+        let datageojson = document.getElementById("featureLayer").value;
         function style(feature) {
             return {
                 weight: 5,

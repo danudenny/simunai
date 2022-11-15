@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\JalanExport;
+use App\VideoJalan;
 use Illuminate\Http\Request;
 use App\Jalan;
 use App\Kecamatan;
@@ -136,9 +137,10 @@ class JalanController extends Controller
 
         $kecamatan = Kecamatan::orderBy('nama')->get();
         $lampiran = Lampiran::where('jalan_id', '=', $id)->get();
+        $video = VideoJalan::where('jalan_id', '=', $id)->get();
         $laporan = LaporanWarga::where('jalan_id', '=', $id)->get();
         $riwayat = Riwayat::where('jalan_id', '=', $id)->orderBy('tahun', 'desc')->get();
-        return view('pages.jalan.show', compact('data', 'kecamatan', 'lampiran', 'riwayat', 'laporan'));
+        return view('pages.jalan.show', compact('data', 'kecamatan', 'video', 'lampiran', 'riwayat', 'laporan'));
     }
 
     public function edit($id)
@@ -170,7 +172,8 @@ class JalanController extends Controller
             ->where($where)
             ->first();
         $lampiran = Lampiran::where(['jalan_id' => $id])->first();
-        return view('pages.jalan.edit', compact('data', 'kecamatan', 'lampiran', 'mapData'));
+        $video = VideoJalan::where(['jalan_id' => $id])->first();
+        return view('pages.jalan.edit', compact('data', 'kecamatan', 'video', 'lampiran', 'mapData'));
     }
 
     public function update(Request $request, $id)
@@ -202,11 +205,6 @@ class JalanController extends Controller
             'rusak_berat' => $request->rusak_berat,
         ];
 
-        if ($request->hasFile('geojson')) {
-            $request->file('geojson')->move(public_path('peta/jalan/'), $request->file('geojson')->getClientOriginalName());
-            $update['geojson'] = 'peta/jalan/' . $request->file('geojson')->getClientOriginalName();
-        }
-
         if($request->hasfile('images')) {
             foreach($request->file('images') as $image) {
                 $name = $image->getClientOriginalName();
@@ -215,12 +213,8 @@ class JalanController extends Controller
             }
 
             $update_lampiran['file_name'] = json_encode($dataimg);
-            $update_lampiran['is_video'] = ($request->url) ? true : false;
-            $update_lampiran['url'] = ($request->url) ? json_encode($request->url) : '';
 
             $getLampiranImages = Lampiran::where('jalan_id', $id)->where('is_video', false)->first();
-            $getLampiranVideo = Lampiran::where('jalan_id', $id)->where('is_video', true)->first();
-            // dd($getLampiranVideo);
             if ($getLampiranImages == null) {
                 $createLampiran= Lampiran::create([
                     'jalan_id' => $id,
@@ -232,17 +226,24 @@ class JalanController extends Controller
                 $createLampiran->save();
             }
 
-            if ($getLampiranVideo == null) {
-                $createLampiran= Lampiran::create([
-                    'jalan_id' => $id,
-                    'file_name' => '',
-                    'is_video' => true,
-                    'url' => ($request->url) ? json_encode($request->url) : '',
-                ]);
-                // dd($createLampiran);
-            }
             $upload_images = Lampiran::where('jalan_id', $id)->update($update_lampiran);
 
+        }
+
+        if($request->has('url')) {
+            $update_video['url'] = urlencode($request->url);
+            $getVideoImages = VideoJalan::where('jalan_id', $id)->first();
+
+            if ($getVideoImages == null) {
+                $uploadVideo = VideoJalan::create([
+                    'jalan_id' => $id,
+                    'url' => urlencode($request->url),
+                ]);
+
+                $uploadVideo->save();
+            } else {
+                VideoJalan::where('jalan_id', $id)->update($update_video);
+            }
         }
 
         $convertToGeom = [];
@@ -381,7 +382,7 @@ class JalanController extends Controller
             'rusak_berat' => $request->rusak_berat,
             'mantap' => $request->mantap,
             'tidak_mantap' => $request->tidak_mantap,
-            'geom' => $convertToGeom[0],
+            'geom' => $request->has('shp') ? $convertToGeom[0] : null,
         ]);
 
         if($request->hasfile('images')) {
@@ -395,9 +396,17 @@ class JalanController extends Controller
             $upload_images = new Lampiran();
             $upload_images->file_name = json_encode($dataimg);
             $upload_images->jalan_id = $tambahJalan['id'];
-            $upload_images->is_video = ($request->url) ? true : false;
-            $upload_images->url = ($request->url) ? json_encode($request->url) : '';
+            $upload_images->is_video = false;
+            $upload_images->url = '';
             $upload_images->save();
+        }
+
+        if($request->has('url')) {
+            $uploadVideo = VideoJalan::create([
+                'jalan_id' => $tambahJalan['id'],
+                'url' => urlencode($request->url),
+            ]);
+
         }
 
         $notification = array(

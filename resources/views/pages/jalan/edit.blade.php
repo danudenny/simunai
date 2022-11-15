@@ -4,11 +4,17 @@
 @push('head')
     <link rel="stylesheet" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/mohithg-switchery/dist/switchery.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.21.0/video-js.min.css" integrity="sha512-kCCb9I/QM9hw+hm+JlN2ounNo2bRFZ4r9guSBv0BYk7RezWV2H8eI1unYnpJrU8+2g773WW1qNG+fSQ0X7M3Tg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/leaflet.min.css') }}" />
     <script src="{{ asset('js/leaflet.min.js') }}"></script>
     <style>
         #mapid {
             height: 30vh;
+        }
+        .video_show {
+            margin: 0 auto;
+            padding-top: 10px;
         }
     </style>
 @endpush
@@ -259,16 +265,27 @@
                                <div class="input-group control-group col-xs-12">
                                    <input type="file" name="images[]" class="form-control file-upload-info" placeholder="Pilih Gambar" accept="*/*">
                                    <span class="input-group-append">
-                                           <button class="file-upload-browse btn btn-danger rem-img" type="button">Hapus Gambar</button>
-                                       </span>
+                                       <button class="file-upload-browse btn btn-danger rem-img" type="button">Hapus Gambar</button>
+                                   </span>
                                </div>
                            </div>
                        </div>
                    </div>
                    <div class="form-group row">
-                       <label class="col-sm-3 col-form-label">Upload Video</label>
+                       <label class="col-sm-3 col-form-label">URL Video</label>
                        <div class="col-sm-9">
-                           <input type="text" name="url" value="{{ ($lampiran == null) ? '' : $lampiran->url }}" class="form-control" placeholder="URL Video">
+                           <input type="text" name="url" value="{{ ($video == null) ? '' : urldecode($video->url) }}" class="form-control" placeholder="URL Video">
+                           <i class="text-danger">contoh: https://youtube.com/watch?v=rtyuouiy6</i>
+                       </div>
+                       <div class="video_show">
+                           <video
+                               id="vid1"
+                               class="video-js vjs-default-skin"
+                               controls
+                               width="560" height="315"
+                               data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "{{ urldecode($video->url) }}" }] }'
+                           >
+                           </video>
                        </div>
                    </div>
                 </div>
@@ -283,6 +300,9 @@
 </div>
 @push('script')
     <script src="{{ asset('js/form-components.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.21.0/video.min.js" integrity="sha512-oopweCRDrrFVLujKxO9K52XE3h4aRIMHuHMnnPSF/aAxcBH6MzO/P6saQJHIJLun7hsNEmxlBd5nNx7B6hjFmw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js" integrity="sha512-mF+XuiEvJq707N/B9Fm/fI2wgMcWuFLsoztIp0UzEKgHCZgczbYpO2+Vq2TEi0LmE4crVj2r8AYru7X5QjVotw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('js/leaflet-image.js') }}"></script>
     <script src="{{ asset('plugins/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('plugins/mohithg-switchery/dist/switchery.min.js') }}"></script>
     <script src="{{ asset('js/leaflet-image.js') }}"></script>
@@ -315,7 +335,7 @@
 
 
         // var datageojson = JSON.parse("{!! json_encode($data->feature_layer) !!}");
-        let datageojson = document.getElementById("featureLayer").value; 
+        let datageojson = document.getElementById("featureLayer").value;
         function style(feature) {
             return {
                 weight: 5,
@@ -339,7 +359,7 @@
         })
 
     </script>
-    
+
 @endpush
 @endsection
 

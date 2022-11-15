@@ -283,8 +283,8 @@
                     <div class="col-lg-3 col-sm-6">
                         <div class="team-card">
                             <div class="team-card-text-2">
-                                <h5 class="fw-bold mb-0">Pelabuhan</h5>
-                                <p class="mb-0 fs-13 text-muted">Data Pelabuhan</p>
+                                <h5 class="fw-bold mb-0">Fasilitas Kesehatan</h5>
+                                <p class="mb-0 fs-13 text-muted">Fasilitas kesehatan</p>
                             </div>
                         </div>
                     </div><!-- End col -->

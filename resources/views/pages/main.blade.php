@@ -34,10 +34,10 @@
             width: 150px;
             height: 130px;
             bottom: 70px;
-            background-color: #00776d;
+            background-color: rgba(0, 119, 109, .7);
             color: #FFF;
             text-align: center;
-            box-shadow: 2px 2px 3px #BEBDBD;
+            /*box-shadow: 2px 2px 3px #BEBDBD;*/
             z-index: 99;
         }
 
@@ -56,12 +56,28 @@
             font-style: italic;
         }
 
-        @media screen and (max-width: 600px) {
+        .mobile-visitor {
+            display: none;
+        }
+
+
+        @media screen and (max-width: 500px) {
             .float {
                 visibility: hidden;
                 clear: both;
                 display: none;
             }
+
+            .mobile-visitor {
+                position: absolute;
+                bottom: 0;
+                text-align: center;
+                color: yellowgreen;
+                font-size: 11px;
+                font-style: italic;
+                display: block;
+            }
+
         }
     </style>
 
@@ -75,8 +91,8 @@
 
             <!-- LOGO -->
             <a class="navbar-brand text-uppercase" href="index-1.html">
-                <img class="logo-light" src="images/logo-light.png" alt="" height="25">
-                <img class="logo-dark" src="images/logo-dark.png" alt="" height="25">
+                <img class="logo-light" src="https://res.cloudinary.com/killtdj/image/upload/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="" height="32">
+                <img class="logo-dark" src="https://res.cloudinary.com/killtdj/image/upload/v1621363029/Lambang_Kabupaten_Banyuasin_frvjhm.png" alt="" height="32">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -118,7 +134,7 @@
         <!-- Start Home -->
         <section class="section home home-2" id="home">
             <video autoplay muted loop id="myVideo">
-                <source src="images/Office-69952.mp4" type="video/mp4">
+                <source src="{{ asset('video/home-video.mp4') }}" type="video/mp4">
             </video>
             <div class="bg-overlay"></div>
             <div class="container">
@@ -127,7 +143,7 @@
                         <div class="home-heading">
                             <h1 class="mb-3 text-white"><span class="text-warning">SIMUNAI</span></h1>
                         </div>
-                        <p class="text-white-50 fs-20">Sistem Informasi Monitoring Pembangunan Infrastruktur Kabupaten
+                        <p class="text-white fs-20">Sistem Informasi Monitoring Pembangunan Infrastruktur Kabupaten
                             Banyuasin.</p>
                         <div class="home-btn hstack gap-2 flex-column d-sm-block">
                             <a class="btn btn-info text-white me-1" href="{{ url('dashboard') }}">Dashboard</a>
@@ -420,6 +436,9 @@
                                 alt=""></a>
                         <p class="mx-auto mt-sm-4">SISTEM INFORMASI MONITORING PEMBANGUNAN INFRASTRUKTUR</p>
                         <p>KABUPATEN BANYUASIN. SUMATERA SELATAN. 2022</p>
+                    </div>
+                    <div class="mobile-visitor">
+                        Pengunjung Hari Ini : <b>{{ $visitorsToday[0]->total }}</b> <br> Total Pengunjung : <b>{{ $visitorsTotal }}</b>
                     </div>
                     <!--end col-->
                 </div>

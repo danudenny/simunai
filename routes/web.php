@@ -41,7 +41,7 @@ Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetF
 Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
 
 // Maps
-Route::get('/', [MainController::class,'index'])->middleware('visitor')->name('main');
+Route::get('/', [MainController::class,'index'])->middleware('log.page.visit')->name('main');
 Route::get('/maps', [MapsController::class,'index'])->name('maps');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

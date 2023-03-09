@@ -418,7 +418,7 @@
         <div class="float">
             <div class="my-float">
                 <span>PENGUNJUNG</span>
-                <span class="desc">Hari Ini : {{ $visitorsToday[0]->total }}</span><br>
+                <span class="desc">Hari Ini : {{ $visitorsToday }}</span><br>
                 <span class="desc">Total : {{ $visitorsTotal }}</span><br>
                 <span class="tanggal">{{ Carbon\Carbon::now() }}</span>
             </div>
@@ -438,7 +438,7 @@
                         <p>KABUPATEN BANYUASIN. SUMATERA SELATAN. 2022</p>
                     </div>
                     <div class="mobile-visitor">
-                        Pengunjung Hari Ini : <b>{{ $visitorsToday[0]->total }}</b> <br> Total Pengunjung : <b>{{ $visitorsTotal }}</b>
+                        Pengunjung Hari Ini : <b>{{ $visitorsToday }}</b> <br> Total Pengunjung : <b>{{ $visitorsTotal }}</b>
                     </div>
                     <!--end col-->
                 </div>

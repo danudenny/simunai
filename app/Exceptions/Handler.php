@@ -29,14 +29,14 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Throwable  $exception
+     * @param  \Throwable  $e
      * @return void
      *
      * @throws \Exception
      */
-    public function report(Throwable $exception)
+    public function report(Throwable $e)
     {
-        parent::report($exception);
+        parent::report($e);
     }
 
     /**
@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
+    public function render($request, Throwable $e)
     {
         // check api guard for unauthorized responses
         /*if(auth()->guard('api')->check()) {
@@ -56,6 +56,24 @@ class Handler extends ExceptionHandler
              'message' => 'Sorry! This action is unauthorized'
             ],401);
         }*/
-        return parent::render($request, $exception);
+        if($this->isHttpException($e))
+        {
+            switch ($e->getStatusCode()) 
+                {
+                // not found
+                case 404:
+                return redirect()->guest('/');
+                break;
+
+                // internal error
+                case '500':
+                return redirect()->guest('/');
+                break;
+
+                default:
+                    return $this->renderHttpException($e);
+                break;
+            }
+        }
     }
 }
